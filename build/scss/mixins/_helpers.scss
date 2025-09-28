@@ -1,0 +1,12 @@
+//
+// Mixins: Color Yiq
+//
+@use "sass:math";
+
+@function color-yiq($color, $dark: #000, $light: #fff) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+  $yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
+  @return if($yiq >= 150, $dark, $light);
+}

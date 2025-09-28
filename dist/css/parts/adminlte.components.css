@@ -338,24 +338,24 @@ body.text-sm .input-group-text {
   background-color: rgb(133.9855072464, 226.0144927536, 155);
 }
 .custom-switch.custom-switch-off-info .custom-control-input ~ .custom-control-label::before {
-  background-color: #0dcaf0;
-  border-color: rgb(7.7588932806, 120.5612648221, 143.2411067194);
+  background-color: #17a2b8;
+  border-color: rgb(11.6666666667, 82.1739130435, 93.3333333333);
 }
 .custom-switch.custom-switch-off-info .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-switch.custom-switch-off-info .custom-control-input ~ .custom-control-label::after {
-  background-color: rgb(6.4486166008, 100.2015810277, 119.0513833992);
+  background-color: rgb(8.8333333333, 62.2173913043, 70.6666666667);
 }
 .custom-switch.custom-switch-on-info .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #0dcaf0;
-  border-color: rgb(7.7588932806, 120.5612648221, 143.2411067194);
+  background-color: #17a2b8;
+  border-color: rgb(11.6666666667, 82.1739130435, 93.3333333333);
 }
 .custom-switch.custom-switch-on-info .custom-control-input:checked:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-switch.custom-switch-on-info .custom-control-input:checked ~ .custom-control-label::after {
-  background-color: rgb(156.3438735178, 234.0355731225, 249.6561264822);
+  background-color: rgb(121.6666666667, 222.3913043478, 238.3333333333);
 }
 .custom-switch.custom-switch-off-warning .custom-control-input ~ .custom-control-label::before {
   background-color: #ffc107;
@@ -738,24 +738,24 @@ body.text-sm .input-group-text {
   background-color: rgb(148.0300429185, 237.9699570815, 211.3605150215);
 }
 .custom-switch.custom-switch-off-cyan .custom-control-input ~ .custom-control-label::before {
-  background-color: #0dcaf0;
-  border-color: rgb(7.7588932806, 120.5612648221, 143.2411067194);
+  background-color: #17a2b8;
+  border-color: rgb(11.6666666667, 82.1739130435, 93.3333333333);
 }
 .custom-switch.custom-switch-off-cyan .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-switch.custom-switch-off-cyan .custom-control-input ~ .custom-control-label::after {
-  background-color: rgb(6.4486166008, 100.2015810277, 119.0513833992);
+  background-color: rgb(8.8333333333, 62.2173913043, 70.6666666667);
 }
 .custom-switch.custom-switch-on-cyan .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #0dcaf0;
-  border-color: rgb(7.7588932806, 120.5612648221, 143.2411067194);
+  background-color: #17a2b8;
+  border-color: rgb(11.6666666667, 82.1739130435, 93.3333333333);
 }
 .custom-switch.custom-switch-on-cyan .custom-control-input:checked:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-switch.custom-switch-on-cyan .custom-control-input:checked ~ .custom-control-label::after {
-  background-color: rgb(156.3438735178, 234.0355731225, 249.6561264822);
+  background-color: rgb(121.6666666667, 222.3913043478, 238.3333333333);
 }
 .custom-switch.custom-switch-off-black .custom-control-input ~ .custom-control-label::before {
   background-color: #000;
@@ -932,31 +932,31 @@ body.text-sm .input-group-text {
   outline: none;
 }
 .custom-range.custom-range-info:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-info:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-info:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-info::-webkit-slider-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-info::-webkit-slider-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-info::-moz-range-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-info::-moz-range-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-info::-ms-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-info::-ms-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-warning:focus {
   outline: none;
@@ -1532,31 +1532,31 @@ body.text-sm .input-group-text {
   outline: none;
 }
 .custom-range.custom-range-cyan:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-cyan:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-cyan:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(23, 162, 184, 0.25);
 }
 .custom-range.custom-range-cyan::-webkit-slider-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-cyan::-webkit-slider-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-cyan::-moz-range-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-cyan::-moz-range-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-cyan::-ms-thumb {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .custom-range.custom-range-cyan::-ms-thumb:active {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 .custom-range.custom-range-black:focus {
   outline: none;
@@ -1743,24 +1743,24 @@ body.text-sm .input-group-text {
 }
 
 .custom-control-input-info:checked ~ .custom-control-label::before {
-  border-color: #0dcaf0;
-  background-color: #0dcaf0;
+  border-color: #17a2b8;
+  background-color: #17a2b8;
 }
 .custom-control-input-info.custom-control-input-outline:checked[type=checkbox] ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%230dcaf0' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%2317a2b8' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E") !important;
 }
 .custom-control-input-info.custom-control-input-outline:checked[type=radio] ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%230dcaf0'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%2317a2b8'/%3E%3C/svg%3E") !important;
 }
 .custom-control-input-info:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(23, 162, 184, 0.25);
 }
 .custom-control-input-info:focus:not(:checked) ~ .custom-control-label::before {
-  border-color: rgb(132.1541501976, 228.895256917, 248.3458498024);
+  border-color: rgb(99, 216.847826087, 235.5);
 }
 .custom-control-input-info:not(:disabled):active ~ .custom-control-label::before {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
-  border-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
+  border-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 
 .custom-control-input-warning:checked ~ .custom-control-label::before {
@@ -2163,24 +2163,24 @@ body.text-sm .input-group-text {
 }
 
 .custom-control-input-cyan:checked ~ .custom-control-label::before {
-  border-color: #0dcaf0;
-  background-color: #0dcaf0;
+  border-color: #17a2b8;
+  background-color: #17a2b8;
 }
 .custom-control-input-cyan.custom-control-input-outline:checked[type=checkbox] ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%230dcaf0' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%2317a2b8' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E") !important;
 }
 .custom-control-input-cyan.custom-control-input-outline:checked[type=radio] ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%230dcaf0'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%2317a2b8'/%3E%3C/svg%3E") !important;
 }
 .custom-control-input-cyan:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(23, 162, 184, 0.25);
 }
 .custom-control-input-cyan:focus:not(:checked) ~ .custom-control-label::before {
-  border-color: rgb(132.1541501976, 228.895256917, 248.3458498024);
+  border-color: rgb(99, 216.847826087, 235.5);
 }
 .custom-control-input-cyan:not(:disabled):active ~ .custom-control-label::before {
-  background-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
-  border-color: rgb(180.5335968379, 239.1758893281, 250.9664031621);
+  background-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
+  border-color: rgb(144.3333333333, 227.9347826087, 241.1666666667);
 }
 
 .custom-control-input-black:checked ~ .custom-control-label::before {
@@ -4420,7 +4420,7 @@ body.text-sm .input-group-text {
 }
 .card-success:not(.card-outline) > .card-header,
 .card-success:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-success:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -4439,12 +4439,12 @@ body.text-sm .input-group-text {
 .bg-success > .card-header .btn-tool,
 .bg-gradient-success > .card-header .btn-tool,
 .card-success:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-success > .card-header .btn-tool:hover,
 .bg-gradient-success > .card-header .btn-tool:hover,
 .card-success:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-success .bootstrap-datetimepicker-widget .table td,
@@ -4464,50 +4464,50 @@ body.text-sm .input-group-text {
 .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(32.115942029, 134.084057971, 55.4);
-  color: #000;
+  color: #fff;
 }
 .card.bg-success .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-success .bootstrap-datetimepicker-widget table td.active,
 .card.bg-success .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(51.6956521739, 206.3043478261, 87);
-  color: #000;
+  color: #fff;
 }
 
 .card-info:not(.card-outline) > .card-header {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .card-info:not(.card-outline) > .card-header,
 .card-info:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-info:not(.card-outline) > .card-header a.active {
   color: #000;
 }
 .card-info.card-outline {
-  border-top: 3px solid #0dcaf0;
+  border-top: 3px solid #17a2b8;
 }
 .card-info.card-outline-tabs > .card-header a:hover {
   border-top: 3px solid var(--bs-border-color);
 }
 .card-info.card-outline-tabs > .card-header a.active,
 .card-info.card-outline-tabs > .card-header a.active:hover {
-  border-top: 3px solid #0dcaf0;
+  border-top: 3px solid #17a2b8;
 }
 
 .bg-info > .card-header .btn-tool,
 .bg-gradient-info > .card-header .btn-tool,
 .card-info:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-info > .card-header .btn-tool:hover,
 .bg-gradient-info > .card-header .btn-tool:hover,
 .card-info:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-info .bootstrap-datetimepicker-widget .table td,
@@ -4526,19 +4526,19 @@ body.text-sm .input-group-text {
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.hour:hover,
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.second:hover {
-  background-color: rgb(10.9035573123, 169.4245059289, 201.2964426877);
-  color: #000;
+  background-color: rgb(18.4666666667, 130.0695652174, 147.7333333333);
+  color: #fff;
 }
 .card.bg-info .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-info .bootstrap-datetimepicker-widget table td.active,
 .card.bg-info .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.active:hover {
-  background-color: rgb(59.5849802372, 213.4743083004, 244.4150197628);
-  color: #000;
+  background-color: rgb(31, 200.2173913043, 227);
+  color: #fff;
 }
 
 .card-warning:not(.card-outline) > .card-header {
@@ -4798,7 +4798,7 @@ body.text-sm .input-group-text {
 }
 .card-lightblue:not(.card-outline) > .card-header,
 .card-lightblue:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-lightblue:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -4817,12 +4817,12 @@ body.text-sm .input-group-text {
 .bg-lightblue > .card-header .btn-tool,
 .bg-gradient-lightblue > .card-header .btn-tool,
 .card-lightblue:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-lightblue > .card-header .btn-tool:hover,
 .bg-gradient-lightblue > .card-header .btn-tool:hover,
 .card-lightblue:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-lightblue .bootstrap-datetimepicker-widget .table td,
@@ -4842,18 +4842,18 @@ body.text-sm .input-group-text {
 .card.bg-gradient-lightblue .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-lightblue .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(50.1290322581, 117.8032258065, 157.0709677419);
-  color: #000;
+  color: #fff;
 }
 .card.bg-lightblue .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-lightblue .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-lightblue .bootstrap-datetimepicker-widget table td.active,
 .card.bg-lightblue .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-lightblue .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-lightblue .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(95.0483870968, 163.9637096774, 203.9516129032);
-  color: #000;
+  color: #fff;
 }
 
 .card-navy:not(.card-outline) > .card-header {
@@ -4924,7 +4924,7 @@ body.text-sm .input-group-text {
 }
 .card-olive:not(.card-outline) > .card-header,
 .card-olive:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-olive:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -4943,12 +4943,12 @@ body.text-sm .input-group-text {
 .bg-olive > .card-header .btn-tool,
 .bg-gradient-olive > .card-header .btn-tool,
 .card-olive:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-olive > .card-header .btn-tool:hover,
 .bg-gradient-olive > .card-header .btn-tool:hover,
 .card-olive:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-olive .bootstrap-datetimepicker-widget .table td,
@@ -4968,18 +4968,18 @@ body.text-sm .input-group-text {
 .card.bg-gradient-olive .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-olive .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(49.3700934579, 123.8299065421, 90.646728972);
-  color: #000;
+  color: #fff;
 }
 .card.bg-olive .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-olive .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-olive .bootstrap-datetimepicker-widget table td.active,
 .card.bg-olive .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-olive .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-olive .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(79.8364485981, 185.1635514019, 138.2242990654);
-  color: #000;
+  color: #fff;
 }
 
 .card-lime:not(.card-outline) > .card-header {
@@ -5050,7 +5050,7 @@ body.text-sm .input-group-text {
 }
 .card-fuchsia:not(.card-outline) > .card-header,
 .card-fuchsia:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-fuchsia:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -5069,12 +5069,12 @@ body.text-sm .input-group-text {
 .bg-fuchsia > .card-header .btn-tool,
 .bg-gradient-fuchsia > .card-header .btn-tool,
 .card-fuchsia:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-fuchsia > .card-header .btn-tool:hover,
 .bg-gradient-fuchsia > .card-header .btn-tool:hover,
 .card-fuchsia:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-fuchsia .bootstrap-datetimepicker-widget .table td,
@@ -5094,18 +5094,18 @@ body.text-sm .input-group-text {
 .card.bg-gradient-fuchsia .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-fuchsia .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(204.2714285714, 12.9285714286, 161.1761904762);
-  color: #000;
+  color: #fff;
 }
 .card.bg-fuchsia .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-fuchsia .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-fuchsia .bootstrap-datetimepicker-widget table td.active,
 .card.bg-fuchsia .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-fuchsia .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-fuchsia .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(243.0357142857, 65.9642857143, 203.1547619048);
-  color: #000;
+  color: #fff;
 }
 
 .card-maroon:not(.card-outline) > .card-header {
@@ -5617,7 +5617,7 @@ body.text-sm .input-group-text {
 }
 .card-green:not(.card-outline) > .card-header,
 .card-green:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-green:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -5636,12 +5636,12 @@ body.text-sm .input-group-text {
 .bg-green > .card-header .btn-tool,
 .bg-gradient-green > .card-header .btn-tool,
 .card-green:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-green > .card-header .btn-tool:hover,
 .bg-gradient-green > .card-header .btn-tool:hover,
 .card-green:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-green .bootstrap-datetimepicker-widget .table td,
@@ -5661,18 +5661,18 @@ body.text-sm .input-group-text {
 .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(32.115942029, 134.084057971, 55.4);
-  color: #000;
+  color: #fff;
 }
 .card.bg-green .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-green .bootstrap-datetimepicker-widget table td.active,
 .card.bg-green .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(51.6956521739, 206.3043478261, 87);
-  color: #000;
+  color: #fff;
 }
 
 .card-teal:not(.card-outline) > .card-header {
@@ -5680,7 +5680,7 @@ body.text-sm .input-group-text {
 }
 .card-teal:not(.card-outline) > .card-header,
 .card-teal:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-teal:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -5699,12 +5699,12 @@ body.text-sm .input-group-text {
 .bg-teal > .card-header .btn-tool,
 .bg-gradient-teal > .card-header .btn-tool,
 .card-teal:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-teal > .card-header .btn-tool:hover,
 .bg-gradient-teal > .card-header .btn-tool:hover,
 .card-teal:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-teal .bootstrap-datetimepicker-widget .table td,
@@ -5724,50 +5724,50 @@ body.text-sm .input-group-text {
 .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(26.3965665236, 165.8034334764, 124.5587982833);
-  color: #000;
+  color: #fff;
 }
 .card.bg-teal .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-teal .bootstrap-datetimepicker-widget table td.active,
 .card.bg-teal .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(60.0386266094, 223.9613733906, 175.4635193133);
-  color: #000;
+  color: #fff;
 }
 
 .card-cyan:not(.card-outline) > .card-header {
-  background-color: #0dcaf0;
+  background-color: #17a2b8;
 }
 .card-cyan:not(.card-outline) > .card-header,
 .card-cyan:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .card-cyan:not(.card-outline) > .card-header a.active {
   color: #000;
 }
 .card-cyan.card-outline {
-  border-top: 3px solid #0dcaf0;
+  border-top: 3px solid #17a2b8;
 }
 .card-cyan.card-outline-tabs > .card-header a:hover {
   border-top: 3px solid var(--bs-border-color);
 }
 .card-cyan.card-outline-tabs > .card-header a.active,
 .card-cyan.card-outline-tabs > .card-header a.active:hover {
-  border-top: 3px solid #0dcaf0;
+  border-top: 3px solid #17a2b8;
 }
 
 .bg-cyan > .card-header .btn-tool,
 .bg-gradient-cyan > .card-header .btn-tool,
 .card-cyan:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .bg-cyan > .card-header .btn-tool:hover,
 .bg-gradient-cyan > .card-header .btn-tool:hover,
 .card-cyan:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 
 .card.bg-cyan .bootstrap-datetimepicker-widget .table td,
@@ -5786,19 +5786,19 @@ body.text-sm .input-group-text {
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.hour:hover,
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.second:hover {
-  background-color: rgb(10.9035573123, 169.4245059289, 201.2964426877);
-  color: #000;
+  background-color: rgb(18.4666666667, 130.0695652174, 147.7333333333);
+  color: #fff;
 }
 .card.bg-cyan .bootstrap-datetimepicker-widget table td.today::before,
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .card.bg-cyan .bootstrap-datetimepicker-widget table td.active,
 .card.bg-cyan .bootstrap-datetimepicker-widget table td.active:hover,
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.active,
 .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.active:hover {
-  background-color: rgb(59.5849802372, 213.4743083004, 244.4150197628);
-  color: #000;
+  background-color: rgb(31, 200.2173913043, 227);
+  color: #fff;
 }
 
 .card-black:not(.card-outline) > .card-header {
@@ -6372,7 +6372,7 @@ html.maximized-card {
   border-left-color: #28a745;
 }
 .todo-list .info {
-  border-left-color: #0dcaf0;
+  border-left-color: #17a2b8;
 }
 .todo-list .warning {
   border-left-color: #ffc107;
@@ -6432,7 +6432,7 @@ html.maximized-card {
   border-left-color: #20c997;
 }
 .todo-list .cyan {
-  border-left-color: #0dcaf0;
+  border-left-color: #17a2b8;
 }
 .todo-list .black {
   border-left-color: #000;
@@ -6585,7 +6585,7 @@ html.maximized-card {
 }
 .dark-mode .card-success:not(.card-outline) > .card-header,
 .dark-mode .card-success:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-success:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -6603,12 +6603,12 @@ html.maximized-card {
 .dark-mode .bg-success > .card-header .btn-tool,
 .dark-mode .bg-gradient-success > .card-header .btn-tool,
 .dark-mode .card-success:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-success > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-success > .card-header .btn-tool:hover,
 .dark-mode .card-success:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-success .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-success .bootstrap-datetimepicker-widget .table th,
@@ -6627,25 +6627,25 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(0, 147.2, 109.6170212766);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-success .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-success .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-success .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-success .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(0, 239, 177.9787234043);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-info:not(.card-outline) > .card-header {
   background-color: #3498db;
 }
 .dark-mode .card-info:not(.card-outline) > .card-header,
 .dark-mode .card-info:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-info:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -6663,12 +6663,12 @@ html.maximized-card {
 .dark-mode .bg-info > .card-header .btn-tool,
 .dark-mode .bg-gradient-info > .card-header .btn-tool,
 .dark-mode .card-info:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-info > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-info > .card-header .btn-tool:hover,
 .dark-mode .card-info:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-info .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-info .bootstrap-datetimepicker-widget .table th,
@@ -6687,18 +6687,18 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(34.6744769874, 130.9924686192, 195.5255230126);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-info .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-info .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-info .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-info .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(95.3179916318, 173.9790794979, 226.6820083682);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-warning:not(.card-outline) > .card-header {
   background-color: #f39c12;
@@ -6765,7 +6765,7 @@ html.maximized-card {
 }
 .dark-mode .card-danger:not(.card-outline) > .card-header,
 .dark-mode .card-danger:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-danger:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -6783,12 +6783,12 @@ html.maximized-card {
 .dark-mode .bg-danger > .card-header .btn-tool,
 .dark-mode .bg-gradient-danger > .card-header .btn-tool,
 .dark-mode .card-danger:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-danger > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-danger > .card-header .btn-tool:hover,
 .dark-mode .card-danger:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-danger .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-danger .bootstrap-datetimepicker-widget .table th,
@@ -6807,18 +6807,18 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(222.7808219178, 45.698630137, 27.4191780822);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-danger .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-danger .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-danger .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-danger .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(236.5890410959, 117.6849315068, 105.4109589041);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-light:not(.card-outline) > .card-header {
   background-color: #f8f9fa;
@@ -7485,7 +7485,7 @@ html.maximized-card {
 }
 .dark-mode .card-pink:not(.card-outline) > .card-header,
 .dark-mode .card-pink:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-pink:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -7503,12 +7503,12 @@ html.maximized-card {
 .dark-mode .bg-pink > .card-header .btn-tool,
 .dark-mode .bg-gradient-pink > .card-header .btn-tool,
 .dark-mode .card-pink:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-pink > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-pink > .card-header .btn-tool:hover,
 .dark-mode .card-pink:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-pink .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-pink .bootstrap-datetimepicker-widget .table th,
@@ -7527,25 +7527,25 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-pink .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-pink .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(226.2388888889, 26.9611111111, 118.3944444444);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-pink .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-pink .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-pink .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-pink .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-pink .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-pink .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(237.4305555556, 107.5694444444, 167.1527777778);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-red:not(.card-outline) > .card-header {
   background-color: #e74c3c;
 }
 .dark-mode .card-red:not(.card-outline) > .card-header,
 .dark-mode .card-red:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-red:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -7563,12 +7563,12 @@ html.maximized-card {
 .dark-mode .bg-red > .card-header .btn-tool,
 .dark-mode .bg-gradient-red > .card-header .btn-tool,
 .dark-mode .card-red:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-red > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-red > .card-header .btn-tool:hover,
 .dark-mode .card-red:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-red .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-red .bootstrap-datetimepicker-widget .table th,
@@ -7587,18 +7587,18 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(222.7808219178, 45.698630137, 27.4191780822);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-red .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-red .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-red .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(236.5890410959, 117.6849315068, 105.4109589041);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-orange:not(.card-outline) > .card-header {
   background-color: #fd7e14;
@@ -7725,7 +7725,7 @@ html.maximized-card {
 }
 .dark-mode .card-green:not(.card-outline) > .card-header,
 .dark-mode .card-green:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-green:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -7743,12 +7743,12 @@ html.maximized-card {
 .dark-mode .bg-green > .card-header .btn-tool,
 .dark-mode .bg-gradient-green > .card-header .btn-tool,
 .dark-mode .card-green:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-green > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-green > .card-header .btn-tool:hover,
 .dark-mode .card-green:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-green .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-green .bootstrap-datetimepicker-widget .table th,
@@ -7767,25 +7767,25 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(0, 147.2, 109.6170212766);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-green .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-green .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-green .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-green .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(0, 239, 177.9787234043);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-teal:not(.card-outline) > .card-header {
   background-color: #20c997;
 }
 .dark-mode .card-teal:not(.card-outline) > .card-header,
 .dark-mode .card-teal:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-teal:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -7803,12 +7803,12 @@ html.maximized-card {
 .dark-mode .bg-teal > .card-header .btn-tool,
 .dark-mode .bg-gradient-teal > .card-header .btn-tool,
 .dark-mode .card-teal:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-teal > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-teal > .card-header .btn-tool:hover,
 .dark-mode .card-teal:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-teal .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-teal .bootstrap-datetimepicker-widget .table th,
@@ -7827,25 +7827,25 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(26.3965665236, 165.8034334764, 124.5587982833);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-teal .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-teal .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-teal .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-teal .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(60.0386266094, 223.9613733906, 175.4635193133);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-cyan:not(.card-outline) > .card-header {
   background-color: #3498db;
 }
 .dark-mode .card-cyan:not(.card-outline) > .card-header,
 .dark-mode .card-cyan:not(.card-outline) > .card-header a {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-cyan:not(.card-outline) > .card-header a.active {
   color: #000;
@@ -7863,12 +7863,12 @@ html.maximized-card {
 .dark-mode .bg-cyan > .card-header .btn-tool,
 .dark-mode .bg-gradient-cyan > .card-header .btn-tool,
 .dark-mode .card-cyan:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .dark-mode .bg-cyan > .card-header .btn-tool:hover,
 .dark-mode .bg-gradient-cyan > .card-header .btn-tool:hover,
 .dark-mode .card-cyan:not(.card-outline) > .card-header .btn-tool:hover {
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-cyan .bootstrap-datetimepicker-widget .table td,
 .dark-mode .card.bg-cyan .bootstrap-datetimepicker-widget .table th,
@@ -7887,18 +7887,18 @@ html.maximized-card {
 .dark-mode .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.minute:hover,
 .dark-mode .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.second:hover {
   background-color: rgb(34.6744769874, 130.9924686192, 195.5255230126);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card.bg-cyan .bootstrap-datetimepicker-widget table td.today::before,
 .dark-mode .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.today::before {
-  border-bottom-color: #000;
+  border-bottom-color: #fff;
 }
 .dark-mode .card.bg-cyan .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-cyan .bootstrap-datetimepicker-widget table td.active:hover,
 .dark-mode .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.active,
 .dark-mode .card.bg-gradient-cyan .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: rgb(95.3179916318, 173.9790794979, 226.6820083682);
-  color: #000;
+  color: #fff;
 }
 .dark-mode .card-white:not(.card-outline) > .card-header {
   background-color: #fff;
@@ -8553,10 +8553,10 @@ html.maximized-card {
   color: #000;
 }
 .toast.bg-info {
-  background-color: rgba(13, 202, 240, 0.9) !important;
+  background-color: rgba(23, 162, 184, 0.9) !important;
 }
 .toast.bg-info .toast-header {
-  background-color: rgba(13, 202, 240, 0.85);
+  background-color: rgba(23, 162, 184, 0.85);
   color: #000;
 }
 .toast.bg-warning {
@@ -8729,10 +8729,10 @@ html.maximized-card {
   color: #000;
 }
 .toast.bg-cyan {
-  background-color: rgba(13, 202, 240, 0.9) !important;
+  background-color: rgba(23, 162, 184, 0.9) !important;
 }
 .toast.bg-cyan .toast-header {
-  background-color: rgba(13, 202, 240, 0.85);
+  background-color: rgba(23, 162, 184, 0.85);
   color: #000;
 }
 .toast.bg-black {
@@ -9190,7 +9190,7 @@ html.maximized-card {
   border-left-color: rgb(211, 158.25, 0);
 }
 .callout.callout-info {
-  border-left-color: rgb(10.3794466403, 161.2806324111, 191.6205533597);
+  border-left-color: rgb(17.3333333333, 122.0869565217, 138.6666666667);
 }
 .callout.callout-success {
   border-left-color: rgb(30.1449275362, 125.8550724638, 52);
@@ -9247,8 +9247,8 @@ html.maximized-card {
 
 .alert-info {
   color: #000;
-  background-color: #0dcaf0;
-  border-color: rgb(11.6897233202, 181.6403162055, 215.8102766798);
+  background-color: #17a2b8;
+  border-color: rgb(20.1666666667, 142.0434782609, 161.3333333333);
 }
 
 .alert-warning {
@@ -9460,7 +9460,7 @@ html.maximized-card {
 
 .btn-close {
   --bs-btn-close-color: #000;
-  --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+  --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
   --bs-btn-close-opacity: 0.5;
   --bs-btn-close-hover-opacity: 0.75;
   --bs-btn-close-focus-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
