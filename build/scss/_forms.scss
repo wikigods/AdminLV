@@ -107,9 +107,9 @@
 }
 /* stylelint-enable selector-class-pattern */
 
-label:not(.form-check-label):not(.custom-file-label) {
-  font-weight: $font-weight-bold;
-}
+//label:not(.form-check-label):not(.custom-file-label) {
+//  font-weight: $font-weight-normal;
+//}
 
 .warning-feedback {
   @include font-size($form-feedback-font-size);
@@ -168,7 +168,7 @@ textarea.form-control {
   }
 }
 
-.custom-select {
+.form-select {
   &.is-warning {
     border-color: $warning;
 
@@ -274,7 +274,7 @@ body.text-sm {
 
 // custom .form-control styles
 .form-control,
-.custom-select {
+.form-select {
   &.form-control-border {
     border-top: 0;
     border-left: 0;
@@ -361,7 +361,7 @@ body.text-sm {
 
 @include dark-mode () {
   .form-control:not(.form-control-navbar):not(.form-control-sidebar),
-  .custom-select,
+  .form-select,
   .custom-file-label,
   .custom-file-label::after,
   .custom-control-label::before,
@@ -380,7 +380,7 @@ body.text-sm {
     border-color: $gray-600;
   }
 
-  .custom-select {
+  .form-select {
     background: $dark $custom-select-dark-background;
 
     &[multiple]{

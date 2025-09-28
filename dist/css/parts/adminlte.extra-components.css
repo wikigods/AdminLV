@@ -102,7 +102,6 @@
 }
 .small-box {
   border-radius: 0.25rem;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
   display: block;
   margin-bottom: 20px;
   position: relative;
@@ -233,7 +232,6 @@
   }
 }
 .info-box {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
   background-color: #fff;
   display: flex;
@@ -480,7 +478,6 @@
   display: table;
 }
 .timeline > div > .timeline-item {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
   background-color: #fff;
   color: #495057;
@@ -553,7 +550,6 @@
 }
 
 .timeline-inverse > div > .timeline-item {
-  box-shadow: none;
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
 }

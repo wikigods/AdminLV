@@ -369,7 +369,7 @@ $escaped-characters: (
 
 $enable-caret:                true !default;
 $enable-rounded:              true !default;
-$enable-shadows:              true !default;
+$enable-shadows:              false !default;
 $enable-gradients:            false !default;
 $enable-transitions:          true !default;
 $enable-reduced-motion:       true !default;
@@ -875,7 +875,7 @@ $form-text-color:                       var(--#{$prefix}secondary-color) !defaul
 $form-label-margin-bottom:              .5rem !default;
 $form-label-font-size:                  null !default;
 $form-label-font-style:                 null !default;
-$form-label-font-weight:                null !default;
+$form-label-font-weight:                $font-weight-bold !default;
 $form-label-color:                      null !default;
 // scss-docs-end form-label-variables
 
