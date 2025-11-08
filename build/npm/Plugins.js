@@ -59,23 +59,23 @@ const Plugins = [
     to: 'plugins/summernote'
   },
   // Bootstrap Slider
-  {
-    from: 'node_modules/bootstrap-slider/dist/',
-    to: 'plugins/bootstrap-slider'
-  },
-  {
-    from: 'node_modules/bootstrap-slider/dist/css',
-    to: 'plugins/bootstrap-slider/css'
-  },
-  // Bootstrap Colorpicker
-  {
-    from: 'node_modules/bootstrap-colorpicker/dist/js',
-    to: 'plugins/bootstrap-colorpicker/js'
-  },
-  {
-    from: 'node_modules/bootstrap-colorpicker/dist/css',
-    to: 'plugins/bootstrap-colorpicker/css'
-  },
+  // {
+  //   from: 'node_modules/bootstrap-slider/dist/',
+  //   to: 'plugins/bootstrap-slider'
+  // },
+  // {
+  //   from: 'node_modules/bootstrap-slider/dist/css',
+  //   to: 'plugins/bootstrap-slider/css'
+  // },
+  // Bootstrap Colorpicker remove
+  // {
+  //   from: 'node_modules/bootstrap-colorpicker/dist/js',
+  //   to: 'plugins/bootstrap-colorpicker/js'
+  // },
+  // {
+  //   from: 'node_modules/bootstrap-colorpicker/dist/css',
+  //   to: 'plugins/bootstrap-colorpicker/css'
+  // },
   // Tempusdominus Bootstrap 4
   {
     from: 'node_modules/tempusdominus-bootstrap-4/build/js',
@@ -94,11 +94,11 @@ const Plugins = [
     from: 'node_modules/moment/locale',
     to: 'plugins/moment/locale'
   },
-  // FastClick
-  {
-    from: 'node_modules/fastclick/lib',
-    to: 'plugins/fastclick'
-  },
+  // // FastClick
+  // {
+  //   from: 'node_modules/fastclick/lib',
+  //   to: 'plugins/fastclick'
+  // },
   // Date Range Picker
   {
     from: 'node_modules/daterangepicker/',
@@ -337,10 +337,10 @@ const Plugins = [
     from: 'node_modules/select2/dist/',
     to: 'plugins/select2'
   },
-  {
-    from: 'node_modules/@ttskch/select2-bootstrap4-theme/dist/',
-    to: 'plugins/select2-bootstrap4-theme'
-  },
+  // {
+  //   from: 'node_modules/@ttskch/select2-bootstrap4-theme/dist/',
+  //   to: 'plugins/select2-bootstrap4-theme'
+  // },
   // Sparklines
   {
     from: 'node_modules/sparklines/source/',
@@ -374,21 +374,21 @@ const Plugins = [
     from: 'node_modules/flag-icon-css/flags',
     to: 'plugins/flag-icon-css/flags'
   },
-  // bootstrap4-duallistbox
-  {
-    from: 'node_modules/bootstrap4-duallistbox/dist',
-    to: 'plugins/bootstrap4-duallistbox/'
-  },
+  // // bootstrap4-duallistbox
+  // {
+  //   from: 'node_modules/bootstrap4-duallistbox/dist',
+  //   to: 'plugins/bootstrap4-duallistbox/'
+  // },
   // filterizr
-  {
-    from: 'node_modules/filterizr/dist',
-    to: 'plugins/filterizr/'
-  },
-  // ekko-lightbox
-  {
-    from: 'node_modules/ekko-lightbox/dist',
-    to: 'plugins/ekko-lightbox/'
-  },
+  // {
+  //   from: 'node_modules/filterizr/dist',
+  //   to: 'plugins/filterizr/'
+  // },
+  // // ekko-lightbox
+  // {
+  //   from: 'node_modules/ekko-lightbox/dist',
+  //   to: 'plugins/ekko-lightbox/'
+  // },
   // bootstrap-switch
   {
     from: 'node_modules/bootstrap-switch/dist',
@@ -399,16 +399,16 @@ const Plugins = [
     from: 'node_modules/jquery-validation/dist/',
     to: 'plugins/jquery-validation'
   },
-  // bs-custom-file-input
-  {
-    from: 'node_modules/bs-custom-file-input/dist/',
-    to: 'plugins/bs-custom-file-input'
-  },
-  // bs-stepper
-  {
-    from: 'node_modules/bs-stepper/dist/',
-    to: 'plugins/bs-stepper'
-  },
+  // // bs-custom-file-input
+  // {
+  //   from: 'node_modules/bs-custom-file-input/dist/',
+  //   to: 'plugins/bs-custom-file-input'
+  // },
+  // // bs-stepper
+  // {
+  //   from: 'node_modules/bs-stepper/dist/',
+  //   to: 'plugins/bs-stepper'
+  // },
   // CodeMirror
   {
     from: 'node_modules/codemirror/dist/',
