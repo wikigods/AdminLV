@@ -78,12 +78,12 @@ const Plugins = [
   // },
   // Tempusdominus Bootstrap 4
   {
-    from: 'node_modules/tempusdominus-bootstrap-4/build/js',
-    to: 'plugins/tempusdominus-bootstrap-4/js'
+    from: 'node_modules/@eonasdan/tempus-dominus/dist/js',
+    to: 'plugins/tempus-dominus/js'
   },
   {
-    from: 'node_modules/tempusdominus-bootstrap-4/build/css',
-    to: 'plugins/tempusdominus-bootstrap-4/css'
+    from: 'node_modules/@eonasdan/tempus-dominus/dist/css',
+    to: 'plugins/tempus-dominus/css'
   },
   // Moment
   {
@@ -367,12 +367,12 @@ const Plugins = [
   },
   // flag-icon-css
   {
-    from: 'node_modules/flag-icon-css/css',
-    to: 'plugins/flag-icon-css/css'
+    from: 'node_modules/flag-icons/css',
+    to: 'plugins/flag-icons/css'
   },
   {
-    from: 'node_modules/flag-icon-css/flags',
-    to: 'plugins/flag-icon-css/flags'
+    from: 'node_modules/flag-icons/flags',
+    to: 'plugins/flag-icons/flags'
   },
   // // bootstrap4-duallistbox
   // {
@@ -389,11 +389,11 @@ const Plugins = [
   //   from: 'node_modules/ekko-lightbox/dist',
   //   to: 'plugins/ekko-lightbox/'
   // },
-  // bootstrap-switch
-  {
-    from: 'node_modules/bootstrap-switch/dist',
-    to: 'plugins/bootstrap-switch/'
-  },
+  // // bootstrap-switch
+  // {
+  //   from: 'node_modules/bootstrap-switch/dist',
+  //   to: 'plugins/bootstrap-switch/'
+  // },
   // jQuery Validate
   {
     from: 'node_modules/jquery-validation/dist/',
@@ -414,22 +414,22 @@ const Plugins = [
     from: 'node_modules/codemirror/dist/',
     to: 'plugins/codemirror'
   },
-  {
-    from: 'node_modules/codemirror/addon/',
-    to: 'plugins/codemirror/addon'
-  },
-  {
-    from: 'node_modules/codemirror/keymap/',
-    to: 'plugins/codemirror/keymap'
-  },
-  {
-    from: 'node_modules/codemirror/mode/',
-    to: 'plugins/codemirror/mode'
-  },
-  {
-    from: 'node_modules/codemirror/theme/',
-    to: 'plugins/codemirror/theme'
-  },
+  // {
+  //   from: 'node_modules/codemirror/addon/',
+  //   to: 'plugins/codemirror/addon'
+  // },
+  // {
+  //   from: 'node_modules/codemirror/keymap/',
+  //   to: 'plugins/codemirror/keymap'
+  // },
+  // {
+  //   from: 'node_modules/codemirror/mode/',
+  //   to: 'plugins/codemirror/mode'
+  // },
+  // {
+  //   from: 'node_modules/codemirror/theme/',
+  //   to: 'plugins/codemirror/theme'
+  // },
   // dropzonejs
   {
     from: 'node_modules/dropzone/dist/',
