@@ -128,7 +128,7 @@
     .nav-item.show .nav-link,
     .nav-link.active {
       background-color: $dark;
-      border-color: lighten($dark, 15%) lighten($dark, 15%) transparent lighten($dark, 15%);
+      border-color: lighten($dark, 15%) lighten($dark, 15%) transparent;
       color: $white;
     }
 
