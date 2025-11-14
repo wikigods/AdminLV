@@ -73,7 +73,7 @@ class Dropdown {
 
     const offset = $element.offset()
     const width = $element.width()
-    const visiblePart = $(window).width() - offset.left
+    const visiblePart = $(globalThis).width() - offset.left
 
     if (offset.left < 0) {
       $element.css({
@@ -98,7 +98,7 @@ class Dropdown {
         data = new Dropdown($(this), _config)
         $(this).data(DATA_KEY, data)
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 

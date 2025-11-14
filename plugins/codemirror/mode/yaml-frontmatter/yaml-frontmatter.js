@@ -18,7 +18,7 @@
     var innerMode = CodeMirror.getMode(config, parserConfig && parserConfig.base || "gfm")
 
     function localMode(state) {
-      return state.state == FRONTMATTER ? {mode: yamlMode, state: state.yaml} : {mode: innerMode, state: state.inner}
+      return state.state == FRONTMATTER ? { mode: yamlMode, state: state.yaml } : { mode: innerMode, state: state.inner }
     }
 
     return {
@@ -69,4 +69,4 @@
       }
     }
   })
-});
+})

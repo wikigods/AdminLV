@@ -71,7 +71,7 @@ class NavbarSearch {
         data = new NavbarSearch($(this), _config)
         $(this).data(DATA_KEY, data)
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 

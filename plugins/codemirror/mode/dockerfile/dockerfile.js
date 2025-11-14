@@ -3,34 +3,34 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("../../addon/mode/simple"));
+    mod(require("../../lib/codemirror"), require("../../addon/mode/simple"))
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "../../addon/mode/simple"], mod);
+    define(["../../lib/codemirror", "../../addon/mode/simple"], mod)
   else // Plain browser env
-    mod(CodeMirror);
+    mod(CodeMirror)
 })(function(CodeMirror) {
-  "use strict";
+  "use strict"
 
-  var from = "from";
-  var fromRegex = new RegExp("^(\\s*)\\b(" + from + ")\\b", "i");
+  var from = "from"
+  var fromRegex = new RegExp(String.raw`^(\s*)\b(` + from + String.raw`)\b`, "i")
 
-  var shells = ["run", "cmd", "entrypoint", "shell"];
-  var shellsAsArrayRegex = new RegExp("^(\\s*)(" + shells.join('|') + ")(\\s+\\[)", "i");
+  var shells = ["run", "cmd", "entrypoint", "shell"]
+  var shellsAsArrayRegex = new RegExp(String.raw`^(\s*)(` + shells.join('|') + String.raw`)(\s+\[)`, "i")
 
-  var expose = "expose";
-  var exposeRegex = new RegExp("^(\\s*)(" + expose + ")(\\s+)", "i");
+  var expose = "expose"
+  var exposeRegex = new RegExp(String.raw`^(\s*)(` + expose + String.raw`)(\s+)`, "i")
 
   var others = [
     "arg", "from", "maintainer", "label", "env",
     "add", "copy", "volume", "user",
     "workdir", "onbuild", "stopsignal", "healthcheck", "shell"
-  ];
+  ]
 
   // Collect all Dockerfile directives
-  var instructions = [from, expose].concat(shells).concat(others),
-      instructionRegex = "(" + instructions.join('|') + ")",
-      instructionOnlyLine = new RegExp("^(\\s*)" + instructionRegex + "(\\s*)(#.*)?$", "i"),
-      instructionWithArguments = new RegExp("^(\\s*)" + instructionRegex + "(\\s+)", "i");
+  var instructions = [from, expose, ...shells, ...others],
+    instructionRegex = `(${  instructions.join('|')  })`,
+    instructionOnlyLine = new RegExp(String.raw`^(\s*)` + instructionRegex + String.raw`(\s*)(#.*)?$`, "i"),
+    instructionWithArguments = new RegExp(String.raw`^(\s*)` + instructionRegex + String.raw`(\s+)`, "i")
 
   CodeMirror.defineSimpleMode("dockerfile", {
     start: [
@@ -205,7 +205,7 @@
     meta: {
       lineComment: "#"
     }
-  });
+  })
 
-  CodeMirror.defineMIME("text/x-dockerfile", "dockerfile");
-});
+  CodeMirror.defineMIME("text/x-dockerfile", "dockerfile")
+})

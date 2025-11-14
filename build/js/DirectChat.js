@@ -48,12 +48,12 @@ class DirectChat {
         data = new DirectChat($(this))
         $(this).data(DATA_KEY, data)
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })

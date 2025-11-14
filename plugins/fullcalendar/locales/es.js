@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var es = {
     code: 'es',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4, // The week that contains Jan 4th is the first week of the year.
+      doy: 4 // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Ant',
@@ -14,18 +14,19 @@ FullCalendar.globalLocales.push(function () {
       month: 'Mes',
       week: 'Semana',
       day: 'Día',
-      list: 'Agenda',
+      list: 'Agenda'
     },
     buttonHints: {
       prev: '$0 antes',
       next: '$0 siguiente',
       today(buttonText) {
-        return (buttonText === 'Día') ? 'Hoy' :
-          ((buttonText === 'Semana') ? 'Esta' : 'Este') + ' ' + buttonText.toLocaleLowerCase()
-      },
+        return (buttonText === 'Día') ?
+          'Hoy' :
+          `${(buttonText === 'Semana') ? 'Esta' : 'Este'  } ${  buttonText.toLocaleLowerCase()}`
+      }
     },
     viewHint(buttonText) {
-      return 'Vista ' + (buttonText === 'Semana' ? 'de la' : 'del') + ' ' + buttonText.toLocaleLowerCase()
+      return `Vista ${  buttonText === 'Semana' ? 'de la' : 'del'  } ${  buttonText.toLocaleLowerCase()}`
     },
     weekText: 'Sm',
     weekTextLong: 'Semana',
@@ -38,9 +39,9 @@ FullCalendar.globalLocales.push(function () {
     navLinkHint: 'Ir al $0',
     closeHint: 'Cerrar',
     timeHint: 'La hora',
-    eventHint: 'Evento',
-  };
+    eventHint: 'Evento'
+  }
 
-  return es;
+  return es
 
-}());
+}())

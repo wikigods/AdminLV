@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var hr = {
     code: 'hr',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 7, // The week that contains Jan 1st is the first week of the year.
+      doy: 7 // The week that contains Jan 1st is the first week of the year.
     },
     buttonText: {
       prev: 'Prijašnji',
@@ -14,16 +14,16 @@ FullCalendar.globalLocales.push(function () {
       month: 'Mjesec',
       week: 'Tjedan',
       day: 'Dan',
-      list: 'Raspored',
+      list: 'Raspored'
     },
     weekText: 'Tje',
     allDayText: 'Cijeli dan',
     moreLinkText: function(n) {
-      return '+ još ' + n
+      return `+ još ${  n}`
     },
-    noEventsText: 'Nema događaja za prikaz',
-  };
+    noEventsText: 'Nema događaja za prikaz'
+  }
 
-  return hr;
+  return hr
 
-}());
+}())

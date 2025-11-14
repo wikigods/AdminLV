@@ -150,12 +150,12 @@ class ControlSidebar {
     this._fixHeight()
     this._fixScrollHeight()
 
-    $(window).resize(() => {
+    $(globalThis).resize(() => {
       this._fixHeight()
       this._fixScrollHeight()
     })
 
-    $(window).scroll(() => {
+    $(globalThis).scroll(() => {
       const $body = $('body')
       const shouldFixHeight = $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) ||
           $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE)
@@ -198,13 +198,13 @@ class ControlSidebar {
 
     const heights = {
       scroll: $(document).height(),
-      window: $(window).height(),
+      window: $(globalThis).height(),
       header: $(SELECTOR_HEADER).outerHeight(),
       footer: $(SELECTOR_FOOTER).outerHeight()
     }
     const positions = {
-      bottom: Math.abs((heights.window + $(window).scrollTop()) - heights.scroll),
-      top: $(window).scrollTop()
+      bottom: Math.abs((heights.window + $(globalThis).scrollTop()) - heights.scroll),
+      top: $(globalThis).scrollTop()
     }
 
     const navbarFixed = this._isNavbarFixed() && $(SELECTOR_HEADER).css('position') === 'fixed'
@@ -222,7 +222,7 @@ class ControlSidebar {
     } else if (positions.bottom <= heights.footer) {
       if (footerFixed === false) {
         const top = heights.header - positions.top
-        $controlSidebar.css('bottom', heights.footer - positions.bottom).css('top', top >= 0 ? top : 0)
+        $controlSidebar.css('bottom', heights.footer - positions.bottom).css('top', Math.max(top, 0))
         $controlsidebarContent.css('height', heights.window - (heights.footer - positions.bottom))
       } else {
         $controlSidebar.css('bottom', heights.footer)
@@ -260,7 +260,7 @@ class ControlSidebar {
     }
 
     const heights = {
-      window: $(window).height(),
+      window: $(globalThis).height(),
       header: $(SELECTOR_HEADER).outerHeight(),
       footer: $(SELECTOR_FOOTER).outerHeight()
     }
@@ -273,7 +273,7 @@ class ControlSidebar {
 
     $controlSidebar.css('height', sidebarHeight)
 
-    if (typeof $.fn.overlayScrollbars !== 'undefined') {
+    if ($.fn.overlayScrollbars !== undefined) {
       $controlSidebar.overlayScrollbars({
         className: this._config.scrollbarTheme,
         sizeAutoCapable: true,
@@ -296,12 +296,12 @@ class ControlSidebar {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })

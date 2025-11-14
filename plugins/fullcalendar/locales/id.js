@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var id = {
     code: 'id',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 7, // The week that contains Jan 1st is the first week of the year.
+      doy: 7 // The week that contains Jan 1st is the first week of the year.
     },
     buttonText: {
       prev: 'mundur',
@@ -14,14 +14,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'Bulan',
       week: 'Minggu',
       day: 'Hari',
-      list: 'Agenda',
+      list: 'Agenda'
     },
     weekText: 'Mg',
     allDayText: 'Sehari penuh',
     moreLinkText: 'lebih',
-    noEventsText: 'Tidak ada acara untuk ditampilkan',
-  };
+    noEventsText: 'Tidak ada acara untuk ditampilkan'
+  }
 
-  return id;
+  return id
 
-}());
+}())

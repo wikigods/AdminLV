@@ -1,13 +1,13 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
+    define(['jquery'], factory)
   } else if (typeof module === 'object' && module.exports) {
     // Node/CommonJS
-    module.exports = factory(require('jquery'));
+    module.exports = factory(require('jquery'))
   } else {
     // Browser globals
-    factory(window.jQuery);
+    factory(globalThis.jQuery)
   }
 }(function($) {
   // Extends plugins for adding hello.
@@ -17,11 +17,11 @@
      * @param {Object} context - context object has status of editor.
      */
     'hello': function(context) {
-      var self = this;
+      var self = this
 
       // ui has renders to build ui elements.
       //  - you can create a button with `ui.button`
-      var ui = $.summernote.ui;
+      var ui = $.summernote.ui
 
       // add hello button
       context.memo('button.hello', function() {
@@ -30,17 +30,17 @@
           contents: '<i class="fa fa-child"/> Hello',
           tooltip: 'hello',
           click: function() {
-            self.$panel.show();
-            self.$panel.hide(500);
+            self.$panel.show()
+            self.$panel.hide(500)
             // invoke insertText method with 'hello' on editor module.
-            context.invoke('editor.insertText', 'hello');
-          },
-        });
+            context.invoke('editor.insertText', 'hello')
+          }
+        })
 
         // create jQuery object from button instance.
-        var $hello = button.render();
-        return $hello;
-      });
+        var $hello = button.render()
+        return $hello
+      })
 
       // This events will be attached when editor is initialized.
       this.events = {
@@ -53,8 +53,8 @@
         'summernote.keyup': function(we, e) {
           // eslint-disable-next-line
           console.log('summernote keyup', we, e);
-        },
-      };
+        }
+      }
 
       // This method will be called when editor is initialized by $('..').summernote();
       // You can create elements for plugin
@@ -65,18 +65,18 @@
           height: 100,
           left: '50%',
           top: '50%',
-          background: 'red',
-        }).hide();
+          background: 'red'
+        }).hide()
 
-        this.$panel.appendTo('body');
-      };
+        this.$panel.appendTo('body')
+      }
 
       // This methods will be called when editor is destroyed by $('..').summernote('destroy');
       // You should remove elements on `initialize`.
       this.destroy = function() {
-        this.$panel.remove();
-        this.$panel = null;
-      };
-    },
-  });
-}));
+        this.$panel.remove()
+        this.$panel = null
+      }
+    }
+  })
+}))

@@ -2,7 +2,7 @@
 
 'use strict'
 
-const path = require('path')
+const path = require('node:path')
 const fse = require('fs-extra')
 const Plugins = require('./Plugins')
 
@@ -20,11 +20,13 @@ class Publish {
       const arg = process.argv[2]
       switch (arg) {
         case '-v':
-        case '--verbose':
+        case '--verbose': {
           this.options.verbose = true
           break
-        default:
+        }
+        default: {
           throw new Error(`Unknown option ${arg}`)
+        }
       }
     }
   }

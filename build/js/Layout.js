@@ -66,7 +66,7 @@ class Layout {
     }
 
     const heights = {
-      window: $(window).height(),
+      window: $(globalThis).height(),
       header: $(SELECTOR_HEADER).length > 0 ? $(SELECTOR_HEADER).outerHeight() : 0,
       footer: $(SELECTOR_FOOTER).length > 0 ? $(SELECTOR_FOOTER).outerHeight() : 0,
       sidebar: $(SELECTOR_SIDEBAR).length > 0 ? $(SELECTOR_SIDEBAR).height() : 0,
@@ -100,7 +100,9 @@ class Layout {
       return
     }
 
-    if (typeof $.fn.overlayScrollbars !== 'undefined') {
+    if ($.fn.overlayScrollbars === undefined) {
+      $(SELECTOR_SIDEBAR).css('overflow-y', 'auto')
+    } else {
       $(SELECTOR_SIDEBAR).overlayScrollbars({
         className: this._config.scrollbarTheme,
         sizeAutoCapable: true,
@@ -109,8 +111,6 @@ class Layout {
           clickScrolling: true
         }
       })
-    } else {
-      $(SELECTOR_SIDEBAR).css('overflow-y', 'auto')
     }
   }
 
@@ -173,7 +173,7 @@ class Layout {
         this.fixLayoutHeight('control_sidebar')
       })
 
-    $(window).resize(() => {
+    $(globalThis).resize(() => {
       this.fixLayoutHeight()
     })
 
@@ -220,12 +220,12 @@ class Layout {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })
@@ -237,7 +237,7 @@ class Layout {
  * ====================================================
  */
 
-$(window).on('load', () => {
+$(globalThis).on('load', () => {
   Layout._jQueryInterface.call($('body'))
 })
 

@@ -155,7 +155,7 @@ class SidebarSearch {
   }
 
   _trimText(text) {
-    return trim(text.replace(/(\r\n|\n|\r)/gm, ' '))
+    return trim(text.replaceAll(/(\r\n|\n|\r)/gm, ' '))
   }
 
   _renderItem(name, link, path) {
@@ -217,12 +217,12 @@ class SidebarSearch {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })
@@ -281,7 +281,7 @@ $(document).on('keydown', SELECTOR_SEARCH_RESULTS_GROUP, event => {
   }
 })
 
-$(window).on('load', () => {
+$(globalThis).on('load', () => {
   SidebarSearch._jQueryInterface.call($(SELECTOR_DATA_WIDGET), 'init')
 })
 

@@ -60,7 +60,7 @@ class PushMenu {
   expand() {
     const $bodySelector = $(SELECTOR_BODY)
 
-    if (this._options.autoCollapseSize && $(window).width() <= this._options.autoCollapseSize) {
+    if (this._options.autoCollapseSize && $(globalThis).width() <= this._options.autoCollapseSize) {
       $bodySelector.addClass(CLASS_NAME_OPEN)
     }
 
@@ -79,7 +79,7 @@ class PushMenu {
   collapse() {
     const $bodySelector = $(SELECTOR_BODY)
 
-    if (this._options.autoCollapseSize && $(window).width() <= this._options.autoCollapseSize) {
+    if (this._options.autoCollapseSize && $(globalThis).width() <= this._options.autoCollapseSize) {
       $bodySelector.removeClass(CLASS_NAME_OPEN).addClass(CLASS_NAME_CLOSED)
     }
 
@@ -111,7 +111,7 @@ class PushMenu {
 
     const $bodySelector = $(SELECTOR_BODY)
 
-    if ($(window).width() <= this._options.autoCollapseSize) {
+    if ($(globalThis).width() <= this._options.autoCollapseSize) {
       if (!$bodySelector.hasClass(CLASS_NAME_OPEN)) {
         this.collapse()
       }
@@ -157,7 +157,7 @@ class PushMenu {
     this.remember()
     this.autoCollapse()
 
-    $(window).resize(() => {
+    $(globalThis).resize(() => {
       this.autoCollapse(true)
     })
   }
@@ -185,12 +185,12 @@ class PushMenu {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })
@@ -214,7 +214,7 @@ $(document).on('click', SELECTOR_TOGGLE_BUTTON, event => {
   PushMenu._jQueryInterface.call($(button), 'toggle')
 })
 
-$(window).on('load', () => {
+$(globalThis).on('load', () => {
   PushMenu._jQueryInterface.call($(SELECTOR_TOGGLE_BUTTON))
 })
 

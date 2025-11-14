@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var sm = {
     code: 'sm',
@@ -10,14 +10,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'Masina',
       week: 'Vaiaso',
       day: 'Aso',
-      list: 'Faasologa',
+      list: 'Faasologa'
     },
     weekText: 'Vaiaso',
     allDayText: 'Aso atoa',
     moreLinkText: 'sili atu',
-    noEventsText: 'Leai ni mea na tutupu',
-  };
+    noEventsText: 'Leai ni mea na tutupu'
+  }
 
-  return sm;
+  return sm
 
-}());
+}())

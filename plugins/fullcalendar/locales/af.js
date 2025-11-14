@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var af = {
     code: 'af',
     week: {
       dow: 1, // Maandag is die eerste dag van die week.
-      doy: 4, // Die week wat die 4de Januarie bevat is die eerste week van die jaar.
+      doy: 4 // Die week wat die 4de Januarie bevat is die eerste week van die jaar.
     },
     buttonText: {
       prev: 'Vorige',
@@ -15,13 +15,13 @@ FullCalendar.globalLocales.push(function () {
       month: 'Maand',
       week: 'Week',
       day: 'Dag',
-      list: 'Agenda',
+      list: 'Agenda'
     },
     allDayText: 'Heeldag',
     moreLinkText: 'Addisionele',
-    noEventsText: 'Daar is geen gebeurtenisse nie',
-  };
+    noEventsText: 'Daar is geen gebeurtenisse nie'
+  }
 
-  return af;
+  return af
 
-}());
+}())

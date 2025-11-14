@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var ptBr = {
     code: 'pt-br',
@@ -10,16 +10,16 @@ FullCalendar.globalLocales.push(function () {
       month: 'Mês',
       week: 'Semana',
       day: 'Dia',
-      list: 'Lista',
+      list: 'Lista'
     },
     weekText: 'Sm',
     allDayText: 'dia inteiro',
     moreLinkText: function(n) {
-      return 'mais +' + n
+      return `mais +${  n}`
     },
-    noEventsText: 'Não há eventos para mostrar',
-  };
+    noEventsText: 'Não há eventos para mostrar'
+  }
 
-  return ptBr;
+  return ptBr
 
-}());
+}())

@@ -16,7 +16,7 @@ $(function () {
     connectWith: '.connectedSortable',
     handle: '.card-header, .nav-tabs',
     forcePlaceholderSize: true,
-    zIndex: 999999
+    zIndex: 999_999
   })
   $('.connectedSortable .card-header').css('cursor', 'move')
 
@@ -25,7 +25,7 @@ $(function () {
     placeholder: 'sort-highlight',
     handle: '.handle',
     forcePlaceholderSize: true,
-    zIndex: 999999
+    zIndex: 999_999
   })
 
   // bootstrap WYSIHTML5 - text editor
@@ -43,8 +43,8 @@ $(function () {
     startDate: moment().subtract(29, 'days'),
     endDate: moment()
   }, function (start, end) {
-    // eslint-disable-next-line no-alert
-    alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+     
+    alert(`You chose: ${  start.format('MMMM D, YYYY')  } - ${  end.format('MMMM D, YYYY')}`)
   })
 
   /* jQueryKnob */
@@ -85,8 +85,8 @@ $(function () {
       }]
     },
     onRegionLabelShow: function (e, el, code) {
-      if (typeof visitorsData[code] !== 'undefined') {
-        el.html(el.html() + ': ' + visitorsData[code] + ' new visitors')
+      if (visitorsData[code] !== undefined) {
+        el.html(`${el.html()  }: ${  visitorsData[code]  } new visitors`)
       }
     }
   })
@@ -165,7 +165,7 @@ $(function () {
   }
 
   // This will get the first returned node in the jQuery collection.
-  // eslint-disable-next-line no-unused-vars
+   
   var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
     type: 'line',
     data: salesChartData,
@@ -196,7 +196,7 @@ $(function () {
   }
   // Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.
-  // eslint-disable-next-line no-unused-vars
+   
   var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
     type: 'doughnut',
     data: pieData,
@@ -221,7 +221,7 @@ $(function () {
         pointHoverRadius: 7,
         pointColor: '#efefef',
         pointBackgroundColor: '#efefef',
-        data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+        data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15_073, 10_687, 8432]
       }
     ]
   }
@@ -258,7 +258,7 @@ $(function () {
   }
 
   // This will get the first returned node in the jQuery collection.
-  // eslint-disable-next-line no-unused-vars
+   
   var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
     type: 'line',
     data: salesGraphChartData,

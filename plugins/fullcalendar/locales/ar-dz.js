@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var arDz = {
     code: 'ar-dz',
     week: {
       dow: 0, // Sunday is the first day of the week.
-      doy: 4, // The week that contains Jan 1st is the first week of the year.
+      doy: 4 // The week that contains Jan 1st is the first week of the year.
     },
     direction: 'rtl',
     buttonText: {
@@ -15,14 +15,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'شهر',
       week: 'أسبوع',
       day: 'يوم',
-      list: 'أجندة',
+      list: 'أجندة'
     },
     weekText: 'أسبوع',
     allDayText: 'اليوم كله',
     moreLinkText: 'أخرى',
-    noEventsText: 'أي أحداث لعرض',
-  };
+    noEventsText: 'أي أحداث لعرض'
+  }
 
-  return arDz;
+  return arDz
 
-}());
+}())

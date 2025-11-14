@@ -83,12 +83,12 @@ class TodoList {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })
@@ -100,7 +100,7 @@ class TodoList {
  * ====================================================
  */
 
-$(window).on('load', () => {
+$(globalThis).on('load', () => {
   TodoList._jQueryInterface.call($(SELECTOR_DATA_TOGGLE))
 })
 
