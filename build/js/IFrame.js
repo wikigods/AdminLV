@@ -149,7 +149,7 @@ class IFrame {
       return
     }
 
-    const uniqueName = unescape(link).replace('./', '').replace(/["#&'./:=?[\]]/gi, '-').replace(/(--)/gi, '')
+    const uniqueName = unescape(link).replace('./', '').replaceAll(/["#&'./:=?[\]]/gi, '-').replaceAll(/(--)/gi, '')
     const navId = `tab-${uniqueName}`
 
     if (!this._config.allowDuplicates && $(`#${navId}`).length > 0) {
@@ -250,7 +250,7 @@ class IFrame {
       $('body').addClass(CLASS_NAME_FULLSCREEN_MODE)
     }
 
-    $(window).trigger('resize')
+    $(globalThis).trigger('resize')
     this._fixHeight(true)
   }
 
@@ -288,7 +288,7 @@ class IFrame {
   }
 
   _setupListeners() {
-    $(window).on('resize', () => {
+    $(globalThis).on('resize', () => {
       setTimeout(() => {
         this._fixHeight()
       }, 1)
@@ -397,7 +397,7 @@ class IFrame {
 
   _fixHeight(tabEmpty = false) {
     if ($('body').hasClass(CLASS_NAME_FULLSCREEN_MODE)) {
-      const windowHeight = $(window).height()
+      const windowHeight = $(globalThis).height()
       const navbarHeight = $(SELECTOR_TAB_NAV).outerHeight()
       $(`${SELECTOR_TAB_EMPTY}, ${SELECTOR_TAB_LOADING}, ${SELECTOR_CONTENT_IFRAME}`).height(windowHeight - navbarHeight)
       $(SELECTOR_CONTENT_WRAPPER).height(windowHeight)
@@ -415,7 +415,7 @@ class IFrame {
   }
 
   // Static
-  // eslint-disable-next-line max-params
+   
   static _jQueryInterface(config, name, link, id, reload) {
     if ($(SELECTOR_DATA_TOGGLE).length > 0) {
       let data = $(this).data(DATA_KEY)
@@ -427,13 +427,13 @@ class IFrame {
       const _options = $.extend({}, Default, typeof config === 'object' ? config : data)
       localStorage.setItem('AdminLTE:IFrame:Options', JSON.stringify(_options))
       const plugin = new IFrame($(this), _options)
-      window.iFrameInstance = plugin
+      globalThis.iFrameInstance = plugin
       $(this).data(DATA_KEY, typeof config === 'object' ? config : { link, name, id, reload, ...data })
       if (typeof config === 'string' && /createTab|openTabSidebar|switchTab|removeActiveTab/.test(config)) {
         plugin[config](name, link, id, reload)
       }
     } else {
-      window.iFrameInstance = new IFrame($(this), JSON.parse(localStorage.getItem('AdminLTE:IFrame:Options')))._initFrameElement()
+      globalThis.iFrameInstance = new IFrame($(this), JSON.parse(localStorage.getItem('AdminLTE:IFrame:Options')))._initFrameElement()
     }
   }
 }
@@ -443,7 +443,7 @@ class IFrame {
  * ====================================================
  */
 
-$(window).on('load', () => {
+$(globalThis).on('load', () => {
   IFrame._jQueryInterface.call($(SELECTOR_DATA_TOGGLE))
 })
 

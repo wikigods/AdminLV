@@ -20,13 +20,13 @@
 
   function copyContext(context) {
     return new Context(CodeMirror.copyState(context.mode, context.state),
-                       context.mode,
-                       context.depth,
-                       context.prev && copyContext(context.prev))
+      context.mode,
+      context.depth,
+      context.prev && copyContext(context.prev))
   }
 
   CodeMirror.defineMode("jsx", function(config, modeConfig) {
-    var xmlMode = CodeMirror.getMode(config, {name: "xml", allowMissing: true, multilineTagIndentPastTag: false, allowMissingTagName: true})
+    var xmlMode = CodeMirror.getMode(config, { name: "xml", allowMissing: true, multilineTagIndentPastTag: false, allowMissingTagName: true })
     var jsMode = CodeMirror.getMode(config, modeConfig && modeConfig.base || "javascript")
 
     function flatXMLIndent(state) {
@@ -38,15 +38,12 @@
     }
 
     function token(stream, state) {
-      if (state.context.mode == xmlMode)
-        return xmlToken(stream, state, state.context)
-      else
-        return jsToken(stream, state, state.context)
+      return state.context.mode == xmlMode ? xmlToken(stream, state, state.context) : jsToken(stream, state, state.context)
     }
 
     function xmlToken(stream, state, cx) {
       if (cx.depth == 2) { // Inside a JS /* */ comment
-        if (stream.match(/^.*?\*\//)) cx.depth = 1
+        if (/^.*?\*\//.test(stream)) cx.depth = 1
         else stream.skipToEnd()
         return "comment"
       }
@@ -69,7 +66,7 @@
         }
 
         state.context = new Context(CodeMirror.startState(jsMode, indent),
-                                    jsMode, 0, state.context)
+          jsMode, 0, state.context)
         return null
       }
 
@@ -77,7 +74,7 @@
         if (stream.peek() == "<") { // Tag inside of tag
           xmlMode.skipAttribute(cx.state)
           state.context = new Context(CodeMirror.startState(xmlMode, flatXMLIndent(cx.state)),
-                                      xmlMode, 0, state.context)
+            xmlMode, 0, state.context)
           return null
         } else if (stream.match("//")) {
           stream.skipToEnd()
@@ -90,10 +87,10 @@
 
       var style = xmlMode.token(stream, cx.state), cur = stream.current(), stop
       if (/\btag\b/.test(style)) {
-        if (/>$/.test(cur)) {
+        if (cur.endsWith('>')) {
           if (cx.state.context) cx.depth = 0
           else state.context = state.context.prev
-        } else if (/^</.test(cur)) {
+        } else if (cur.startsWith('<')) {
           cx.depth = 1
         }
       } else if (!style && (stop = cur.indexOf("{")) > -1) {
@@ -105,7 +102,7 @@
     function jsToken(stream, state, cx) {
       if (stream.peek() == "<" && jsMode.expressionAllowed(stream, cx.state)) {
         state.context = new Context(CodeMirror.startState(xmlMode, jsMode.indent(cx.state, "", "")),
-                                    xmlMode, 0, state.context)
+          xmlMode, 0, state.context)
         jsMode.skipExpression(cx.state)
         return null
       }
@@ -115,20 +112,18 @@
         var cur = stream.current()
         if (cur == "{") {
           cx.depth++
-        } else if (cur == "}") {
-          if (--cx.depth == 0) state.context = state.context.prev
-        }
+        } else if (cur == "}" && --cx.depth == 0) state.context = state.context.prev
       }
       return style
     }
 
     return {
       startState: function() {
-        return {context: new Context(CodeMirror.startState(jsMode), jsMode)}
+        return { context: new Context(CodeMirror.startState(jsMode), jsMode) }
       },
 
       copyState: function(state) {
-        return {context: copyContext(state.context)}
+        return { context: copyContext(state.context) }
       },
 
       token: token,
@@ -144,5 +139,5 @@
   }, "xml", "javascript")
 
   CodeMirror.defineMIME("text/jsx", "jsx")
-  CodeMirror.defineMIME("text/typescript-jsx", {name: "jsx", base: {name: "javascript", typescript: true}})
-});
+  CodeMirror.defineMIME("text/typescript-jsx", { name: "jsx", base: { name: "javascript", typescript: true } })
+})

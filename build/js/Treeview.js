@@ -118,7 +118,7 @@ class Treeview {
   // Private
 
   _setupListeners() {
-    const elementId = this._element.attr('id') !== undefined ? `#${this._element.attr('id')}` : ''
+    const elementId = this._element.attr('id') === undefined ? '' : `#${this._element.attr('id')}`
     $(document).on('click', `${elementId}${this._config.trigger}`, event => {
       this.toggle(event)
     })
@@ -141,12 +141,12 @@ class Treeview {
         $(this).data(DATA_KEY, data)
         data._init()
       } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
+        if (data[config] === undefined) {
           throw new TypeError(`No method named "${config}"`)
         }
 
         data[config]()
-      } else if (typeof config === 'undefined') {
+      } else if (config === undefined) {
         data._init()
       }
     })
@@ -158,7 +158,7 @@ class Treeview {
  * ====================================================
  */
 
-$(window).on(EVENT_LOAD_DATA_API, () => {
+$(globalThis).on(EVENT_LOAD_DATA_API, () => {
   $(SELECTOR_DATA_WIDGET).each(function () {
     Treeview._jQueryInterface.call($(this), 'init')
   })

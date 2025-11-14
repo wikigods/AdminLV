@@ -12,7 +12,7 @@ $(function () {
   var intersect = true
 
   var $salesChart = $('#sales-chart')
-  // eslint-disable-next-line no-unused-vars
+   
   var salesChart = new Chart($salesChart, {
     type: 'bar',
     data: {
@@ -62,7 +62,7 @@ $(function () {
                 value += 'k'
               }
 
-              return '$' + value
+              return `$${  value}`
             }
           }, ticksStyle)
         }],
@@ -78,7 +78,7 @@ $(function () {
   })
 
   var $visitorsChart = $('#visitors-chart')
-  // eslint-disable-next-line no-unused-vars
+   
   var visitorsChart = new Chart($visitorsChart, {
     data: {
       labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],

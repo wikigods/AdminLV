@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var ca = {
     code: 'ca',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4, // The week that contains Jan 4th is the first week of the year.
+      doy: 4 // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Anterior',
@@ -14,14 +14,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'Mes',
       week: 'Setmana',
       day: 'Dia',
-      list: 'Agenda',
+      list: 'Agenda'
     },
     weekText: 'Set',
     allDayText: 'Tot el dia',
     moreLinkText: 'més',
-    noEventsText: 'No hi ha esdeveniments per mostrar',
-  };
+    noEventsText: 'No hi ha esdeveniments per mostrar'
+  }
 
-  return ca;
+  return ca
 
-}());
+}())

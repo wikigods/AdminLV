@@ -20,16 +20,16 @@
   }
 
   var keywords = wordSet(["_","var","let","class","enum","extension","import","protocol","struct","func","typealias","associatedtype",
-                          "open","public","internal","fileprivate","private","deinit","init","new","override","self","subscript","super",
-                          "convenience","dynamic","final","indirect","lazy","required","static","unowned","unowned(safe)","unowned(unsafe)","weak","as","is",
-                          "break","case","continue","default","else","fallthrough","for","guard","if","in","repeat","switch","where","while",
-                          "defer","return","inout","mutating","nonmutating","catch","do","rethrows","throw","throws","try","didSet","get","set","willSet",
-                          "assignment","associativity","infix","left","none","operator","postfix","precedence","precedencegroup","prefix","right",
-                          "Any","AnyObject","Type","dynamicType","Self","Protocol","__COLUMN__","__FILE__","__FUNCTION__","__LINE__"])
+    "open","public","internal","fileprivate","private","deinit","init","new","override","self","subscript","super",
+    "convenience","dynamic","final","indirect","lazy","required","static","unowned","unowned(safe)","unowned(unsafe)","weak","as","is",
+    "break","case","continue","default","else","fallthrough","for","guard","if","in","repeat","switch","where","while",
+    "defer","return","inout","mutating","nonmutating","catch","do","rethrows","throw","throws","try","didSet","get","set","willSet",
+    "assignment","associativity","infix","left","none","operator","postfix","precedence","precedencegroup","prefix","right",
+    "Any","AnyObject","Type","dynamicType","Self","Protocol","__COLUMN__","__FILE__","__FUNCTION__","__LINE__"])
   var definingKeywords = wordSet(["var","let","class","enum","extension","import","protocol","struct","func","typealias","associatedtype","for"])
   var atoms = wordSet(["true","false","nil","self","super","_"])
   var types = wordSet(["Array","Bool","Character","Dictionary","Double","Float","Int","Int8","Int16","Int32","Int64","Never","Optional","Set","String",
-                       "UInt8","UInt16","UInt32","UInt64","Void"])
+    "UInt8","UInt16","UInt32","UInt64","Void"])
   var operators = "+-/*%=|&<>~^?!"
   var punc = ":;,.(){}[]"
   var binary = /^\-?0b[01][01_]*/
@@ -57,13 +57,13 @@
         return tokenComment(stream, state)
       }
     }
-    if (stream.match(instruction)) return "builtin"
-    if (stream.match(attribute)) return "attribute"
-    if (stream.match(binary)) return "number"
-    if (stream.match(octal)) return "number"
-    if (stream.match(hexadecimal)) return "number"
-    if (stream.match(decimal)) return "number"
-    if (stream.match(property)) return "property"
+    if (instruction.test(stream)) return "builtin"
+    if (attribute.test(stream)) return "attribute"
+    if (binary.test(stream)) return "number"
+    if (octal.test(stream)) return "number"
+    if (hexadecimal.test(stream)) return "number"
+    if (decimal.test(stream)) return "number"
+    if (property.test(stream)) return "property"
     if (operators.indexOf(ch) > -1) {
       stream.next()
       return "operator"
@@ -80,7 +80,7 @@
       return tokenize(stream, state)
     }
 
-    if (stream.match(identifier)) {
+    if (identifier.test(stream)) {
       var ident = stream.current()
       if (types.hasOwnProperty(ident)) return "variable-2"
       if (atoms.hasOwnProperty(ident)) return "atom"
@@ -107,7 +107,7 @@
           if (depth == 0) {
             stream.backUp(1)
             state.tokenize.pop()
-            return state.tokenize[state.tokenize.length - 1](stream, state)
+            return state.tokenize.at(-1)(stream, state)
           }
           else --depth
         }
@@ -188,7 +188,7 @@
       token: function(stream, state) {
         var prev = state.prev
         state.prev = null
-        var tokenize = state.tokenize[state.tokenize.length - 1] || tokenBase
+        var tokenize = state.tokenize.at(-1) || tokenBase
         var style = tokenize(stream, state, prev)
         if (!style || style == "comment") state.prev = prev
         else if (!state.prev) state.prev = style
@@ -220,4 +220,4 @@
   })
 
   CodeMirror.defineMIME("text/x-swift","swift")
-});
+})

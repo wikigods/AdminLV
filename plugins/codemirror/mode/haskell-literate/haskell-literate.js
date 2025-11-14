@@ -22,10 +22,7 @@
         }
       },
       token: function (stream, state) {
-        if (stream.sol()) {
-          if (state.inCode = stream.eat(">"))
-            return "meta"
-        }
+        if (stream.sol() && (state.inCode = stream.eat(">"))) return "meta"
         if (state.inCode) {
           return baseMode.token(stream, state.baseState)
         } else {
@@ -34,10 +31,10 @@
         }
       },
       innerMode: function (state) {
-        return state.inCode ? {state: state.baseState, mode: baseMode} : null
+        return state.inCode ? { state: state.baseState, mode: baseMode } : null
       }
     }
   }, "haskell")
 
   CodeMirror.defineMIME("text/x-literate-haskell", "haskell-literate")
-});
+})

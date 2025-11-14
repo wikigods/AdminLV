@@ -158,7 +158,6 @@ label:not(.form-check-label):not(.custom-file-label) {
   }
 }
 
-// stylelint-disable-next-line selector-no-qualifying-type
 textarea.form-control {
   &.is-warning {
     @if $enable-validation-icons {

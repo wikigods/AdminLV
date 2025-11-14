@@ -1,5 +1,5 @@
-import "./inputmask.js";
+import "./inputmask.js"
 
-const inputmask = window.Inputmask;
-window.Inputmask = undefined;
-export default inputmask;
+const inputmask = globalThis.Inputmask
+globalThis.Inputmask = undefined
+export default inputmask

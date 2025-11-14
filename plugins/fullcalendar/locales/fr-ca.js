@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict';
+  'use strict'
 
   var frCa = {
     code: 'fr',
@@ -11,14 +11,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'Mois',
       week: 'Semaine',
       day: 'Jour',
-      list: 'Mon planning',
+      list: 'Mon planning'
     },
     weekText: 'Sem.',
     allDayText: 'Toute la journée',
     moreLinkText: 'en plus',
-    noEventsText: 'Aucun événement à afficher',
-  };
+    noEventsText: 'Aucun événement à afficher'
+  }
 
-  return frCa;
+  return frCa
 
-}());
+}())
