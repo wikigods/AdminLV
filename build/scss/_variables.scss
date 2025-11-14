@@ -4,7 +4,7 @@
 
 // COLORS
 // --------------------------------------------------------
-$blue: #0073b7 !default;
+$blue: #007bff !default;
 $lightblue: #3c8dbc !default;
 $navy: #001f3f !default;
 $teal: #39cccc !default;
@@ -146,7 +146,8 @@ $control-sidebar-width: $sidebar-width !default;
 
 // Cards
 // --------------------------------------------------------
-$card-border-color: $gray-100 !default;
+$card-border-color: #dfdfdf !default;
+$card-header-bg: #f2f2f2 !default;
 $card-dark-border-color: lighten($gray-900, 10%) !default;
 $card-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2) !default;
 $card-title-font-size: 1.1rem !default;
