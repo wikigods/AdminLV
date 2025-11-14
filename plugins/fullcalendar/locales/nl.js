@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var nl = {
     code: 'nl',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4 // The week that contains Jan 4th is the first week of the year.
+      doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Vorige',
@@ -15,13 +15,13 @@ FullCalendar.globalLocales.push(function () {
       month: 'Maand',
       week: 'Week',
       day: 'Dag',
-      list: 'Agenda'
+      list: 'Agenda',
     },
     allDayText: 'Hele dag',
     moreLinkText: 'extra',
-    noEventsText: 'Geen evenementen om te laten zien'
-  }
+    noEventsText: 'Geen evenementen om te laten zien',
+  };
 
-  return nl
+  return nl;
 
-}())
+}());

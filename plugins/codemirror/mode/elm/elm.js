@@ -3,31 +3,31 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"))
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror"], mod)
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
-    mod(CodeMirror)
+    mod(CodeMirror);
 })(function(CodeMirror) {
-  "use strict"
+  "use strict";
 
   CodeMirror.defineMode("elm", function() {
 
     function switchState(source, setState, f)
     {
-      setState(f)
-      return f(source, setState)
+      setState(f);
+      return f(source, setState);
     }
 
-    var lowerRE = /[a-z]/
-    var upperRE = /[A-Z]/
-    var innerRE = /[a-zA-Z0-9_]/
+    var lowerRE = /[a-z]/;
+    var upperRE = /[A-Z]/;
+    var innerRE = /[a-zA-Z0-9_]/;
 
-    var digitRE = /[0-9]/
-    var hexRE = /[0-9A-Fa-f]/
-    var symbolRE = /[-&*+.\\/<>=?^|:]/
-    var specialRE = /[(),[\]{}]/
-    var spacesRE = /[ \v\f]/ // newlines are handled in tokenizer
+    var digitRE = /[0-9]/;
+    var hexRE = /[0-9A-Fa-f]/;
+    var symbolRE = /[-&*+.\\/<>=?^|:]/;
+    var specialRE = /[(),[\]{}]/;
+    var spacesRE = /[ \v\f]/; // newlines are handled in tokenizer
 
     function normal()
     {
@@ -35,45 +35,45 @@
       {
         if (source.eatWhile(spacesRE))
         {
-          return null
+          return null;
         }
 
-        var char = source.next()
+        var char = source.next();
 
         if (specialRE.test(char))
         {
-          return (char === '{' && source.eat('-')) ?
-            switchState(source, setState, chompMultiComment(1)) :
-            ((char === '[' && source.match('glsl|')) ?
-              switchState(source, setState, chompGlsl) :
-              'builtin')
+          return (char === '{' && source.eat('-'))
+            ? switchState(source, setState, chompMultiComment(1))
+            : (char === '[' && source.match('glsl|'))
+                ? switchState(source, setState, chompGlsl)
+                : 'builtin';
         }
 
         if (char === '\'')
         {
-          return switchState(source, setState, chompChar)
+          return switchState(source, setState, chompChar);
         }
 
         if (char === '"')
         {
-          return source.eat('"') ?
-            (source.eat('"') ?
-              switchState(source, setState, chompMultiString) :
-              'string') :
-            switchState(source, setState, chompSingleString)
+          return source.eat('"')
+            ? source.eat('"')
+                ? switchState(source, setState, chompMultiString)
+                : 'string'
+            : switchState(source, setState, chompSingleString);
         }
 
         if (upperRE.test(char))
         {
-          source.eatWhile(innerRE)
-          return 'variable-2'
+          source.eatWhile(innerRE);
+          return 'variable-2';
         }
 
         if (lowerRE.test(char))
         {
-          var isDef = source.pos === 1
-          source.eatWhile(innerRE)
-          return isDef ? "def" : "variable"
+          var isDef = source.pos === 1;
+          source.eatWhile(innerRE);
+          return isDef ? "def" : "variable";
         }
 
         if (digitRE.test(char))
@@ -82,43 +82,43 @@
           {
             if (source.eat(/[xX]/))
             {
-              source.eatWhile(hexRE) // should require at least 1
-              return "number"
+              source.eatWhile(hexRE); // should require at least 1
+              return "number";
             }
           }
           else
           {
-            source.eatWhile(digitRE)
+            source.eatWhile(digitRE);
           }
           if (source.eat('.'))
           {
-            source.eatWhile(digitRE) // should require at least 1
+            source.eatWhile(digitRE); // should require at least 1
           }
           if (source.eat(/[eE]/))
           {
-            source.eat(/[-+]/)
-            source.eatWhile(digitRE) // should require at least 1
+            source.eat(/[-+]/);
+            source.eatWhile(digitRE); // should require at least 1
           }
-          return "number"
+          return "number";
         }
 
         if (symbolRE.test(char))
         {
           if (char === '-' && source.eat('-'))
           {
-            source.skipToEnd()
-            return "comment"
+            source.skipToEnd();
+            return "comment";
           }
-          source.eatWhile(symbolRE)
-          return "keyword"
+          source.eatWhile(symbolRE);
+          return "keyword";
         }
 
         if (char === '_')
         {
-          return "keyword"
+          return "keyword";
         }
 
-        return "error"
+        return "error";
       }
     }
 
@@ -126,29 +126,29 @@
     {
       if (nest == 0)
       {
-        return normal()
+        return normal();
       }
       return function(source, setState)
       {
         while (!source.eol())
         {
-          var char = source.next()
+          var char = source.next();
           if (char == '{' && source.eat('-'))
           {
-            ++nest
+            ++nest;
           }
           else if (char == '-' && source.eat('}'))
           {
-            --nest
+            --nest;
             if (nest === 0)
             {
-              setState(normal())
-              return 'comment'
+              setState(normal());
+              return 'comment';
             }
           }
         }
-        setState(chompMultiComment(nest))
-        return 'comment'
+        setState(chompMultiComment(nest));
+        return 'comment';
       }
     }
 
@@ -156,56 +156,56 @@
     {
       while (!source.eol())
       {
-        var char = source.next()
+        var char = source.next();
         if (char === '"' && source.eat('"') && source.eat('"'))
         {
-          setState(normal())
-          return 'string'
+          setState(normal());
+          return 'string';
         }
       }
-      return 'string'
+      return 'string';
     }
 
     function chompSingleString(source, setState)
     {
-      while (source.skipTo(String.raw`\"`)) { source.next(); source.next() }
+      while (source.skipTo('\\"')) { source.next(); source.next(); }
       if (source.skipTo('"'))
       {
-        source.next()
-        setState(normal())
-        return 'string'
+        source.next();
+        setState(normal());
+        return 'string';
       }
-      source.skipToEnd()
-      setState(normal())
-      return 'error'
+      source.skipToEnd();
+      setState(normal());
+      return 'error';
     }
 
     function chompChar(source, setState)
     {
-      while (source.skipTo(String.raw`\'`)) { source.next(); source.next() }
+      while (source.skipTo("\\'")) { source.next(); source.next(); }
       if (source.skipTo("'"))
       {
-        source.next()
-        setState(normal())
-        return 'string'
+        source.next();
+        setState(normal());
+        return 'string';
       }
-      source.skipToEnd()
-      setState(normal())
-      return 'error'
+      source.skipToEnd();
+      setState(normal());
+      return 'error';
     }
 
     function chompGlsl(source, setState)
     {
       while (!source.eol())
       {
-        var char = source.next()
+        var char = source.next();
         if (char === '|' && source.eat(']'))
         {
-          setState(normal())
-          return 'string'
+          setState(normal());
+          return 'string';
         }
       }
-      return 'string'
+      return 'string';
     }
 
     var wellKnownWords = {
@@ -224,20 +224,22 @@
       import: 1,
       exposing: 1,
       port: 1
-    }
+    };
 
     return {
-      startState: function ()  { return { f: normal() } },
-      copyState:  function (s) { return { f: s.f } },
+      startState: function ()  { return { f: normal() }; },
+      copyState:  function (s) { return { f: s.f }; },
+
+      lineComment: '--',
 
       token: function(stream, state) {
-        var type = state.f(stream, function(s) { state.f = s })
-        var word = stream.current()
-        return (wellKnownWords.hasOwnProperty(word)) ? 'keyword' : type
+        var type = state.f(stream, function(s) { state.f = s; });
+        var word = stream.current();
+        return (wellKnownWords.hasOwnProperty(word)) ? 'keyword' : type;
       }
-    }
+    };
 
-  })
+  });
 
-  CodeMirror.defineMIME("text/x-elm", "elm")
-})
+  CodeMirror.defineMIME("text/x-elm", "elm");
+});

@@ -6,7 +6,7 @@
 @mixin accent-variant($name, $color) {
   $link-color: $color;
   .accent-#{$name} {
-    $link-hover-color: darken($color, 15%);
+    $link-hover-color: shade-color($color, 15%);
     $pagination-active-bg: $color;
     $pagination-active-border-color: $color;
 
@@ -15,7 +15,7 @@
     .nav-tabs .nav-link {
       color: $link-color;
 
-      @include hover () {
+      &:hover {
         color: $link-hover-color;
       }
     }
@@ -24,19 +24,7 @@
       &:active,
       &.active {
         background-color: $color;
-        color: color-yiq($color);
-      }
-    }
-
-    .custom-control-input:checked ~ .custom-control-label {
-      &::before {
-        background-color: $color;
-        border-color: darken($color, 20%);
-      }
-
-      &::after {
-        $new-color: color-yiq($color);
-        background-image: str-replace($custom-checkbox-indicator-icon-checked, str-replace(#{$custom-control-indicator-checked-color}, "#", "%23"), str-replace(#{$new-color}, "#", "%23"));
+        color: color-contrast($color);
       }
     }
 
@@ -44,7 +32,7 @@
     .custom-select:focus,
     .custom-control-input:focus:not(:checked) ~ .custom-control-label::before,
     .custom-file-input:focus ~ .custom-file-label {
-      border-color: lighten($color, 25%);
+      border-color: tint-color($color, 25%);
     }
 
     .page-item {
@@ -72,7 +60,7 @@
         a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link) {
           color: $sidebar-dark-color;
 
-          @include hover () {
+          &:hover {
             color: $sidebar-dark-hover-color;
           }
         }
@@ -84,7 +72,7 @@
         a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link) {
           color: $sidebar-light-color;
 
-          @include hover () {
+          &:hover {
             color: $sidebar-light-hover-color;
           }
         }
@@ -97,7 +85,7 @@
         .page-link {
           &:hover,
           &:focus {
-            color: lighten($link-color, 5%);
+            color: tint-color($link-color, 5%);
           }
         }
       }

@@ -918,9 +918,9 @@
 [class*="sidebar-dark"] {
   .form-control-sidebar,
   .btn-sidebar {
-    background-color: lighten($sidebar-dark-bg, 5%);
-    border: 1px solid lighten($sidebar-dark-bg, 15%);
-    color: lighten(color-yiq(lighten($sidebar-dark-bg, 5%)), 15%);
+    background-color: tint-color($sidebar-dark-bg, 5%);
+    border: 1px solid tint-color($sidebar-dark-bg, 15%);
+    color: color-contrast(tint-color($sidebar-dark-bg, 5%));
   }
 
   .form-control-sidebar:focus,

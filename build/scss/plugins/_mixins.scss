@@ -9,12 +9,12 @@
     + .select2-container--default {
       &.select2-container--open {
         .select2-selection--single {
-          border-color: lighten($color, 25%);
+          border-color: tint-color($color, 25%);
         }
       }
 
       &.select2-container--focus .select2-selection--single {
-        border-color: lighten($color, 25%);
+        border-color: tint-color($color, 25%);
       }
     }
 
@@ -25,20 +25,20 @@
       .select2-search--inline {
         .select2-search__field {
           &:focus {
-            border: $input-border-width solid lighten($color, 25%);
+            border: $input-border-width solid tint-color($color, 25%);
           }
         }
       }
 
       .select2-results__option--highlighted {
         background-color: $color;
-        color: color-yiq($color);
+        color: color-contrast($color);
 
         &[aria-selected] {
           &,
           &:hover {
-            background-color: darken($color, 3%);
-            color: color-yiq(darken($color, 3%));
+            background-color: shade-color($color, 3%);
+            color: color-contrast(shade-color($color, 3%));
           }
         }
       }
@@ -47,26 +47,26 @@
       & {
         .select2-selection--multiple {
           &:focus {
-            border-color: lighten($color, 25%);
+            border-color: tint-color($color, 25%);
           }
 
           .select2-selection__choice {
             background-color: $color;
-            border-color: darken($color, 5%);
-            color: color-yiq($color);
+            border-color: shade-color($color, 5%);
+            color: color-contrast($color);
           }
 
           .select2-selection__choice__remove {
-            color: rgba(color-yiq($color), 0.7);
+            color: rgba(color-contrast($color), 0.7);
 
             &:hover {
-              color: color-yiq($color);
+              color: color-contrast($color);
             }
           }
         }
 
         &.select2-container--focus .select2-selection--multiple {
-          border-color: lighten($color, 25%);
+          border-color: tint-color($color, 25%);
         }
       }
     }

@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var ko = {
     code: 'ko',
@@ -10,14 +10,14 @@ FullCalendar.globalLocales.push(function () {
       month: '월',
       week: '주',
       day: '일',
-      list: '일정목록'
+      list: '일정목록',
     },
     weekText: '주',
     allDayText: '종일',
     moreLinkText: '개',
-    noEventsText: '일정이 없습니다'
-  }
+    noEventsText: '일정이 없습니다',
+  };
 
-  return ko
+  return ko;
 
-}())
+}());

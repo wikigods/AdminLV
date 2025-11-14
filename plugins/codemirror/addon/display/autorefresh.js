@@ -17,7 +17,7 @@
       cm.state.autoRefresh = null
     }
     if (val && cm.display.wrapper.offsetHeight == 0)
-      startListening(cm, cm.state.autoRefresh = { delay: val.delay || 250 })
+      startListening(cm, cm.state.autoRefresh = {delay: val.delay || 250})
   })
 
   function startListening(cm, state) {
@@ -35,13 +35,13 @@
       clearTimeout(state.timeout)
       state.timeout = setTimeout(check, 50)
     }
-    CodeMirror.on(globalThis, "mouseup", state.hurry)
-    CodeMirror.on(globalThis, "keyup", state.hurry)
+    CodeMirror.on(window, "mouseup", state.hurry)
+    CodeMirror.on(window, "keyup", state.hurry)
   }
 
   function stopListening(_cm, state) {
     clearTimeout(state.timeout)
-    CodeMirror.off(globalThis, "mouseup", state.hurry)
-    CodeMirror.off(globalThis, "keyup", state.hurry)
+    CodeMirror.off(window, "mouseup", state.hurry)
+    CodeMirror.off(window, "keyup", state.hurry)
   }
-})
+});

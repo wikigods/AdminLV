@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var ug = {
     code: 'ug',
@@ -7,11 +7,11 @@ FullCalendar.globalLocales.push(function () {
       month: 'ئاي',
       week: 'ھەپتە',
       day: 'كۈن',
-      list: 'كۈنتەرتىپ'
+      list: 'كۈنتەرتىپ',
     },
-    allDayText: 'پۈتۈن كۈن'
-  }
+    allDayText: 'پۈتۈن كۈن',
+  };
 
-  return ug
+  return ug;
 
-}())
+}());

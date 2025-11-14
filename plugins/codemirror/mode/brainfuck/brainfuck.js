@@ -12,7 +12,7 @@
     mod(CodeMirror)
 })(function(CodeMirror) {
   "use strict"
-  var reserve = [..."><+-.,[]"]
+  var reserve = "><+-.,[]".split("");
   /*
   comments can be either:
   placed behind lines
@@ -39,54 +39,47 @@
       token: function(stream, state) {
         if (stream.eatSpace()) return null
         if(stream.sol()){
-          state.commentLine = false
+          state.commentLine = false;
         }
-        var ch = stream.next().toString()
-        if(reserve.indexOf(ch) === -1){
-          state.commentLine = true
-          if(stream.eol()){
-            state.commentLine = false
-          }
-          return "comment"
-        }
-        else{
+        var ch = stream.next().toString();
+        if(reserve.indexOf(ch) !== -1){
           if(state.commentLine === true){
             if(stream.eol()){
-              state.commentLine = false
+              state.commentLine = false;
             }
-            return "comment"
+            return "comment";
           }
-          switch (ch) {
-            case "]": 
-            case "[": {
-              if(ch === "["){
-                state.left++
-              }
-              else{
-                state.right++
-              }
-              return "bracket"
+          if(ch === "]" || ch === "["){
+            if(ch === "["){
+              state.left++;
             }
-            case "+": 
-            case "-": {
-              return "keyword"
+            else{
+              state.right++;
             }
-            case "<": 
-            case ">": {
-              return "atom"
-            }
-            case ".": 
-            case ",": {
-              return "def"
-            }
-          // No default
+            return "bracket";
           }
+          else if(ch === "+" || ch === "-"){
+            return "keyword";
+          }
+          else if(ch === "<" || ch === ">"){
+            return "atom";
+          }
+          else if(ch === "." || ch === ","){
+            return "def";
+          }
+        }
+        else{
+          state.commentLine = true;
+          if(stream.eol()){
+            state.commentLine = false;
+          }
+          return "comment";
         }
         if(stream.eol()){
-          state.commentLine = false
+          state.commentLine = false;
         }
       }
-    }
-  })
-  CodeMirror.defineMIME("text/x-brainfuck","brainfuck")
-})
+    };
+  });
+CodeMirror.defineMIME("text/x-brainfuck","brainfuck")
+});
