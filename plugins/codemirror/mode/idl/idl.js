@@ -3,16 +3,16 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"))
+    mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror"], mod)
+    define(["../../lib/codemirror"], mod);
   else // Plain browser env
-    mod(CodeMirror)
+    mod(CodeMirror);
 })(function(CodeMirror) {
-  "use strict"
+  "use strict";
 
   function wordRegexp(words) {
-    return new RegExp(`^((${  words.join(')|(')  }))\\b`, 'i')
+    return new RegExp('^((' + words.join(')|(') + '))\\b', 'i');
   };
 
   var builtinArray = [
@@ -221,8 +221,8 @@
     'xregistered', 'xroi', 'xsq_test', 'xsurface', 'xvaredit',
     'xvolume', 'xvolume_rotate', 'xvolume_write_image',
     'xyouts', 'zlib_compress', 'zlib_uncompress', 'zoom', 'zoom_24'
-  ]
-  var builtins = wordRegexp(builtinArray)
+  ];
+  var builtins = wordRegexp(builtinArray);
 
   var keywordArray = [
     'begin', 'end', 'endcase', 'endfor',
@@ -231,60 +231,60 @@
     'foreach', 'goto', 'if', 'then', 'else',
     'repeat', 'until', 'switch', 'while',
     'do', 'pro', 'function'
-  ]
-  var keywords = wordRegexp(keywordArray)
+  ];
+  var keywords = wordRegexp(keywordArray);
 
-  CodeMirror.registerHelper("hintWords", "idl", [...builtinArray, ...keywordArray])
+  CodeMirror.registerHelper("hintWords", "idl", builtinArray.concat(keywordArray));
 
-  var identifiers = new RegExp('^[_a-z\u00A1-\uFFFF][_a-z0-9\u00A1-\uFFFF]*', 'i')
+  var identifiers = new RegExp('^[_a-z\xa1-\uffff][_a-z0-9\xa1-\uffff]*', 'i');
 
-  var singleOperators = /[+\-*&=<>\/@#~$]/
-  var boolOperators = new RegExp('(and|or|eq|lt|le|gt|ge|ne|not)', 'i')
+  var singleOperators = /[+\-*&=<>\/@#~$]/;
+  var boolOperators = new RegExp('(and|or|eq|lt|le|gt|ge|ne|not)', 'i');
 
   function tokenBase(stream) {
     // whitespaces
-    if (stream.eatSpace()) return null
+    if (stream.eatSpace()) return null;
 
     // Handle one line Comments
     if (stream.match(';')) {
-      stream.skipToEnd()
-      return 'comment'
+      stream.skipToEnd();
+      return 'comment';
     }
 
     // Handle Number Literals
     if (stream.match(/^[0-9\.+-]/, false)) {
-      if (/^[+-]?0x[0-9a-fA-F]+/.test(stream))
-        return 'number'
-      if (/^[+-]?\d*\.\d+([EeDd][+-]?\d+)?/.test(stream))
-        return 'number'
-      if (/^[+-]?\d+([EeDd][+-]?\d+)?/.test(stream))
-        return 'number'
+      if (stream.match(/^[+-]?0x[0-9a-fA-F]+/))
+        return 'number';
+      if (stream.match(/^[+-]?\d*\.\d+([EeDd][+-]?\d+)?/))
+        return 'number';
+      if (stream.match(/^[+-]?\d+([EeDd][+-]?\d+)?/))
+        return 'number';
     }
 
     // Handle Strings
-    if (/^"([^"]|(""))*"/.test(stream)) { return 'string' }
-    if (/^'([^']|(''))*'/.test(stream)) { return 'string' }
+    if (stream.match(/^"([^"]|(""))*"/)) { return 'string'; }
+    if (stream.match(/^'([^']|(''))*'/)) { return 'string'; }
 
     // Handle words
-    if (stream.match(keywords)) { return 'keyword' }
-    if (stream.match(builtins)) { return 'builtin' }
-    if (identifiers.test(stream)) { return 'variable' }
+    if (stream.match(keywords)) { return 'keyword'; }
+    if (stream.match(builtins)) { return 'builtin'; }
+    if (stream.match(identifiers)) { return 'variable'; }
 
-    if (singleOperators.test(stream) || boolOperators.test(stream)) {
-      return 'operator' }
+    if (stream.match(singleOperators) || stream.match(boolOperators)) {
+      return 'operator'; }
 
     // Handle non-detected items
-    stream.next()
-    return null
+    stream.next();
+    return null;
   };
 
   CodeMirror.defineMode('idl', function() {
     return {
       token: function(stream) {
-        return tokenBase(stream)
+        return tokenBase(stream);
       }
-    }
-  })
+    };
+  });
 
-  CodeMirror.defineMIME('text/x-idl', 'idl')
-})
+  CodeMirror.defineMIME('text/x-idl', 'idl');
+});

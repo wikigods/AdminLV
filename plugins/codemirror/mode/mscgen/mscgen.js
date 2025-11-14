@@ -11,13 +11,13 @@
 
 (function(mod) {
   if ( typeof exports == "object" && typeof module == "object")// CommonJS
-    mod(require("../../lib/codemirror"))
+    mod(require("../../lib/codemirror"));
   else if ( typeof define == "function" && define.amd)// AMD
-    define(["../../lib/codemirror"], mod)
+    define(["../../lib/codemirror"], mod);
   else// Plain browser env
-    mod(CodeMirror)
+    mod(CodeMirror);
 })(function(CodeMirror) {
-  "use strict"
+  "use strict";
 
   var languages = {
     mscgen: {
@@ -25,9 +25,9 @@
       "options" : ["hscale", "width", "arcgradient", "wordwraparcs"],
       "constants" : ["true", "false", "on", "off"],
       "attributes" : ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip"],
-      "brackets" : [String.raw`\{`, String.raw`\}`], // [ and  ] are brackets too, but these get handled in with lists
+      "brackets" : ["\\{", "\\}"], // [ and  ] are brackets too, but these get handled in with lists
       "arcsWords" : ["note", "abox", "rbox", "box"],
-      "arcsOthers" : [String.raw`\|\|\|`, String.raw`\.\.\.`, "---", "--", "<->", "==", "<<=>>", "<=>", String.raw`\.\.`, "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
       "singlecomment" : ["//", "#"],
       "operators" : ["="]
     },
@@ -36,9 +36,9 @@
       "options" : ["hscale", "width", "arcgradient", "wordwraparcs", "wordwrapentities", "watermark"],
       "constants" : ["true", "false", "on", "off", "auto"],
       "attributes" : ["label", "idurl", "id", "url", "linecolor", "linecolour", "textcolor", "textcolour", "textbgcolor", "textbgcolour", "arclinecolor", "arclinecolour", "arctextcolor", "arctextcolour", "arctextbgcolor", "arctextbgcolour", "arcskip", "title", "deactivate", "activate", "activation"],
-      "brackets" : [String.raw`\{`, String.raw`\}`],  // [ and  ] are brackets too, but these get handled in with lists
+      "brackets" : ["\\{", "\\}"],  // [ and  ] are brackets too, but these get handled in with lists
       "arcsWords" : ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
-      "arcsOthers" : [String.raw`\|\|\|`, String.raw`\.\.\.`, "---", "--", "<->", "==", "<<=>>", "<=>", String.raw`\.\.`, "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
       "singlecomment" : ["//", "#"],
       "operators" : ["="]
     },
@@ -47,9 +47,9 @@
       "options" : ["hscale", "width", "arcgradient", "wordwraparcs", "wordwrapentities", "watermark"],
       "constants" : ["true", "false", "on", "off", "auto"],
       "attributes" : null,
-      "brackets" : [String.raw`\{`, String.raw`\}`],
+      "brackets" : ["\\{", "\\}"],
       "arcsWords" : ["note", "abox", "rbox", "box", "alt", "else", "opt", "break", "par", "seq", "strict", "neg", "critical", "ignore", "consider", "assert", "loop", "ref", "exc"],
-      "arcsOthers" : [String.raw`\|\|\|`, String.raw`\.\.\.`, "---", "--", "<->", "==", "<<=>>", "<=>", String.raw`\.\.`, "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
+      "arcsOthers" : ["\\|\\|\\|", "\\.\\.\\.", "---", "--", "<->", "==", "<<=>>", "<=>", "\\.\\.", "<<>>", "::", "<:>", "->", "=>>", "=>", ">>", ":>", "<-", "<<=", "<=", "<<", "<:", "x-", "-x"],
       "singlecomment" : ["//", "#"],
       "operators" : ["="]
     }
@@ -64,19 +64,19 @@
       lineComment : "#",
       blockCommentStart : "/*",
       blockCommentEnd : "*/"
-    }
-  })
+    };
+  });
 
-  CodeMirror.defineMIME("text/x-mscgen", "mscgen")
-  CodeMirror.defineMIME("text/x-xu", { name: "mscgen", language: "xu" })
-  CodeMirror.defineMIME("text/x-msgenny", { name: "mscgen", language: "msgenny" })
+  CodeMirror.defineMIME("text/x-mscgen", "mscgen");
+  CodeMirror.defineMIME("text/x-xu", {name: "mscgen", language: "xu"});
+  CodeMirror.defineMIME("text/x-msgenny", {name: "mscgen", language: "msgenny"});
 
   function wordRegexpBoundary(pWords) {
-    return new RegExp(String.raw`^\b(?:` + pWords.join("|") + String.raw`)\b`, "i")
+    return new RegExp("^\\b(?:" + pWords.join("|") + ")\\b", "i");
   }
 
   function wordRegexp(pWords) {
-    return new RegExp(`^(?:${  pWords.join("|")  })`, "i")
+    return new RegExp("^(?:" + pWords.join("|") + ")", "i");
   }
 
   function startStateFn() {
@@ -85,7 +85,7 @@
       inString : false,
       inAttributeList : false,
       inScript : false
-    }
+    };
   }
 
   function copyStateFn(pState) {
@@ -94,82 +94,82 @@
       inString : pState.inString,
       inAttributeList : pState.inAttributeList,
       inScript : pState.inScript
-    }
+    };
   }
 
   function produceTokenFunction(pConfig) {
 
     return function(pStream, pState) {
       if (pStream.match(wordRegexp(pConfig.brackets), true, true)) {
-        return "bracket"
+        return "bracket";
       }
       /* comments */
       if (!pState.inComment) {
         if (pStream.match(/\/\*[^\*\/]*/, true, true)) {
-          pState.inComment = true
-          return "comment"
+          pState.inComment = true;
+          return "comment";
         }
         if (pStream.match(wordRegexp(pConfig.singlecomment), true, true)) {
-          pStream.skipToEnd()
-          return "comment"
+          pStream.skipToEnd();
+          return "comment";
         }
       }
       if (pState.inComment) {
         if (pStream.match(/[^\*\/]*\*\//, true, true))
-          pState.inComment = false
+          pState.inComment = false;
         else
-          pStream.skipToEnd()
-        return "comment"
+          pStream.skipToEnd();
+        return "comment";
       }
       /* strings */
       if (!pState.inString && pStream.match(/\"(\\\"|[^\"])*/, true, true)) {
-        pState.inString = true
-        return "string"
+        pState.inString = true;
+        return "string";
       }
       if (pState.inString) {
         if (pStream.match(/[^\"]*\"/, true, true))
-          pState.inString = false
+          pState.inString = false;
         else
-          pStream.skipToEnd()
-        return "string"
+          pStream.skipToEnd();
+        return "string";
       }
       /* keywords & operators */
       if (!!pConfig.keywords && pStream.match(wordRegexpBoundary(pConfig.keywords), true, true))
-        return "keyword"
+        return "keyword";
 
       if (pStream.match(wordRegexpBoundary(pConfig.options), true, true))
-        return "keyword"
+        return "keyword";
 
       if (pStream.match(wordRegexpBoundary(pConfig.arcsWords), true, true))
-        return "keyword"
+        return "keyword";
 
       if (pStream.match(wordRegexp(pConfig.arcsOthers), true, true))
-        return "keyword"
+        return "keyword";
 
       if (!!pConfig.operators && pStream.match(wordRegexp(pConfig.operators), true, true))
-        return "operator"
+        return "operator";
 
       if (!!pConfig.constants && pStream.match(wordRegexp(pConfig.constants), true, true))
-        return "variable"
+        return "variable";
 
       /* attribute lists */
       if (!pConfig.inAttributeList && !!pConfig.attributes && pStream.match('[', true, true)) {
-        pConfig.inAttributeList = true
-        return "bracket"
+        pConfig.inAttributeList = true;
+        return "bracket";
       }
       if (pConfig.inAttributeList) {
         if (pConfig.attributes !== null && pStream.match(wordRegexpBoundary(pConfig.attributes), true, true)) {
-          return "attribute"
+          return "attribute";
         }
         if (pStream.match(']', true, true)) {
-          pConfig.inAttributeList = false
-          return "bracket"
+          pConfig.inAttributeList = false;
+          return "bracket";
         }
       }
 
-      pStream.next()
-      return "base"
-    }
+      pStream.next();
+      return "base";
+    };
   }
 
-})
+});

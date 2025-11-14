@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var he = {
     code: 'he',
@@ -11,14 +11,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'חודש',
       week: 'שבוע',
       day: 'יום',
-      list: 'סדר יום'
+      list: 'סדר יום',
     },
     allDayText: 'כל היום',
     moreLinkText: 'אחר',
     noEventsText: 'אין אירועים להצגה',
-    weekText: 'שבוע'
-  }
+    weekText: 'שבוע',
+  };
 
-  return he
+  return he;
 
-}())
+}());

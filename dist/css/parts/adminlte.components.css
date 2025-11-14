@@ -6288,14 +6288,14 @@ html.maximized-card {
 .card-comments {
   background-color: #f8f9fa;
 }
-.card-comments .card-comment {
-  border-bottom: 1px solid #e9ecef;
-  padding: 8px 0;
-}
 .card-comments .card-comment::after {
   display: block;
   clear: both;
   content: "";
+}
+.card-comments .card-comment {
+  border-bottom: 1px solid #e9ecef;
+  padding: 8px 0;
 }
 .card-comments .card-comment:last-of-type {
   border-bottom: 0;
@@ -6356,7 +6356,6 @@ html.maximized-card {
   display: none;
   float: right;
   /* stylelint-disable selector-class-pattern */
-  /* stylelint-enable selector-class-pattern */
 }
 .todo-list > li .tools > .fa,
 .todo-list > li .tools > .fas,
@@ -6368,6 +6367,9 @@ html.maximized-card {
 .todo-list > li .tools > .ion {
   cursor: pointer;
   margin-right: 5px;
+}
+.todo-list > li .tools {
+  /* stylelint-enable selector-class-pattern */
 }
 .todo-list > li:hover .tools {
   display: inline-block;
@@ -8836,7 +8838,6 @@ html.maximized-card {
   position: relative;
   text-align: center;
   /* stylelint-disable selector-class-pattern */
-  /* stylelint-enable selector-class-pattern */
 }
 .btn-app > .fa,
 .btn-app > .fas,
@@ -8851,6 +8852,9 @@ html.maximized-card {
 }
 .btn-app > .svg-inline--fa {
   margin: 0 auto;
+}
+.btn-app {
+  /* stylelint-enable selector-class-pattern */
 }
 .btn-app:hover {
   background-color: #f8f9fa;
@@ -9526,15 +9530,14 @@ html.maximized-card {
   background-color: rgb(63.4310344828, 70.75, 78.0689655172);
 }
 
-.carousel-control-custom-icon {
-  /* stylelint-disable selector-class-pattern */
-  /* stylelint-enable selector-class-pattern */
-}
 .carousel-control-prev .carousel-control-custom-icon {
   margin-left: -20px;
 }
 .carousel-control-next .carousel-control-custom-icon {
   margin-right: 20px;
+}
+.carousel-control-custom-icon {
+  /* stylelint-disable selector-class-pattern */
 }
 .carousel-control-custom-icon > .fa,
 .carousel-control-custom-icon > .fas,
@@ -9551,20 +9554,25 @@ html.maximized-card {
   top: 50%;
   z-index: 5;
 }
+.carousel-control-custom-icon {
+  /* stylelint-enable selector-class-pattern */
+}
 
 .close {
   float: right;
   font-size: calc(1.275rem + 0.3vw);
-  font-weight: 700;
-  line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
-  opacity: 0.5;
 }
 @media (min-width: 1200px) {
   .close {
     font-size: 1.5rem;
   }
+}
+.close {
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
 }
 .close:hover {
   color: #000;

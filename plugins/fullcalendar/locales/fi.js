@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var fi = {
     code: 'fi',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4 // The week that contains Jan 4th is the first week of the year.
+      doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Edellinen',
@@ -14,14 +14,14 @@ FullCalendar.globalLocales.push(function () {
       month: 'Kuukausi',
       week: 'Viikko',
       day: 'Päivä',
-      list: 'Tapahtumat'
+      list: 'Tapahtumat',
     },
     weekText: 'Vk',
     allDayText: 'Koko päivä',
     moreLinkText: 'lisää',
-    noEventsText: 'Ei näytettäviä tapahtumia'
-  }
+    noEventsText: 'Ei näytettäviä tapahtumia',
+  };
 
-  return fi
+  return fi;
 
-}())
+}());

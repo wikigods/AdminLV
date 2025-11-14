@@ -126,15 +126,17 @@
 }
 .small-box h3 {
   font-size: calc(1.345rem + 1.14vw);
-  font-weight: 700;
-  margin: 0 0 10px;
-  padding: 0;
-  white-space: nowrap;
 }
 @media (min-width: 1200px) {
   .small-box h3 {
     font-size: 2.2rem;
   }
+}
+.small-box h3 {
+  font-weight: 700;
+  margin: 0 0 10px;
+  padding: 0;
+  white-space: nowrap;
 }
 @media (min-width: 992px) {
   .col-xl-2 .small-box h3, .col-lg-2 .small-box h3, .col-md-2 .small-box h3 {
@@ -468,16 +470,14 @@
   top: 0;
   width: 4px;
 }
+.timeline > div::before, .timeline > div::after {
+  content: "";
+  display: table;
+}
 .timeline > div {
   margin-bottom: 15px;
   margin-right: 10px;
   position: relative;
-  /* stylelint-disable selector-class-pattern */
-  /* stylelint-enable selector-class-pattern */
-}
-.timeline > div::before, .timeline > div::after {
-  content: "";
-  display: table;
 }
 .timeline > div > .timeline-item {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -522,6 +522,9 @@
 .timeline > div > .timeline-item > .timeline-footer > a {
   color: #fff;
 }
+.timeline > div {
+  /* stylelint-disable selector-class-pattern */
+}
 .timeline > div > .fa,
 .timeline > div > .fas,
 .timeline > div > .far,
@@ -543,6 +546,9 @@
 }
 .timeline > div > .svg-inline--fa {
   padding: 7px;
+}
+.timeline > div {
+  /* stylelint-enable selector-class-pattern */
 }
 .timeline > .time-label > span {
   border-radius: 4px;
@@ -582,15 +588,15 @@
   margin: 0;
   padding: 0;
 }
-.products-list > .item {
-  border-radius: 0.25rem;
-  background-color: #fff;
-  padding: 10px 0;
-}
 .products-list > .item::after {
   display: block;
   clear: both;
   content: "";
+}
+.products-list > .item {
+  border-radius: 0.25rem;
+  background-color: #fff;
+  padding: 10px 0;
 }
 .products-list .product-img {
   float: left;
@@ -657,13 +663,13 @@
   display: block;
 }
 
-.direct-chat-msg {
-  margin-bottom: 10px;
-}
 .direct-chat-msg::after {
   display: block;
   clear: both;
   content: "";
+}
+.direct-chat-msg {
+  margin-bottom: 10px;
 }
 
 .direct-chat-messages,
@@ -767,15 +773,15 @@
   padding-left: 0;
   list-style: none;
 }
-.contacts-list > li {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 0;
-  padding: 10px;
-}
 .contacts-list > li::after {
   display: block;
   clear: both;
   content: "";
+}
+.contacts-list > li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding: 10px;
 }
 .contacts-list > li:last-of-type {
   border-bottom: 0;

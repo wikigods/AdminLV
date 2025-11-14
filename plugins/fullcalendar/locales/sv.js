@@ -1,11 +1,11 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var sv = {
     code: 'sv',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4 // The week that contains Jan 4th is the first week of the year.
+      doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Förra',
@@ -14,7 +14,7 @@ FullCalendar.globalLocales.push(function () {
       month: 'Månad',
       week: 'Vecka',
       day: 'Dag',
-      list: 'Program'
+      list: 'Program',
     },
     buttonHints: {
       prev(buttonText) {
@@ -24,8 +24,8 @@ FullCalendar.globalLocales.push(function () {
         return `Nästa ${buttonText.toLocaleLowerCase()}`
       },
       today(buttonText) {
-        return `${buttonText === 'Program' ? 'Detta' : 'Denna'  } ${  buttonText.toLocaleLowerCase()}`
-      }
+        return (buttonText === 'Program' ? 'Detta' : 'Denna') + ' ' + buttonText.toLocaleLowerCase()
+      },
     },
     viewHint: '$0 vy',
     navLinkHint: 'Gå till $0',
@@ -39,9 +39,9 @@ FullCalendar.globalLocales.push(function () {
     noEventsText: 'Inga händelser att visa',
     closeHint: 'Stäng',
     timeHint: 'Klockan',
-    eventHint: 'Händelse'
-  }
+    eventHint: 'Händelse',
+  };
 
-  return sv
+  return sv;
 
-}())
+}());

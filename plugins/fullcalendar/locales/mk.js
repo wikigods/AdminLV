@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var mk = {
     code: 'mk',
@@ -10,16 +10,16 @@ FullCalendar.globalLocales.push(function () {
       month: 'Месец',
       week: 'Недела',
       day: 'Ден',
-      list: 'График'
+      list: 'График',
     },
     weekText: 'Сед',
     allDayText: 'Цел ден',
     moreLinkText: function(n) {
-      return `+повеќе ${  n}`
+      return '+повеќе ' + n
     },
-    noEventsText: 'Нема настани за прикажување'
-  }
+    noEventsText: 'Нема настани за прикажување',
+  };
 
-  return mk
+  return mk;
 
-}())
+}());

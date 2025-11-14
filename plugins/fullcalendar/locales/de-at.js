@@ -1,17 +1,16 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   function affix(buttonText) {
-    return (buttonText === 'Tag' || buttonText === 'Monat') ?
-      'r' :
-      (buttonText === 'Jahr' ? 's' : '')
+    return (buttonText === 'Tag' || buttonText === 'Monat') ? 'r' :
+      buttonText === 'Jahr' ? 's' : ''
   }
 
   var deAt = {
     code: 'de-at',
     week: {
       dow: 1, // Monday is the first day of the week.
-      doy: 4 // The week that contains Jan 4th is the first week of the year.
+      doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
       prev: 'Zurück',
@@ -21,13 +20,13 @@ FullCalendar.globalLocales.push(function () {
       month: 'Monat',
       week: 'Woche',
       day: 'Tag',
-      list: 'Terminübersicht'
+      list: 'Terminübersicht',
     },
     weekText: 'KW',
     weekTextLong: 'Woche',
     allDayText: 'Ganztägig',
     moreLinkText: function(n) {
-      return `+ weitere ${  n}`
+      return '+ weitere ' + n
     },
     noEventsText: 'Keine Ereignisse anzuzeigen',
     buttonHints: {
@@ -43,24 +42,24 @@ FullCalendar.globalLocales.push(function () {
           return 'Heute'
         }
         return `Diese${affix(buttonText)} ${buttonText}`
-      }
+      },
     },
     viewHint(buttonText) {
       // → Tagesansicht, Wochenansicht, Monatsansicht, Jahresansicht
-      const glue = buttonText === 'Woche' ? 'n' : (buttonText === 'Monat' ? 's' : 'es')
-      return `${buttonText + glue  }ansicht`
+      const glue = buttonText === 'Woche' ? 'n' : buttonText === 'Monat' ? 's' : 'es';
+      return buttonText + glue + 'ansicht'
     },
     navLinkHint: 'Gehe zu $0',
     moreLinkHint(eventCnt) {
-      return `Zeige ${  eventCnt === 1 ?
+      return 'Zeige ' + (eventCnt === 1 ?
         'ein weiteres Ereignis' :
-        `${eventCnt  } weitere Ereignisse`}`
+        eventCnt + ' weitere Ereignisse')
     },
     closeHint: 'Schließen',
     timeHint: 'Uhrzeit',
-    eventHint: 'Ereignis'
-  }
+    eventHint: 'Ereignis',
+  };
 
-  return deAt
+  return deAt;
 
-}())
+}());

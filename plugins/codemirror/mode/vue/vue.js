@@ -2,31 +2,31 @@
 // Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 (function (mod) {
-  "use strict"
+  "use strict";
   if (typeof exports === "object" && typeof module === "object") {// CommonJS
     mod(require("../../lib/codemirror"),
-      require("../../addon/mode/overlay"),
-      require("../xml/xml"),
-      require("../javascript/javascript"),
-      require("../coffeescript/coffeescript"),
-      require("../css/css"),
-      require("../sass/sass"),
-      require("../stylus/stylus"),
-      require("../pug/pug"),
-      require("../handlebars/handlebars"))
+        require("../../addon/mode/overlay"),
+        require("../xml/xml"),
+        require("../javascript/javascript"),
+        require("../coffeescript/coffeescript"),
+        require("../css/css"),
+        require("../sass/sass"),
+        require("../stylus/stylus"),
+        require("../pug/pug"),
+        require("../handlebars/handlebars"));
   } else if (typeof define === "function" && define.amd) { // AMD
     define(["../../lib/codemirror",
-      "../../addon/mode/overlay",
-      "../xml/xml",
-      "../javascript/javascript",
-      "../coffeescript/coffeescript",
-      "../css/css",
-      "../sass/sass",
-      "../stylus/stylus",
-      "../pug/pug",
-      "../handlebars/handlebars"], mod)
+            "../../addon/mode/overlay",
+            "../xml/xml",
+            "../javascript/javascript",
+            "../coffeescript/coffeescript",
+            "../css/css",
+            "../sass/sass",
+            "../stylus/stylus",
+            "../pug/pug",
+            "../handlebars/handlebars"], mod);
   } else { // Plain browser env
-    mod(CodeMirror)
+    mod(CodeMirror);
   }
 })(function (CodeMirror) {
   var tagLanguages = {
@@ -55,23 +55,23 @@
       ["type", /^text\/x-handlebars-template$/i, "handlebars"],
       [null, null, "vue-template"]
     ]
-  }
+  };
 
   CodeMirror.defineMode("vue-template", function (config, parserConfig) {
     var mustacheOverlay = {
       token: function (stream) {
-        if (/^\{\{.*?\}\}/.test(stream)) return "meta mustache"
+        if (stream.match(/^\{\{.*?\}\}/)) return "meta mustache";
         while (stream.next() && !stream.match("{{", false)) {}
-        return null
+        return null;
       }
-    }
-    return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), mustacheOverlay)
-  })
+    };
+    return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), mustacheOverlay);
+  });
 
   CodeMirror.defineMode("vue", function (config) {
-    return CodeMirror.getMode(config, { name: "htmlmixed", tags: tagLanguages })
-  }, "htmlmixed", "xml", "javascript", "coffeescript", "css", "sass", "stylus", "pug", "handlebars")
+    return CodeMirror.getMode(config, {name: "htmlmixed", tags: tagLanguages});
+  }, "htmlmixed", "xml", "javascript", "coffeescript", "css", "sass", "stylus", "pug", "handlebars");
 
-  CodeMirror.defineMIME("script/x-vue", "vue")
-  CodeMirror.defineMIME("text/x-vue", "vue")
-})
+  CodeMirror.defineMIME("script/x-vue", "vue");
+  CodeMirror.defineMIME("text/x-vue", "vue");
+});

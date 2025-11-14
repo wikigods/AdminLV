@@ -1,5 +1,5 @@
 FullCalendar.globalLocales.push(function () {
-  'use strict'
+  'use strict';
 
   var zhTw = {
     code: 'zh-tw',
@@ -10,14 +10,14 @@ FullCalendar.globalLocales.push(function () {
       month: '月',
       week: '週',
       day: '天',
-      list: '活動列表'
+      list: '活動列表',
     },
     weekText: '周',
     allDayText: '整天',
     moreLinkText: '顯示更多',
-    noEventsText: '没有任何活動'
-  }
+    noEventsText: '没有任何活動',
+  };
 
-  return zhTw
+  return zhTw;
 
-}())
+}());
