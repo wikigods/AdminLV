@@ -13,7 +13,7 @@ The card component is the most widely used component through out this template. 
   <div class="card-header">
     <h3 class="card-title">Default Card Example</h3>
     <div class="card-tools">
-      <span class="badge badge-primary">Label</span>
+      <span class="badge bg-primary">Label</span>
     </div>
   </div>
   <div class="card-body">
@@ -31,7 +31,7 @@ The card component is the most widely used component through out this template. 
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="badge badge-primary">Label</span>
+      <span class="badge bg-primary">Label</span>
     </div>
     <!-- /.card-tools -->
   </div>

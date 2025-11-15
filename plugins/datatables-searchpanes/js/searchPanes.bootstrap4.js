@@ -40,7 +40,7 @@
       container: 'table'
     },
     paneButton: 'btn btn-light',
-    pill: 'pill badge badge-pill badge-secondary',
+    pill: 'pill badge badge-pill bg-secondary',
     search: 'form-control search',
     searchCont: 'input-group',
     searchLabelCont: 'input-group-append',

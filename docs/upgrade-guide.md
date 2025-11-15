@@ -46,7 +46,7 @@ Like above the biggest change is the Main Sidebar contains now the Logo and the 
   - `<li> <a> <span>` replaced with `<p>`
   - `<span class="pull-right-container">` removed
   - `<i class="fa fa-angle-left pull-right"></i>` replaced with `<i class="right fas fa-angle-left"></i>`
-  - `<small class="label pull-right bg-green">new</small>` replaced with `<span class="right badge badge-danger">New</span>`
+  - `<small class="label pull-right bg-green">new</small>` replaced with `<span class="right badge bg-danger">New</span>`
   - `<li> <ul class="treeview-menu">` replaced with `<ul class="nav nav-treeview">`
 
 
@@ -72,7 +72,7 @@ New sample entry
     <i class="nav-icon fas fa-th"></i>
     <p>
       Widgets
-      <span class="right badge badge-danger">New</span>
+      <span class="right badge bg-danger">New</span>
     </p>
   </a>
 </li>

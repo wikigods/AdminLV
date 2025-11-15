@@ -60,7 +60,7 @@ The sidebar used in this page to the left provides an example of what your sideb
             <i class="nav-icon fas fa-th"></i>
             <p>
               Simple Link
-              <span class="right badge badge-danger">New</span>
+              <span class="right badge bg-danger">New</span>
             </p>
           </a>
         </li>

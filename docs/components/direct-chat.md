@@ -11,7 +11,7 @@ The direct chat widget extends the card component to create a beautiful chat int
       <div class="card-header">
         <h3 class="card-title">Direct Chat</h3>
         <div class="card-tools">
-          <span data-toggle="tooltip" title="3 New Messages" class="badge badge-light">3</span>
+          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light">3</span>
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
           </button>
@@ -160,7 +160,7 @@ The direct chat widget extends the card component to create a beautiful chat int
       <div class="card-header">
         <h3 class="card-title">Direct Chat</h3>
         <div class="card-tools">
-          <span data-toggle="tooltip" title="3 New Messages" class="badge badge-light">3</span>
+          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light">3</span>
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
           </button>
@@ -314,7 +314,7 @@ The direct chat widget extends the card component to create a beautiful chat int
   <div class="card-header">
     <h3 class="card-title">Direct Chat</h3>
     <div class="card-tools">
-      <span data-toggle="tooltip" title="3 New Messages" class="badge badge-light">3</span>
+      <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light">3</span>
       <button type="button" class="btn btn-tool" data-card-widget="collapse">
         <i class="fas fa-minus"></i>
       </button>
@@ -511,7 +511,7 @@ Of course you can use direct chat with a outline card by adding the class `.card
       <div class="card-header">
         <h3 class="card-title">Direct Chat</h3>
         <div class="card-tools">
-          <span data-toggle="tooltip" title="3 New Messages" class="badge badge-light">3</span>
+          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light">3</span>
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
           </button>
@@ -660,7 +660,7 @@ Of course you can use direct chat with a outline card by adding the class `.card
       <div class="card-header">
         <h3 class="card-title">Direct Chat</h3>
         <div class="card-tools">
-          <span data-toggle="tooltip" title="3 New Messages" class="badge badge-light">3</span>
+          <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light">3</span>
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
           </button>
