@@ -131,7 +131,7 @@ The biggest change in content header is AdminLTE use here now `.container-fluid`
 - `<div class="container-fluid">` added in `<div class="content-header">`
 - `<h1>` & `<ol class="breadcrumb">` rebuild in `<div class="row">` & `<div class="col-sm-6">`
 - `<h1>` replaced with `<h1 class="m-0 text-dark">`
-- `<ol class="breadcrumb">` need new class `.float-sm-right`
+- `<ol class="breadcrumb">` need new class `.float-sm-end`
 - `<ol class="breadcrumb"> <li>` need new class `.breadcrumb-item`
 
 
@@ -164,7 +164,7 @@ New Content Header Markup
         </h1>
       </div>
       <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
+        <ol class="breadcrumb float-sm-end">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
           <li class="breadcrumb-item active">Dashboard v1</li>
         </ol>
