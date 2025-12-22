@@ -288,7 +288,7 @@ html.maximized-card {
   // .no-header & {
   //   @include border-top-radius($border-radius);
   // }
-
+  padding: var(--#{$prefix}card-spacer-x) var(--#{$prefix}card-spacer-x);
   // Tables within the box body
   > .table {
     margin-bottom: 0;

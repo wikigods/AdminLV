@@ -3,6 +3,7 @@
     "stylelint-config-twbs-bootstrap"
   ],
   "rules": {
+    "function-disallowed-list": null,
     "declaration-no-important": null,
     "order/properties-order": null,
     "selector-max-class": null,
