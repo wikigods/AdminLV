@@ -2,6 +2,47 @@
 // iOS requires the button element instead of an anchor tag.
 // If you want the anchor version, it requires `href="#"`.
 // See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+@import "bootstrap-variables";
+
+.close {
+  float: right;
+  @include font-size($close-font-size);
+  font-weight: $close-font-weight;
+  line-height: 1;
+  color: $close-color;
+  text-shadow: $close-text-shadow;
+  opacity: .5;
+
+  &:hover {
+    color: var(--#{$prefix}btn-close-color);
+    text-decoration: none;
+    opacity: var(--#{$prefix}btn-close-hover-opacity);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--#{$prefix}btn-close-focus-shadow);
+    opacity: var(--#{$prefix}btn-close-focus-opacity);
+  }
+}
+
+// Additional properties for button version
+// iOS requires the button element instead of an anchor tag.
+// If you want the anchor version, it requires `href="#"`.
+// See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+}
+
+// Future-proof disabling of clicks on `<a>` elements
+
+a.close.disabled {
+  pointer-events: none;
+}
+
 
 .btn-close {
   // scss-docs-start close-css-vars
@@ -64,3 +105,31 @@
     @include btn-close-white();
   }
 }
+
+.modal-header {
+
+  .btn-close,
+  .close {
+    padding: calc(var(--#{$prefix}modal-header-padding-y) * .5) calc(var(--#{$prefix}modal-header-padding-x) * .5);
+    // Split properties to avoid invalid calc() function if value is 0
+    margin-top: calc(-.5 * var(--#{$prefix}modal-header-padding-y));
+    margin-right: calc(-.5 * var(--#{$prefix}modal-header-padding-x));
+    margin-bottom: calc(-.5 * var(--#{$prefix}modal-header-padding-y));
+    margin-left: auto;
+  }
+}
+
+.alert-dismissible {
+  padding-right: $alert-dismissible-padding-r;
+
+  // Adjust close link position
+  .btn-close,
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: $stretched-link-z-index + 1;
+    padding: $alert-padding-y * 1.25 $alert-padding-x;
+  }
+}
+

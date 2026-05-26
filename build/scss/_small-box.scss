@@ -32,48 +32,49 @@
   }
 
   h3 {
-    @include font-size(2.2rem);
+    font-size: 2.2rem;
     font-weight: 700;
     margin: 0 0 10px;
     padding: 0;
     white-space: nowrap;
+    line-height: 1;
   }
 
-  @include media-breakpoint-up(lg) {
-    .col-xl-2 &,
-    .col-lg-2 &,
-    .col-md-2 & {
-      h3 {
-        @include font-size(1.6rem);
-      }
-    }
-
-    .col-xl-3 &,
-    .col-lg-3 &,
-    .col-md-3 & {
-      h3 {
-        @include font-size(1.6rem);
-      }
-    }
-  }
-
-  @include media-breakpoint-up(xl) {
-    .col-xl-2 &,
-    .col-lg-2 &,
-    .col-md-2 & {
-      h3 {
-        @include font-size(2.2rem);
-      }
-    }
-
-    .col-xl-3 &,
-    .col-lg-3 &,
-    .col-md-3 & {
-      h3 {
-        @include font-size(2.2rem);
-      }
-    }
-  }
+  //@include media-breakpoint-up(lg) {
+  //    .col-xl-2 &,
+  //    .col-lg-2 &,
+  //    .col-md-2 & {
+  //        h3 {
+  //            @include font-size(1.6rem);
+  //        }
+  //    }
+  //
+  //    .col-xl-3 &,
+  //    .col-lg-3 &,
+  //    .col-md-3 & {
+  //        h3 {
+  //            @include font-size(1.6rem);
+  //        }
+  //    }
+  //}
+  //
+  //@include media-breakpoint-up(xl) {
+  //    .col-xl-2 &,
+  //    .col-lg-2 &,
+  //    .col-md-2 & {
+  //        h3 {
+  //            @include font-size(2.2rem);
+  //        }
+  //    }
+  //
+  //    .col-xl-3 &,
+  //    .col-lg-3 &,
+  //    .col-md-3 & {
+  //        h3 {
+  //            @include font-size(2.2rem);
+  //        }
+  //    }
+  //}
 
   p {
     font-size: 1rem;

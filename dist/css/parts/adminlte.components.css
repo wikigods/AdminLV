@@ -9458,6 +9458,41 @@ html.maximized-card {
   z-index: 5;
 }
 
+.close {
+  float: right;
+  font-size: calc(1.275rem + 0.3vw);
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+@media (min-width: 1200px) {
+  .close {
+    font-size: 1.5rem;
+  }
+}
+.close:hover {
+  color: var(--bs-btn-close-color);
+  text-decoration: none;
+  opacity: var(--bs-btn-close-hover-opacity);
+}
+.close:focus {
+  outline: none;
+  box-shadow: var(--bs-btn-close-focus-shadow);
+  opacity: var(--bs-btn-close-focus-opacity);
+}
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+}
+
+a.close.disabled {
+  pointer-events: none;
+}
+
 .btn-close {
   --bs-btn-close-color: #000;
   --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
@@ -9504,6 +9539,27 @@ html.maximized-card {
 
 [data-bs-theme=dark] {
   --bs-btn-close-filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.modal-header .btn-close,
+.modal-header .close {
+  padding: calc(var(--bs-modal-header-padding-y) * 0.5) calc(var(--bs-modal-header-padding-x) * 0.5);
+  margin-top: calc(-0.5 * var(--bs-modal-header-padding-y));
+  margin-right: calc(-0.5 * var(--bs-modal-header-padding-x));
+  margin-bottom: calc(-0.5 * var(--bs-modal-header-padding-y));
+  margin-left: auto;
+}
+
+.alert-dismissible {
+  padding-right: 3rem;
+}
+.alert-dismissible .btn-close,
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 1.25rem 1rem;
 }
 
 /*# sourceMappingURL=adminlte.components.css.map */

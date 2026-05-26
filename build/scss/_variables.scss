@@ -253,10 +253,10 @@ $custom-control-indicator-checked-color: #0e0707;
 $table-cell-padding: .75rem !default;
 
 // Close
-//$close-font-size:                   $font-size-base * 1.5 !default;
-//$close-font-weight:                 $font-weight-bold !default;
-//$close-color:                       $black !default;
-//$close-text-shadow:                 0 1px 0 $white !default;
+$close-font-size:                   $font-size-base * 1.5 !default;
+$close-font-weight:                 $font-weight-bold !default;
+$close-color:                       $black !default;
+$close-text-shadow:                 0 1px 0 $white !default;
 
 // scss-docs-start close-variables
 $btn-close-width:            1em !default;
