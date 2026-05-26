@@ -1,5 +1,5 @@
 /*!
- * AdminLTE v1.0.4 (https://adminlte.io)
+ * AdminLTE v1.0.5 (https://adminlte.io)
  * Copyright 2014-2026 Colorlib <https://colorlib.com>
  * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
  */
@@ -97,7 +97,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var _this2 = this;
       $(this).find(this._settings.trigger).on('click', function () {
@@ -109,7 +109,7 @@
     }
 
     // Static
-    ;
+  ;
     CardRefresh._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$e);
@@ -284,7 +284,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init(card) {
       var _this3 = this;
       this._parent = card;
@@ -300,7 +300,7 @@
     }
 
     // Static
-    ;
+  ;
     CardWidget._jQueryInterface = function _jQueryInterface(config) {
       var data = $(this).data(DATA_KEY$d);
       var _config = $.extend({}, Default$b, $(this).data());
@@ -474,7 +474,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var _this2 = this;
       var $body = $('body');
@@ -591,7 +591,7 @@
     }
 
     // Static
-    ;
+  ;
     ControlSidebar._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$c);
@@ -674,7 +674,7 @@
     }
 
     // Static
-    ;
+  ;
     DirectChat._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$b);
@@ -797,7 +797,7 @@
     }
 
     // Static
-    ;
+  ;
     Dropdown._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$a);
@@ -920,7 +920,7 @@
     }
 
     // Static
-    ;
+  ;
     ExpandableTable._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$9);
@@ -1028,7 +1028,7 @@
     }
 
     // Static
-    ;
+  ;
     Fullscreen._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$8);
@@ -1304,7 +1304,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var usingDefTab = $(SELECTOR_TAB_CONTENT).children().length > 2;
       this._setupListeners();
@@ -1449,7 +1449,7 @@
 
     // Static
     // eslint-disable-next-line max-params
-    ;
+  ;
     IFrame._jQueryInterface = function _jQueryInterface(config, name, link, id, reload) {
       if ($(SELECTOR_DATA_TOGGLE$1).length > 0) {
         var data = $(this).data(DATA_KEY$7);
@@ -1618,7 +1618,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var _this = this;
       // Activate layout height watcher
@@ -1677,7 +1677,7 @@
     }
 
     // Static
-    ;
+  ;
     Layout._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$6);
@@ -1856,7 +1856,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var _this2 = this;
       this.remember();
@@ -1877,7 +1877,7 @@
     }
 
     // Static
-    ;
+  ;
     PushMenu._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$5);
@@ -2042,7 +2042,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._parseItem = function _parseItem(item, path) {
       var _this3 = this;
       if (path === void 0) {
@@ -2108,7 +2108,7 @@
     }
 
     // Static
-    ;
+  ;
     SidebarSearch._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$4);
@@ -2243,7 +2243,7 @@
     }
 
     // Static
-    ;
+  ;
     NavbarSearch._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$3);
@@ -2395,7 +2395,7 @@
     }
 
     // Static
-    ;
+  ;
     _proto._getContainerId = function _getContainerId() {
       if (this._config.position === POSITION_TOP_RIGHT) {
         return SELECTOR_CONTAINER_TOP_RIGHT;
@@ -2432,7 +2432,7 @@
     }
 
     // Static
-    ;
+  ;
     Toasts._jQueryInterface = function _jQueryInterface(option, config) {
       return this.each(function () {
         var _options = $.extend({}, Default$2, config);
@@ -2511,7 +2511,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._init = function _init() {
       var _this = this;
       var $toggleSelector = this._element;
@@ -2522,7 +2522,7 @@
     }
 
     // Static
-    ;
+  ;
     TodoList._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY$1);
@@ -2665,7 +2665,7 @@
     }
 
     // Private
-    ;
+  ;
     _proto._setupListeners = function _setupListeners() {
       var _this3 = this;
       var elementId = this._element.attr('id') !== undefined ? "#" + this._element.attr('id') : '';
@@ -2680,7 +2680,7 @@
     }
 
     // Static
-    ;
+  ;
     Treeview._jQueryInterface = function _jQueryInterface(config) {
       return this.each(function () {
         var data = $(this).data(DATA_KEY);
