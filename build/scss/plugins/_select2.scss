@@ -1,121 +1,67 @@
+//
 // Plugin: Select2
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
+//
 
-// General: Mixins
-// Select2 Variant
-@mixin select2-variant($name, $color) {
-  .select2-#{$name} {
-    + .select2-container--default {
-      &.select2-container--open {
-        .select2-selection--single {
-          border-color: lighten($color, 25%);
-        }
-      }
-      &.select2-container--focus .select2-selection--single {
-        border-color: lighten($color, 25%);
-      }
-    }
-    .select2-container--default &,
-    .select2-container--default {
-      &.select2-dropdown,
-      .select2-dropdown,
-      .select2-search--inline {
-        .select2-search__field {
-          &:focus {
-            border: $input-border-width solid lighten($color, 25%);
-          }
-        }
-      }
-      .select2-results__option--highlighted {
-        background-color: $color;
-        color: color-contrast($color);
-        &[aria-selected] {
-          &,
-          &:hover {
-            background-color: darken($color, 3%);
-            color: color-contrast(darken($color, 3%));
-          }
-        }
-      }
-      //Multiple select
-      & {
-        .select2-selection--multiple {
-          &:focus {
-            border-color: lighten($color, 25%);
-          }
-          .select2-selection__choice {
-            background-color: $color;
-            border-color: darken($color, 5%);
-            color: color-contrast($color);
-          }
-          .select2-selection__choice__remove {
-            color: rgba(color-contrast($color), 0.7);
-            &:hover {
-              color: color-contrast($color);
-            }
-          }
-        }
-        &.select2-container--focus .select2-selection--multiple {
-          border-color: lighten($color, 25%);
-        }
-      }
-    }
-  }
-}
+//Signle select
+// .select2-container--default,
+// .select2-selection {
+//   &.select2-container--focus,
+//   &:focus,
+//   &:active {
+//     outline: none;
+//   }
+// }
 
 .select2-container--default {
-  // SINGLE SELECT
   .select2-selection--single {
     border: $input-border-width solid $input-border-color;
-    padding: 0 $input-padding-x;
-    padding-right: 2.25rem; // Space for the Bootstrap 5 arrow
-    height: 38px;
-    display: flex;
-    align-items: center;
-
-    // Bootstrap 5 Arrow
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 16px 12px;
-  }
-
-  // Hide default arrow
-  .select2-selection--single .select2-selection__arrow {
-    display: none !important;
+    //border-radius: $input-radius;
+    padding: ($input-padding-y * 1.25) $input-padding-x;
+    height: $input-height;
   }
 
   &.select2-container--open {
     .select2-selection--single {
-      border-color: lighten($primary, 25%);
+      border-color: tint-color($primary, 25%);
     }
   }
 
-  .select2-dropdown {
+  & .select2-dropdown {
     border: $input-border-width solid $input-border-color;
-    border-radius: $input-border-radius;
+    //border-radius: $input-radius;
   }
 
-  .select2-results__option {
+  & .select2-results__option {
     padding: 6px 12px;
     user-select: none;
   }
 
-  .select2-selection--single .select2-selection__rendered {
+  & .select2-selection--single .select2-selection__rendered {
     padding-left: 0;
-    padding-right: 0;
+    //padding-right: 0;
     height: auto;
+    margin-top: -3px;
+  }
+
+  &[dir="rtl"] .select2-selection--single .select2-selection__rendered {
+    padding-right: 6px;
+    padding-left: 20px;
+  }
+
+  & .select2-selection--single .select2-selection__arrow {
+    height: 31px;
+    right: 6px;
+  }
+
+  & .select2-selection--single .select2-selection__arrow b {
     margin-top: 0;
-    line-height: normal;
-    width: 100%;
   }
 
   .select2-dropdown,
   .select2-search--inline {
     .select2-search__field {
       border: $input-border-width solid $input-border-color;
+
       &:focus {
         outline: none;
         border: $input-border-width solid $input-focus-border-color;
@@ -123,15 +69,30 @@
     }
   }
 
-  // RESULT STATES
+  .select2-dropdown {
+    &.select2-dropdown--below {
+      border-top: 0;
+    }
+
+    &.select2-dropdown--above {
+      border-bottom: 0;
+    }
+  }
+
   .select2-results__option {
-    &[aria-disabled="true"] {
+    &[aria-disabled='true'] {
       color: $gray-600;
     }
-    &[aria-selected="true"] {
+
+    &[aria-selected='true'] {
       $color: $gray-300;
+
       background-color: $color;
-      color: color-contrast($color);
+
+      &,
+      &:hover {
+        color: color-contrast($color);
+      }
     }
   }
 
@@ -139,233 +100,475 @@
     $color: $primary;
     background-color: $color;
     color: color-contrast($color);
+
+    &[aria-selected] {
+      $color: shade-color($color, 3%);
+
+      &,
+      &:hover {
+        background-color: $color;
+        color: color-contrast($color);
+      }
+    }
   }
 
-  // MULTIPLE SELECT
-  .select2-selection--multiple {
-    border: $input-border-width solid $input-border-color;
-    min-height: 38px;
-    height: auto !important;
-    padding: 4px 8px;
-    display: flex;
-    align-items: center;
-
-    &:focus {
-      border-color: $input-focus-border-color;
-    }
-
-    .select2-selection__rendered {
-      display: flex !important;
+  //Multiple select
+  & {
+    .select2-selection--multiple {
+      border: $input-border-width solid $input-border-color;
+      display: flex;
       flex-wrap: wrap;
       align-items: center;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      box-sizing: border-box;
-      width: 100%;
-      gap: 4px;
+      min-height: $input-height;
+      padding: 0 $input-padding-x * 0.5;
 
-      &::before, &::after {
-        display: none !important;
+      .select2-search--inline .select2-search__field,
+      .select2-search--inline .select2-search__field:focus {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        outline: 0;
       }
+
+      &:focus {
+        border-color: $input-focus-border-color;
+      }
+
+      .select2-selection__rendered {
+        padding: 0 $input-padding-x * 0.5 $input-padding-y;
+        margin-bottom: -$input-padding-x * 0.5;
+
+        .select2-search.select2-search--inline {
+          .select2-search__field {
+            border: 0;
+            margin-top: 6px;
+          }
+        }
+      }
+
+      .select2-selection__choice {
+        align-items: center;
+        background-color: $primary;
+        border-color: shade-color($primary, 5%);
+        color: color-contrast($primary);
+        display: inline-grid;
+        grid-template-areas: 'label remove';
+        grid-template-columns: auto auto;
+        margin-top: .31rem;
+        padding: 0 10px;
+      }
+
+      .select2-selection__choice__display {
+        grid-area: label;
+      }
+
+      .select2-selection__choice__remove {
+        align-items: center;
+        appearance: none;
+        grid-area: remove;
+        color: rgba(255, 255, 255, 0.7);
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        display: inline-flex;
+        float: none;
+        justify-content: center;
+        line-height: 1;
+        margin-left: 5px;
+        margin-right: 0;
+        padding: 0;
+        position: static;
+
+        &:hover {
+          background-color: transparent;
+          color: $white;
+        }
+
+        &:focus,
+        &:active {
+          background-color: transparent;
+          border: 0;
+          box-shadow: none;
+          color: $white;
+          outline: 0;
+        }
+      }
+
+      .text-sm &,
+      &.text-sm {
+        .select2-search.select2-search--inline {
+          .select2-search__field {
+            margin-top: 8px;
+          }
+        }
+
+        .select2-selection__choice {
+          margin-top: .4rem;
+        }
+      }
+    }
+
+    &.select2-container--focus {
+      .select2-selection--single,
+      .select2-selection--multiple {
+        border-color: $input-focus-border-color;
+      }
+
+      .select2-search__field {
+        border: 0;
+      }
+    }
+  }
+
+  // Select2 4.1 places its inline-search textarea inside the rendered list.
+  // Flatten the list so choices and search align within the selection control.
+  .select2-selection--multiple {
+    .select2-selection__rendered {
+      display: contents;
+    }
+
+    .select2-selection__choice {
+      margin: .25rem 0 .25rem .25rem;
     }
 
     .select2-search--inline {
-      float: none;
-      margin: 0;
+      align-items: center;
       display: flex;
-      align-items: center;
+      flex: 1 1 5rem;
+      height: calc($input-height - 2 * $input-border-width);
+      margin: 0;
+      min-width: 5rem;
     }
 
-    .select2-search--inline .select2-search__field {
+    .select2-search--inline .select2-search__field,
+    .select2-search--inline .select2-search__field:focus {
+      background: transparent;
       border: 0;
-      margin: 0;
-      padding: 0;
-      height: 24px;
-      line-height: 24px;
-      font-family: inherit;
       box-shadow: none;
-      background: transparent;
-      vertical-align: top;
-      max-width: 100%;
-    }
-
-    // TAG STYLE
-    .select2-selection__choice {
-      float: none;
-      position: relative;
-      background-color: $primary;
-      border: 1px solid darken($primary, 5%);
-      color: $white;
-      padding: 0 20px 0 6px;
-      margin: 0;
-      border-radius: $border-radius-sm;
-      font-size: 0.8125rem;
-      height: 24px;
-      line-height: 22px; // 24px - 2px border
       box-sizing: border-box;
-      display: inline-flex;
-      align-items: center;
+      display: block;
+      flex: 1 1 auto;
+      font-family: inherit;
+      height: 1.5em;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 $input-padding-x * 0.5;
+      resize: none;
+      width: 100% !important;
     }
 
-    // FIX REMOVE BUTTON POSITION
-    .select2-selection__choice__remove {
-      position: absolute;
-      right: 4px;
-      left: auto;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      background: transparent;
-      color: $white;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 1;
-      padding: 0 2px;
-
-      &:hover {
-        background: transparent !important;
-        color: $white;
-        opacity: 0.8;
-      }
+    .select2-search--inline .select2-search__field::placeholder {
+      line-height: inherit;
     }
   }
 
-  // FOCUS
-  &.select2-container--focus {
-    .select2-selection--single,
-    .select2-selection--multiple {
-      border-color: $input-focus-border-color;
-    }
-    .select2-search__field {
-      border: 0;
+  & .select2-selection--single .select2-selection__rendered li {
+    padding-right: 10px;
+  }
+
+  .input-group-text ~ & {
+    .select2-selection {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
     }
   }
 
-  // INPUT GROUP FIX
   .input-group > &:not(:last-child) {
     .select2-selection {
-      border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
     }
   }
 }
 
-// BOOTSTRAP 5 THEME
-.select2-container--bootstrap5 {
+// Select2 Bootstrap4 Theme overrides
+.select2-container--bootstrap {
   &.select2-container--focus .select2-selection {
     box-shadow: none;
   }
 }
 
-// SMALL INPUT SUPPORT
+// Keep the Bootstrap 5 theme aligned with Bootstrap form controls when using
+// Select2 4.1's nested inline search markup.
+.select2-container--bootstrap {
+  .select2-selection--multiple {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: $input-height;
+    padding: 0;
+
+    .select2-selection__rendered {
+      display: contents;
+    }
+
+    .select2-selection__choice {
+      align-items: center;
+      background-color: var(--bs-body-bg, $white);
+      border-color: $input-border-color;
+      color: var(--bs-body-color, $gray-900);
+      display: inline-flex;
+      float: none;
+      margin: .25rem 0 .25rem .375rem;
+      padding: 0 .375rem;
+    }
+
+    .select2-selection__choice__remove {
+      color: $gray-500;
+      float: none;
+      margin: 0 .25rem 0 0;
+      order: -1;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: transparent;
+        color: $gray-700;
+      }
+    }
+
+    .select2-search--inline {
+      align-items: center;
+      display: flex;
+      flex: 1 1 5rem;
+      height: calc($input-height - 2 * $input-border-width);
+      margin: 0;
+      min-width: 5rem;
+    }
+
+    .select2-search--inline .select2-search__field,
+    .select2-search--inline .select2-search__field:focus,
+    .select2-search--inline textarea.select2-search__field {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      box-sizing: border-box;
+      display: block;
+      flex: 1 1 auto;
+      font-family: inherit;
+      height: 1.5em;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 .375rem;
+      resize: none;
+      width: auto !important;
+    }
+
+    .select2-search--inline .select2-search__field::placeholder {
+      line-height: inherit;
+    }
+  }
+}
+
+// text-sm / form-control-sm override
+select.form-control-sm ~ {
+  .select2-container--default {
+    font-size: 75%;
+  }
+}
+
 .text-sm,
 select.form-control-sm ~ {
   .select2-container--default {
     .select2-selection--single {
-      height: 31px;
-      padding-right: 2.25rem;
+      height: $input-height-sm;
+
       .select2-selection__rendered {
-        margin-top: 0;
-        line-height: normal;
+        margin-top: -.4rem;
+      }
+
+      .select2-selection__arrow {
+        top: -.12rem;
       }
     }
+
     .select2-selection--multiple {
-      min-height: 31px;
-      padding: 3px 8px;
+      min-height: $input-height-sm;
+
       .select2-selection__rendered {
-        min-height: auto;
-        padding: 0;
-        gap: 2px;
-      }
-      .select2-search--inline .select2-search__field {
-        height: 20px;
-        line-height: 20px;
-        margin: 0;
-        font-size: 0.875rem;
-      }
-      .select2-selection__choice {
-        margin: 0;
-        height: 20px;
-        line-height: 18px;
-        font-size: 0.75rem;
-        padding: 0 18px 0 6px;
+        padding: 0 $input-padding-x-sm * 0.5 $input-padding-y-sm;
+        margin-top: -($input-padding-x-sm * .2);
+
+        li:first-child.select2-search.select2-search--inline {
+          margin-left: $input-padding-x-sm * 0.5;
+        }
+
+        .select2-search.select2-search--inline {
+          .select2-search__field {
+            margin-top: 6px;
+          }
+        }
       }
     }
   }
 }
 
-// LARGE INPUT SUPPORT
-select.form-control-lg ~ {
-  .select2-container--default {
-    .select2-selection--single {
-      height: 48px;
-      padding-right: 2.25rem;
-      .select2-selection__rendered {
-        margin-top: 0;
-        line-height: normal;
-        font-size: 1.25rem;
-      }
-    }
-    .select2-selection--multiple {
-      min-height: 48px;
-      padding: 6px 12px;
-      .select2-selection__rendered {
-        min-height: auto;
-        padding: 0;
-        gap: 6px;
-      }
-      .select2-search--inline .select2-search__field {
-        height: 30px;
-        line-height: 30px;
-        margin: 0;
-        font-size: 1.25rem;
-      }
-      .select2-selection__choice {
-        margin: 0;
-        height: 30px;
-        line-height: 28px;
-        font-size: 1rem;
-        padding: 0 24px 0 8px;
-      }
-    }
-  }
-}
-
-// DROPDOWN FIX
+// Dropdown Fix inside maximized card
 .maximized-card .select2-dropdown {
   z-index: 9999;
 }
 
-// THEME COLORS
+// Background colors (theme colors)
 @each $name, $color in $theme-colors {
   @include select2-variant($name, $color);
 }
 
+// Background colors (colors)
 @each $name, $color in $colors {
   @include select2-variant($name, $color);
 }
 
-// DARK MODE
-[data-bs-theme="dark"] {
+// Keep the inline search input borderless when a color variant is focused.
+.select2-container--default .select2-selection--multiple .select2-search--inline .select2-search__field:focus {
+  border: 0;
+  box-shadow: none;
+  outline: 0;
+}
+
+@include dark-mode () {
+  .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+    background-color: var(--bs-body-bg, $dark);
+    border-color: $gray-600;
+    color: var(--bs-body-color, $gray-300);
+  }
+
+  .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
+    color: $gray-500;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $gray-300;
+    }
+  }
+
   .select2-selection {
     background-color: $dark;
     border-color: $gray-600;
   }
-  .select2-selection--single .select2-selection__rendered {
-    color: $white;
+
+  .select2-container--disabled .select2-selection--single {
+    background-color: tint-color($dark, 7.5%);
   }
-  .select2-dropdown,
-  .select2-search__field {
+
+  .select2-selection--single {
     background-color: $dark;
     border-color: $gray-600;
-    color: $white;
+
+    .select2-selection__rendered {
+      color: $white;
+    }
+  }
+  .select2-dropdown .select2-search__field,
+  .select2-search--inline .select2-search__field {
+    background-color: $dark;
+    border-color: $gray-600;
+    color: white;
+  }
+  .select2-dropdown {
+    background-color: $dark;
+    border-color: $gray-600;
+    color: white;
   }
   .select2-results__option[aria-selected="true"] {
-    background-color: lighten($dark, 5%) !important;
+    background-color: tint-color($dark, 5%) !important;
     color: $gray-300;
   }
-  .select2-container--default .select2-selection--single {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  .select2-container .select2-search--inline .select2-search__field {
+    background-color: transparent;
+    color: $white;
+  }
+
+  .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+    color: $white;
+  }
+
+  // Background colors (theme colors)
+  @each $name, $color in $theme-colors-alt {
+    @include select2-variant($name, $color);
+  }
+
+  // Background colors (colors)
+  @each $name, $color in $colors-alt {
+    @include select2-variant($name, $color);
+  }
+}
+
+// Use Bootstrap 5's native select indicator for the Bootstrap Select2 theme.
+.select2-container--bootstrap {
+  --bs-form-select-bg-img: #{escape-svg($form-select-indicator)};
+
+  .select2-selection--single .select2-selection__arrow {
+    bottom: 0;
+    height: 100%;
+    right: $form-select-padding-x;
+    top: 0;
+    width: 1rem;
+
+    &::after {
+      background-image: var(--bs-form-select-bg-img);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: $form-select-bg-size;
+      content: "";
+      height: 12px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+    }
+
+    b {
+      display: none;
+    }
+  }
+
+  .form-group-lg & .select2-selection--multiple {
+    align-items: center;
+    min-height: $input-height-lg;
+
+    .select2-search--inline {
+      align-items: center;
+      height: auto;
+      min-height: calc($input-height-lg - 2 * $input-border-width);
+    }
+
+    .select2-search--inline .select2-search__field,
+    .select2-search--inline textarea.select2-search__field {
+      align-self: center;
+      height: 1.5em;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 $input-padding-x-lg;
+    }
+  }
+
+  .form-group-sm & .select2-selection--multiple {
+    align-items: center;
+    font-size: $font-size-sm;
+    min-height: $input-height-sm;
+
+    .select2-search--inline {
+      align-items: center;
+      height: auto;
+      min-height: calc($input-height-sm - 2 * $input-border-width);
+    }
+
+    .select2-search--inline .select2-search__field,
+    .select2-search--inline textarea.select2-search__field {
+      align-self: center;
+      font-size: $font-size-sm;
+      height: 1.5em;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 $input-padding-x-sm;
+    }
+  }
+}
+
+@include dark-mode () {
+  .select2-container--bootstrap {
+    --bs-form-select-bg-img: #{escape-svg($form-select-indicator-dark)};
   }
 }

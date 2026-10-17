@@ -34,40 +34,40 @@
 
   // Themes for different contexts
   &.callout-danger {
-    border-left-color: darken($danger, 10%);
+    border-left-color: shade-color($danger, 10%);
   }
 
   &.callout-warning {
-    border-left-color: darken($warning, 10%);
+    border-left-color: shade-color($warning, 10%);
   }
 
   &.callout-info {
-    border-left-color: darken($info, 10%);
+    border-left-color: shade-color($info, 10%);
   }
 
   &.callout-success {
-    border-left-color: darken($success, 10%);
+    border-left-color: shade-color($success, 10%);
   }
 }
 
 @include dark-mode () {
   .callout {
-    background-color: lighten($dark, 5%);
+    background-color: tint-color($dark, 5%);
 
     &.callout-danger {
-      border-left-color: lighten($danger-alt, 10%);
+      border-left-color: tint-color($danger-alt, 10%);
     }
 
     &.callout-warning {
-      border-left-color: lighten($warning-alt, 10%);
+      border-left-color: tint-color($warning-alt, 10%);
     }
 
     &.callout-info {
-      border-left-color: lighten($info-alt, 10%);
+      border-left-color: tint-color($info-alt, 10%);
     }
 
     &.callout-success {
-      border-left-color: lighten($success-alt, 10%);
+      border-left-color: tint-color($success-alt, 10%);
     }
   }
 }

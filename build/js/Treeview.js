@@ -1,74 +1,52 @@
-/**
- * --------------------------------------------
- * AdminLTE Treeview.js
- * License MIT
- * --------------------------------------------
- */
+import { animateHeight, dispatch, getConfig, getInstance, onReady, setInstance } from './Native'
+import PushMenu from './PushMenu'
 
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'Treeview'
-const DATA_KEY = 'lte.treeview'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_EXPANDED = `expanded${EVENT_KEY}`
-const EVENT_COLLAPSED = `collapsed${EVENT_KEY}`
-const EVENT_LOAD_DATA_API = `load${EVENT_KEY}`
-
-const SELECTOR_LI = '.nav-item'
+const EVENT_EXPANDED = 'expanded.lte.treeview'
+const EVENT_COLLAPSED = 'collapsed.lte.treeview'
+const SELECTOR_TREEVIEW = '[data-widget="treeview"]'
+const SELECTOR_NAV_ITEM = '.nav-item'
 const SELECTOR_LINK = '.nav-link'
 const SELECTOR_TREEVIEW_MENU = '.nav-treeview'
-const SELECTOR_OPEN = '.menu-open'
-const SELECTOR_DATA_WIDGET = '[data-widget="treeview"]'
-
 const CLASS_NAME_OPEN = 'menu-open'
 const CLASS_NAME_IS_OPENING = 'menu-is-opening'
 const CLASS_NAME_SIDEBAR_COLLAPSED = 'sidebar-collapse'
 
 const Default = {
-  trigger: `${SELECTOR_DATA_WIDGET} ${SELECTOR_LINK}`,
+  trigger: '.nav-link',
   animationSpeed: 300,
   accordion: true,
   expandSidebar: false,
   sidebarButtonSelector: '[data-widget="pushmenu"]'
 }
 
-/**
- * Class Definition
- * ====================================================
- */
 class Treeview {
-  constructor(element, config) {
-    this._config = config
+  constructor(element, config = {}) {
     this._element = element
+    this._config = getConfig(element, Default, config)
+    setInstance(Treeview, element, this)
   }
 
-  // Public
-
-  _init() {
-    $(`${SELECTOR_LI}${SELECTOR_OPEN} ${SELECTOR_TREEVIEW_MENU}${SELECTOR_OPEN}`).css('display', 'block')
-    this._setupListeners()
+  init() {
+    this._element.querySelectorAll(`${SELECTOR_NAV_ITEM}.${CLASS_NAME_OPEN} > ${SELECTOR_TREEVIEW_MENU}`).forEach(menu => {
+      menu.hidden = false
+      menu.style.display = 'block'
+    })
   }
 
-  expand(treeviewMenu, parentLi) {
-    const expandedEvent = $.Event(EVENT_EXPANDED)
-
+  expand(menu, parentItem) {
     if (this._config.accordion) {
-      const openMenuLi = parentLi.siblings(SELECTOR_OPEN).first()
-      const openTreeview = openMenuLi.find(SELECTOR_TREEVIEW_MENU).first()
-      this.collapse(openTreeview, openMenuLi)
+      [...parentItem.parentElement.children]
+        .filter(item => item !== parentItem && item.classList.contains(CLASS_NAME_OPEN))
+        .forEach(item => this.collapse(item.querySelector(`:scope > ${SELECTOR_TREEVIEW_MENU}`), item))
     }
 
-    parentLi.addClass(CLASS_NAME_IS_OPENING)
-    treeviewMenu.stop().slideDown(this._config.animationSpeed, () => {
-      parentLi.addClass(CLASS_NAME_OPEN)
-      $(this._element).trigger(expandedEvent)
+    parentItem.classList.add(CLASS_NAME_IS_OPENING)
+    menu.hidden = false
+    menu.style.display = 'block'
+    animateHeight(menu, true, this._config.animationSpeed, () => {
+      parentItem.classList.add(CLASS_NAME_OPEN)
+      parentItem.classList.remove(CLASS_NAME_IS_OPENING)
+      dispatch(this._element, EVENT_EXPANDED, { relatedTarget: parentItem })
     })
 
     if (this._config.expandSidebar) {
@@ -76,104 +54,75 @@ class Treeview {
     }
   }
 
-  collapse(treeviewMenu, parentLi) {
-    const collapsedEvent = $.Event(EVENT_COLLAPSED)
+  collapse(menu, parentItem) {
+    if (!menu || !parentItem) {
+      return
+    }
 
-    parentLi.removeClass(`${CLASS_NAME_IS_OPENING} ${CLASS_NAME_OPEN}`)
-    treeviewMenu.stop().slideUp(this._config.animationSpeed, () => {
-      $(this._element).trigger(collapsedEvent)
-      treeviewMenu.find(`${SELECTOR_OPEN} > ${SELECTOR_TREEVIEW_MENU}`).slideUp()
-      treeviewMenu.find(SELECTOR_OPEN).removeClass(`${CLASS_NAME_IS_OPENING} ${CLASS_NAME_OPEN}`)
+    parentItem.classList.remove(CLASS_NAME_IS_OPENING, CLASS_NAME_OPEN)
+    animateHeight(menu, false, this._config.animationSpeed, () => {
+      menu.hidden = true
+      menu.querySelectorAll(`${SELECTOR_NAV_ITEM}.${CLASS_NAME_OPEN}`).forEach(item => {
+        item.classList.remove(CLASS_NAME_IS_OPENING, CLASS_NAME_OPEN)
+        const childMenu = item.querySelector(`:scope > ${SELECTOR_TREEVIEW_MENU}`)
+        if (childMenu) {
+          childMenu.hidden = true
+        }
+      })
+      dispatch(this._element, EVENT_COLLAPSED, { relatedTarget: parentItem })
     })
   }
 
-  toggle(event) {
-    const $relativeTarget = $(event.currentTarget)
-    const $parent = $relativeTarget.parent()
-
-    let treeviewMenu = $parent.find(`> ${SELECTOR_TREEVIEW_MENU}`)
-
-    if (!treeviewMenu.is(SELECTOR_TREEVIEW_MENU)) {
-      if (!$parent.is(SELECTOR_LI)) {
-        treeviewMenu = $parent.parent().find(`> ${SELECTOR_TREEVIEW_MENU}`)
-      }
-
-      if (!treeviewMenu.is(SELECTOR_TREEVIEW_MENU)) {
-        return
-      }
+  toggle(event, link) {
+    const parentItem = link.closest(SELECTOR_NAV_ITEM)
+    const menu = parentItem?.querySelector(`:scope > ${SELECTOR_TREEVIEW_MENU}`)
+    if (!parentItem || !menu) {
+      return
     }
 
     event.preventDefault()
-
-    const parentLi = $relativeTarget.parents(SELECTOR_LI).first()
-    const isOpen = parentLi.hasClass(CLASS_NAME_OPEN)
-
-    if (isOpen) {
-      this.collapse($(treeviewMenu), parentLi)
+    if (parentItem.classList.contains(CLASS_NAME_OPEN)) {
+      this.collapse(menu, parentItem)
     } else {
-      this.expand($(treeviewMenu), parentLi)
+      this.expand(menu, parentItem)
     }
-  }
-
-  // Private
-
-  _setupListeners() {
-    const elementId = this._element.attr('id') !== undefined ? `#${this._element.attr('id')}` : ''
-    $(document).on('click', `${elementId}${this._config.trigger}`, event => {
-      this.toggle(event)
-    })
   }
 
   _expandSidebar() {
-    if ($('body').hasClass(CLASS_NAME_SIDEBAR_COLLAPSED)) {
-      $(this._config.sidebarButtonSelector).PushMenu('expand')
+    if (document.body.classList.contains(CLASS_NAME_SIDEBAR_COLLAPSED)) {
+      const button = document.querySelector(this._config.sidebarButtonSelector)
+      if (button) {
+        PushMenu.getOrCreateInstance(button).expand()
+      }
     }
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
+  static getInstance(element) {
+    return getInstance(Treeview, element)
+  }
 
-      if (!data) {
-        data = new Treeview($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
+  static getOrCreateInstance(element, config = {}) {
+    return Treeview.getInstance(element) ?? new Treeview(element, config)
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-
-$(window).on(EVENT_LOAD_DATA_API, () => {
-  $(SELECTOR_DATA_WIDGET).each(function () {
-    Treeview._jQueryInterface.call($(this), 'init')
+onReady(() => {
+  document.querySelectorAll(SELECTOR_TREEVIEW).forEach(element => {
+    Treeview.getOrCreateInstance(element).init()
   })
 })
 
-/**
- * jQuery API
- * ====================================================
- */
+document.addEventListener('click', event => {
+  const link = event.target instanceof Element ? event.target.closest(`${SELECTOR_TREEVIEW} ${SELECTOR_LINK}`) : null
+  const root = link?.closest(SELECTOR_TREEVIEW)
+  if (!root) {
+    return
+  }
 
-$.fn[NAME] = Treeview._jQueryInterface
-$.fn[NAME].Constructor = Treeview
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return Treeview._jQueryInterface
-}
+  const instance = Treeview.getOrCreateInstance(root)
+  if (link.matches(instance._config.trigger)) {
+    instance.toggle(event, link)
+  }
+})
 
 export default Treeview

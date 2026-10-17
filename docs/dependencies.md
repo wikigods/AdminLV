@@ -8,9 +8,9 @@ title: Dependencies & Plugins
 AdminLTE depends on two main frameworks. The downloadable package contains both of these libraries, so you don't have to manually download them.
 {: .lead}
 
-- [Bootstrap 4.6](https://getbootstrap.com/)
+- [Bootstrap 5](https://getbootstrap.com/)
 - [jQuery 3.5.1+](https://jquery.com/)
-- [Popper.js 1.16.1+](https://popper.js.org/)
+- [Popper.js 2](https://popper.js.org/)
 - [All other plugins are listed below](#plugins)
 
 #### Plugins
@@ -52,9 +52,7 @@ AdminLTE makes use of the following plugins. For documentation, updates or licen
       <li><a href="https://github.com/RobinHerbots/Inputmask/" rel="noopener" target="_blank">Inputmask</a></li>
       <li><a href="http://ionden.com/a/plugins/ion.rangeSlider/" rel="noopener" target="_blank">Ion.RangeSlider</a></li>
       <li><a href="https://select2.org/" rel="noopener" target="_blank">Select2</a></li>
-      <li><a href="https://tempusdominus.github.io/bootstrap-4/" rel="noopener" target="_blank">Tempus Dominus</a></li>
-      <li><a href="https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox#readme" rel="noopener" target="_blank">Bootstrap4 Duallistbox</a></li>
-      <li><a href="https://github.com/Johann-S/bs-custom-file-input#readme" rel="noopener" target="_blank">bs-custom-file-input</a></li>
+      <li><a href="https://air-datepicker.com/" rel="noopener" target="_blank">Air Datepicker</a></li>
       <li><a href="https://github.com/Johann-S/bs-stepper#readme" rel="noopener" target="_blank">bs-stepper</a></li>
     </ul>
   </div>
@@ -71,7 +69,7 @@ AdminLTE makes use of the following plugins. For documentation, updates or licen
     <ul class="list-unstyled">
       <li><h4>Table Grids</h4></li>
       <li><a href="https://datatables.net/" rel="noopener" target="_blank">DataTables</a></li>
-      <li><a href="https://datatables.net/extensions/" rel="noopener" target="_blank">DataTables (Included all open-source extensions with Bootstrap 4 styling)</a></li>
+      <li><a href="https://datatables.net/extensions/" rel="noopener" target="_blank">DataTables (Included all open-source extensions with Bootstrap 5 styling)</a></li>
       <li><a href="http://js-grid.com/" rel="noopener" target="_blank">jsGrid</a></li>
     </ul>
   </div>

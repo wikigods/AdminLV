@@ -4,14 +4,14 @@
     <img src="{{ '/assets/img/logo-xl.png' | prepend: site.baseurl }}" alt="AdminLTE Docs Logo Large" class="brand-image-xs logo-xl" style="left: 12px">
   </a>
   <div class="sidebar">
-    <div class="form-inline mt-2">
+    <div class="d-flex flex-wrap align-items-center mt-2">
       <div class="input-group" data-widget="sidebar-search">
         <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
+        
           <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
+            <i class="fa-solid fa-magnifying-glass fa-fw"></i>
           </button>
-        </div>
+        
       </div>
     </div>
     <nav class="mt-2">
@@ -36,7 +36,7 @@
               <i class="nav-icon {{ item.icon }}"></i>
               <p>
                 {{ item.title }}
-                {% if item.subitems %}<i class="right fas fa-angle-left"></i>{% endif %}
+                {% if item.subitems %}<i class="right fa-solid fa-angle-left"></i>{% endif %}
               </p>
             </a>
 
@@ -46,7 +46,7 @@
                 {%- assign subitem_url = '/' | append: subitem.url -%}
                 <li class="nav-item">
                   <a href="{{ subitem.url | prepend: "/" | prepend: site.baseurl }}" class="nav-link{% if subitem_url == page.url %} active{% endif %}">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa-regular fa-circle nav-icon"></i>
                     <p>{{ subitem.title }}</p>
                   </a>
                 </li>

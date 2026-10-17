@@ -13,7 +13,7 @@ The card component is the most widely used component through out this template. 
   <div class="card-header">
     <h3 class="card-title">Default Card Example</h3>
     <div class="card-tools">
-      <span class="badge badge-primary">Label</span>
+      <span class="badge bg-primary">Label</span>
     </div>
   </div>
   <div class="card-body">
@@ -31,7 +31,7 @@ The card component is the most widely used component through out this template. 
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="badge badge-primary">Label</span>
+      <span class="badge bg-primary">Label</span>
     </div>
     <!-- /.card-tools -->
   </div>
@@ -521,11 +521,11 @@ AdminLTE data-card-widget attribute provides cards with the ability to collapse 
 
     <div class="card-tools">
       <!-- This will cause the card to maximize when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fa-solid fa-expand"></i></button>
       <!-- This will cause the card to collapse when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa-solid fa-minus"></i></button>
       <!-- This will cause the card to be removed when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <!-- /.card-tools -->
   </div>
@@ -547,7 +547,7 @@ To simulate a loading state, simply place this code before the `.card` closing t
 
 ```html
 <div class="overlay">
-  <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+  <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
 </div>
 ```
 
@@ -561,7 +561,7 @@ To simulate a loading state, simply place this code before the `.card` closing t
         The body of the card
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -574,7 +574,7 @@ To simulate a loading state, simply place this code before the `.card` closing t
         The body of the card
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -587,7 +587,7 @@ To simulate a loading state, simply place this code before the `.card` closing t
         The body of the card
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -600,7 +600,7 @@ To simulate a loading state, simply place this code before the `.card` closing t
         The body of the card
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -611,7 +611,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
 
 ```html
 <div class="overlay dark">
-  <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+  <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
 </div>
 ```
 
@@ -625,7 +625,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         The body of the card
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -638,7 +638,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         The body of the card
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -651,7 +651,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         The body of the card
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -664,7 +664,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         The body of the card
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>

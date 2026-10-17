@@ -1,10 +1,4 @@
-import { globalPlugins } from '@fullcalendar/core/index.js';
-export * from '@fullcalendar/core/index.js';
-import interactionPlugin__default from '@fullcalendar/interaction/index.js';
-export * from '@fullcalendar/interaction/index.js';
-import dayGridPlugin from '@fullcalendar/daygrid/index.js';
-import timeGridPlugin from '@fullcalendar/timegrid/index.js';
-import listPlugin from '@fullcalendar/list/index.js';
-import multiMonthPlugin from '@fullcalendar/multimonth/index.js';
-
-globalPlugins.push(interactionPlugin__default, dayGridPlugin, timeGridPlugin, listPlugin, multiMonthPlugin);
+export { C as Calendar, C as default } from './chunks/41b24878.js';
+export { J as JsonRequestError, g as globalLocales, a as globalPlugins } from './chunks/9495217e.js';
+export { j as joinClassNames } from './chunks/44c8e1c1.js';
+export { C as CalendarController, f as formatDate, a as formatRange, s as sliceEvents, v as version } from './chunks/85db4926.js';

@@ -9,14 +9,16 @@
 // Bootstrap
 // ---------------------------------------------------
 @import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
 @import "../bootstrap-variables";
 @import "bootstrap/scss/mixins";
-//@import "bootstrap/scss/close";
+@import "bootstrap/scss/close";
 
 // Variables and Mixins
 // ---------------------------------------------------
 @import "../variables";
 @import "../variables-alt";
 @import "../mixins";
+@import "../close";
 
 @import "pages";

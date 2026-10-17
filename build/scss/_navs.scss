@@ -30,8 +30,7 @@
     border-top-right-radius: 0;
     margin-right: -$nav-tabs-border-width;
 
-    &:hover,
-    &:focus {
+    @include hover-focus () {
       border-color: $gray-200 transparent $gray-200 $gray-200;
     }
   }
@@ -52,9 +51,8 @@
       border-top-right-radius: $nav-tabs-border-radius;
       margin-left: -$nav-tabs-border-width;
 
-      &:hover,
-      &:focus {
-        border-color: $gray-200 transparent $gray-200 $gray-200;
+      @include hover-focus () {
+        border-color: $gray-200 $gray-200 $gray-200 transparent;
       }
     }
 
@@ -84,7 +82,7 @@
     .navbar-#{$color} {
       background-color: $value;
       @if $color == dark {
-        border-color: lighten($dark, 10%);
+        border-color: tint-color($dark, 10%);
       }
     }
   }
@@ -120,17 +118,17 @@
   }
 
   .nav-tabs {
-    border-color: lighten($dark, 15%);
+    border-color: tint-color($dark, 15%);
 
     .nav-link:focus,
     .nav-link:hover {
-      border-color: lighten($dark, 15%);
+      border-color: tint-color($dark, 15%);
     }
 
     .nav-item.show .nav-link,
     .nav-link.active {
       background-color: $dark;
-      border-color: var(--#{$prefix}nav-tabs-link-active-border-color);
+      border-color: tint-color($dark, 15%) tint-color($dark, 15%) transparent;
       color: $white;
     }
 
@@ -140,20 +138,20 @@
         &.active,
         &:focus,
         &:hover {
-          border-color: lighten($dark, 15%) transparent lighten($dark, 15%) lighten($dark, 15%);
+          border-color: tint-color($dark, 15%) transparent tint-color($dark, 15%) tint-color($dark, 15%);
         }
         &:focus,
         &:hover {
-          background-color: lighten($dark, 5%);
+          background-color: tint-color($dark, 5%);
         }
       }
       &.nav-tabs-right {
-        border-color: lighten($dark, 15%);
+        border-color: tint-color($dark, 15%);
         .nav-link {
           &.active,
           &:focus,
           &:hover {
-            border-color: lighten($dark, 15%) lighten($dark, 15%) lighten($dark, 15%) transparent;
+            border-color: tint-color($dark, 15%) tint-color($dark, 15%) tint-color($dark, 15%) transparent;
           }
         }
       }
@@ -166,7 +164,7 @@
       .navbar-#{$color} {
         background-color: $value;
         @if $color == dark {
-          border-color: lighten($dark, 10%);
+          border-color: tint-color($dark, 10%);
         }
       }
     }

@@ -50,7 +50,6 @@
     ],
     "prefer-template": "error",
     "prefer-named-capture-group": "off",
-
     "semi": [
       "error",
       "never"
@@ -71,6 +70,18 @@
     "unicorn/prefer-optional-catch-binding": "off",
     "unicorn/prefer-query-selector": "off",
     "unicorn/prefer-set-has": "off",
-    "unicorn/prevent-abbreviations": "off"
+    "unicorn/prevent-abbreviations": "off",
+    "no-new": "off",
+    "unicorn/consistent-existence-index-check": "off",
+    "unicorn/no-typeof-undefined": "off",
+    "unicorn/prefer-at": "off",
+    "unicorn/prefer-global-this": "off",
+    "unicorn/prefer-string-replace-all": "off",
+    "unicorn/no-negated-condition": "off",
+    "unicorn/prefer-node-protocol": "off",
+    "unicorn/switch-case-braces": "off"
+  },
+  "globals": {
+    "AirDatepicker": "readonly"
   }
 }

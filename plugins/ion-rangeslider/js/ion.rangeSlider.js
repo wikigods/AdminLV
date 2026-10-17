@@ -1,6 +1,6 @@
 // Ion.RangeSlider
-// version 2.3.1 Build: 382
-// © Denis Ineshin, 2019
+// version 2.5.0 Build: 387
+// © Denis Ineshin, 2026
 // https://github.com/IonDen
 //
 // Project page:    http://ionden.com/a/plugins/ion.rangeSlider/en.html
@@ -27,6 +27,20 @@
     // Service
 
     var plugin_count = 0;
+
+    // Globals that execute their argument instead of formatting it (#535 security
+    // fix). prettify's string-name resolution must never bind one of these: in
+    // values mode with prettify_all_values, prettify is called with raw entries
+    // from `values`, so resolving e.g. "eval" would turn slider config into an
+    // arbitrary-code-execution sink. execScript is legacy IE's global-eval.
+    var prettify_denylist = ["eval", "Function", "setTimeout", "setInterval", "execScript"];
+
+    // The option names that carry a prettify function (or the name of a
+    // global one, #535) and share the string-name resolution block in
+    // validate() -- prettify_grid and prettify_min_max (#306) are new sinks
+    // added alongside the original prettify, so they run through the exact
+    // same denylist/resolve/fallback rules rather than a duplicated block.
+    var prettify_option_names = ["prettify", "prettify_grid", "prettify_min_max"];
 
     // IE8 fix
     var is_old_ie = (function () {
@@ -156,7 +170,7 @@
      * @constructor
      */
     var IonRangeSlider = function (input, options, plugin_count) {
-        this.VERSION = "2.3.1";
+        this.VERSION = "2.5.0";
         this.input = input;
         this.plugin_count = plugin_count;
         this.current_plugin = 0;
@@ -177,6 +191,19 @@
         this.is_active = false;
         this.is_resize = false;
         this.is_click = false;
+        // #507: true from a mousedown/touchstart on a coincident from/to
+        // pair (double mode) until the first real pointermove picks a
+        // direction, or the press is released with no movement at all --
+        // see pointerDown()/pointerMove()/pointerUp(). coincident_pending_x
+        // is the pageX read at that mousedown/touchstart.
+        this.coincident_pending = false;
+        this.coincident_pending_x = 0;
+        // #507: like coincident_pending above, but for the keyboard path --
+        // true only when pointerFocus() just armed its DEFAULT target (no
+        // explicit prior click) onto a pair that is coincident right then;
+        // re-resolved on every key press while the pair stays coincident
+        // and cleared once a press moves a value, see moveByKey().
+        this.coincident_key_pending = false;
 
         options = options || {};
 
@@ -268,7 +295,7 @@
          */
         var $inp = this.$cache.input,
             val = $inp.prop("value"),
-            config, config_from_data, prop;
+            config, config_from_data, prop, i;
 
         // default config
         config = {
@@ -280,12 +307,15 @@
             from: null,
             to: null,
             step: 1,
+            step_from_min: false,
 
             min_interval: 0,
             max_interval: 0,
             drag_interval: false,
+            drag_over_limit: false,
 
             values: [],
+            values_raw: false,
             p_values: [],
 
             from_fixed: false,
@@ -301,6 +331,9 @@
             prettify_enabled: true,
             prettify_separator: " ",
             prettify: null,
+            prettify_grid: null,
+            prettify_min_max: null,
+            prettify_all_values: false,
 
             force_edges: false,
 
@@ -315,6 +348,8 @@
             hide_from_to: false,
 
             prefix: "",
+            min_prefix: "",
+            max_prefix: "",
             postfix: "",
             max_postfix: "",
             decorate_both: true,
@@ -331,13 +366,16 @@
             onStart: null,
             onChange: null,
             onFinish: null,
-            onUpdate: null
+            onUpdate: null,
+            onInit: null
         };
 
 
         // check if base element is input
         if ($inp[0].nodeName !== "INPUT") {
-            console && console.warn && console.warn("Base element should be <input>!", $inp[0]);
+            if (typeof console !== "undefined" && console.warn) {
+                console.warn("Base element should be <input>!", $inp[0]);
+            }
         }
 
 
@@ -351,12 +389,15 @@
             from: $inp.data("from"),
             to: $inp.data("to"),
             step: $inp.data("step"),
+            step_from_min: $inp.data("stepFromMin"),
 
             min_interval: $inp.data("minInterval"),
             max_interval: $inp.data("maxInterval"),
             drag_interval: $inp.data("dragInterval"),
+            drag_over_limit: $inp.data("dragOverLimit"),
 
             values: $inp.data("values"),
+            values_raw: $inp.data("valuesRaw"),
 
             from_fixed: $inp.data("fromFixed"),
             from_min: $inp.data("fromMin"),
@@ -370,6 +411,10 @@
 
             prettify_enabled: $inp.data("prettifyEnabled"),
             prettify_separator: $inp.data("prettifySeparator"),
+            prettify: $inp.data("prettify"),
+            prettify_grid: $inp.data("prettifyGrid"),
+            prettify_min_max: $inp.data("prettifyMinMax"),
+            prettify_all_values: $inp.data("prettifyAllValues"),
 
             force_edges: $inp.data("forceEdges"),
 
@@ -384,6 +429,8 @@
             hide_from_to: $inp.data("hideFromTo"),
 
             prefix: $inp.data("prefix"),
+            min_prefix: $inp.data("minPrefix"),
+            max_prefix: $inp.data("maxPrefix"),
             postfix: $inp.data("postfix"),
             max_postfix: $inp.data("maxPostfix"),
             decorate_both: $inp.data("decorateBoth"),
@@ -394,13 +441,17 @@
             disable: $inp.data("disable"),
             block: $inp.data("block"),
 
-            extra_classes: $inp.data("extraClasses"),
+            extra_classes: $inp.data("extraClasses")
         };
         config_from_data.values = config_from_data.values && config_from_data.values.split(",");
 
         for (prop in config_from_data) {
             if (config_from_data.hasOwnProperty(prop)) {
-                if (config_from_data[prop] === undefined || config_from_data[prop] === "") {
+                // #681: for every other option "" means "not set", but for
+                // prettify_separator an empty string is itself a meaningful
+                // value (it disables the thousands separator), so it is the
+                // one key excepted from the empty-string strip below.
+                if (config_from_data[prop] === undefined || (config_from_data[prop] === "" && prop !== "prettify_separator")) {
                     delete config_from_data[prop];
                 }
             }
@@ -435,6 +486,22 @@
 
         // data config extends config
         $.extend(config, config_from_data);
+
+        // #505: data-values is a comma-separated string, so "10, 20, 30"
+        // carries a leading space into every entry after the first. With
+        // values_raw on those spaces would reach from_value, the input and
+        // the labels, so the split entries are trimmed here, once the option
+        // has been resolved from the data attribute and the JS option in the
+        // usual order (an empty data-values-raw attribute means "not set",
+        // like every other data-* option). A JS values array is never
+        // touched: only entries that came from the comma split are trimmed,
+        // and only when values_raw is on.
+        if (config_from_data.values && config.values_raw) {
+            for (i = 0; i < config.values.length; i++) {
+                config.values[i] = config.values[i].replace(/^\s+|\s+$/g, "");
+            }
+        }
+
         this.options = config;
 
 
@@ -456,10 +523,14 @@
             from: this.options.from,
             from_percent: 0,
             from_value: null,
+            from_min: this.options.from_min,
+            from_max: this.options.from_max,
 
             to: this.options.to,
             to_percent: 0,
-            to_value: null
+            to_value: null,
+            to_min: this.options.to_min,
+            to_max: this.options.to_max
         };
 
 
@@ -479,6 +550,15 @@
             this.coords.p_step = this.convertToPercent(this.options.step, true);
 
             this.target = "base";
+            // #507: init() re-runs on update()/reset() (remove() + init(),
+            // not the constructor), so a flag left armed by a press or focus
+            // from before the re-init -- e.g. a still-pending
+            // coincident_key_pending from a focus that happened just before
+            // an update() call -- must not survive into the rebuilt
+            // instance's own $cache handles.
+            this.coincident_pending = false;
+            this.coincident_pending_x = 0;
+            this.coincident_key_pending = false;
 
             this.toggleInput();
             this.append();
@@ -496,6 +576,11 @@
 
                 // callbacks called
                 this.callOnStart();
+            }
+
+            if (!is_update) {
+                this.drawHandles();
+                this.callOnInit();
             }
 
             this.updateScene();
@@ -613,8 +698,18 @@
                     this.$cache.s_from.removeClass("type_last");
                     break;
                 case "both":
-                    this.coords.p_gap_left = this.toFixed(this.coords.p_pointer - this.coords.p_from_fake);
-                    this.coords.p_gap_right = this.toFixed(this.coords.p_to_fake - this.coords.p_pointer);
+                    // #319: captured in REAL percent (matching
+                    // p_from_real/p_to_real, the space calc()'s "both" case
+                    // adds them into), not fake percent (p_from_fake/
+                    // p_to_fake use the handle-width-compressed space). With
+                    // a non-zero handle width the two spaces differ, so a
+                    // fake-percent gap added onto a real-percent pointer
+                    // position doesn't reproduce the actual gap -- it makes
+                    // the resolved pair drift below the true position by
+                    // roughly (p_handle / 100) * (to - from), most visibly
+                    // as a step backward on the very first tick of a drag.
+                    this.coords.p_gap_left = this.toFixed(this.convertToRealPercent(this.coords.p_pointer) - this.coords.p_from_real);
+                    this.coords.p_gap_right = this.toFixed(this.coords.p_to_real - this.convertToRealPercent(this.coords.p_pointer));
                     this.$cache.s_to.removeClass("type_last");
                     this.$cache.s_from.removeClass("type_last");
                     break;
@@ -737,23 +832,36 @@
         /**
          * Focus with tabIndex
          *
+         * Only arms keyboard control (current_plugin/target) so key() and
+         * moveByKey() have a handle to act on -- it must not simulate a
+         * click. A synthesized click here previously fired onChange/onFinish
+         * for a value that never moved whenever focus arrived with no target
+         * already set -- a bare Tab, a programmatic .focus(), or a focus
+         * after a relayout had nulled this.target (#742).
+         *
          * @param e {Object} event object
          */
         pointerFocus: function (e) {
             if (!this.target) {
-                var x;
-                var $handle;
+                this.current_plugin = this.plugin_count;
+                this.target = this.options.type === "single" ? "single" : "from";
 
-                if (this.options.type === "single") {
-                    $handle = this.$cache.single;
-                } else {
-                    $handle = this.$cache.from;
-                }
-
-                x = $handle.offset().left;
-                x += ($handle.width() / 2) - 1;
-
-                this.pointerClick("single", {preventDefault: function () {}, pageX: x});
+                // #507: this default target is a guess (no explicit prior
+                // click chose it) -- if the pair happens to be coincident
+                // right now, "from" may be the buried handle the user can
+                // never actually reach with it. Let the key presses that
+                // follow resolve that, mirroring the mouse path's own
+                // coincident_pending (see moveByKey()). An assignment, not
+                // just a conditional "= true": defensive, so a focus that
+                // does NOT qualify (single mode, or a non-coincident pair)
+                // never leaves an older value in place. The ARMING check runs
+                // only here (the resolution in moveByKey() is per press), so a
+                // pair that only becomes coincident through legitimate,
+                // already-armed keyboard movement -- e.g. stepping "from" up
+                // until it meets "to" -- keeps clamping there exactly as
+                // before (#302); that instance never had a "wrong default"
+                // problem to begin with.
+                this.coincident_key_pending = this.options.type !== "single" && this.result.from === this.result.to;
             }
         },
 
@@ -768,8 +876,37 @@
                 return;
             }
 
-            var x = e.pageX || e.originalEvent.touches && e.originalEvent.touches[0].pageX;
+            var x = e.pageX || e.originalEvent.touches && e.originalEvent.touches[0].pageX,
+                hit_target;
+
             this.coords.x_pointer = x - this.coords.x_gap;
+
+            // #507: resolve which handle a coincident-pair press actually
+            // meant to grab from the direction of the first real movement --
+            // moving right means "to", moving left means "from" -- EXCEPT
+            // when that handle is fixed, in which case the other (non-fixed)
+            // handle is chosen instead, regardless of which handle was
+            // actually hit: e.g. with to_fixed, a hit on "to" that then
+            // moves right still resolves to "from" (mirrors chooseHandle()'s
+            // own from_fixed/to_fixed ternary). changeLevel() re-arms
+            // .type_last/state_hover and p_gap for the resolved handle, same
+            // as a fresh pointerDown on it would; if that resolved handle
+            // differs from the one actually hit, the hit handle's own
+            // state_hover (added by pointerDown()'s own changeLevel() call)
+            // is removed below, since changeLevel() only ever adds hover to
+            // its target and never clears a different handle's.
+            if (this.coincident_pending && x !== this.coincident_pending_x) {
+                hit_target = this.target;
+                this.target = x > this.coincident_pending_x ?
+                    (this.options.to_fixed ? "from" : "to") :
+                    (this.options.from_fixed ? "to" : "from");
+                this.coincident_pending = false;
+                this.changeLevel(this.target);
+
+                if (this.target !== hit_target) {
+                    (hit_target === "to" ? this.$cache.s_to : this.$cache.s_from).removeClass("state_hover");
+                }
+            }
 
             this.calc();
         },
@@ -808,6 +945,11 @@
             }
 
             this.dragging = false;
+            // #507: a press-and-release with no movement never reaches
+            // pointerMove()'s own resolution -- clear it here so it can
+            // never leak into the next, unrelated press (see the flag's
+            // declaration in the constructor).
+            this.coincident_pending = false;
         },
 
         /**
@@ -834,6 +976,29 @@
 
             this.current_plugin = this.plugin_count;
             this.target = target;
+            // #507: an explicit press always overrides a keyboard default
+            // that was only ever a guess (see pointerFocus()) and is now
+            // moot -- drop any resolution still pending for it so a later,
+            // unrelated key press never resolves against it.
+            this.coincident_key_pending = false;
+
+            // #507: with a double slider's from/to coincident, the hit
+            // handle (target here) is whichever setTopHandler()/changeLevel()
+            // last put on top, not necessarily the one the user means to
+            // move -- defer committing to it until pointerMove() sees which
+            // way the press actually goes. target stays the hit handle in
+            // the meantime, so drawing code never sees a null target. Both
+            // branches assign (never just the true side), so a press that
+            // does NOT qualify -- including one interrupted before
+            // pointerMove()/pointerUp() ever run again, e.g. a touchcancel or
+            // a mouseup delivered outside the window -- can never leave a
+            // stale true/x behind for the next, unrelated press to pick up.
+            if (this.options.type !== "single" && (target === "from" || target === "to") && this.result.from === this.result.to) {
+                this.coincident_pending = true;
+                this.coincident_pending_x = x;
+            } else {
+                this.coincident_pending = false;
+            }
 
             this.is_active = true;
             this.dragging = true;
@@ -869,6 +1034,8 @@
 
             this.current_plugin = this.plugin_count;
             this.target = target;
+            // #507: see the matching comment in pointerDown().
+            this.coincident_key_pending = false;
 
             this.is_click = true;
             this.coords.x_gap = this.$cache.rs.offset().left;
@@ -916,32 +1083,207 @@
         /**
          * Move by key
          *
+         * Steps the currently keyboard-active handle by exactly one step,
+         * working in real percent (the same space p_from_real/p_to_real/
+         * p_single_real and coords.p_step already live in) and only
+         * converting to a fake-percent pointer position at the very end.
+         * This keeps every press an exact one-step move regardless of
+         * p_handle or any p_gap left over from a previous mouse drag.
+         *
+         * The drag_interval target "both_one" (line click) moves the whole
+         * interval by one step the same way: the target real position is
+         * the interval's midpoint shifted by one step, converted back
+         * through calc()'s own "both_one" math so calc() itself needs no
+         * change for the mouse path. "both" (bar drag) is handled
+         * separately by moveIntervalByKey() -- see there for why.
+         *
          * @param right {boolean} direction to move
          */
         moveByKey: function (right) {
-            var p = this.coords.p_pointer;
-            var p_step = (this.options.max - this.options.min) / 100;
-            p_step = this.options.step / p_step;
+            var p_real, p_fake,
+                step = right ? this.coords.p_step : -this.coords.p_step;
 
-            if (right) {
-                p += p_step;
-            } else {
-                p -= p_step;
+            if (this.target === "both") {
+                this.moveIntervalByKey(step);
+                return;
             }
 
-            this.coords.x_pointer = this.toFixed(this.coords.w_rs / 100 * p);
+            // #507: resolve pointerFocus()'s default-armed target ("from")
+            // for as long as the pair it landed on stays coincident, in case
+            // it defaulted onto a handle buried under that pair -- stepping
+            // it toward the other one would otherwise hit the same calc()
+            // crossing guard the mouse path does, and the key press would
+            // silently do nothing. Re-resolved on EVERY press while pending,
+            // not just the first: a press whose direction is itself blocked
+            // (e.g. increasing "to" from an already-maxed 100/100) leaves
+            // the pair coincident, and a one-shot switch that committed to
+            // "to" there and cleared the flag would then strand the pair --
+            // the opposite-direction press that follows needs the SAME
+            // re-resolution to reach "from" instead. Only committed to the
+            // OTHER handle, same as the mouse path, mirroring
+            // chooseHandle()'s own from_fixed/to_fixed ternary so a fixed
+            // handle is never the one picked; when the direction's own
+            // handle is fixed, this.target is left as it already is (calc()'s
+            // own from_fixed/to_fixed guard turns that press into a no-op,
+            // same as it would for a fixed handle hit directly). The switch
+            // toggles .type_last directly rather than through changeLevel():
+            // that would add state_hover (which only pointerUp() removes) and,
+            // with no pointer position yet, set a p_gap that clamps this very
+            // press to 0, killing the step.
+            if (this.coincident_key_pending && this.result.from === this.result.to) {
+                if (right && !this.options.to_fixed) {
+                    this.target = "to";
+                    this.$cache.s_to.addClass("type_last");
+                    this.$cache.s_from.removeClass("type_last");
+                } else if (!right && !this.options.from_fixed) {
+                    this.target = "from";
+                    this.$cache.s_from.addClass("type_last");
+                    this.$cache.s_to.removeClass("type_last");
+                }
+            }
+
+            switch (this.target) {
+                case "single":
+                    p_real = this.coords.p_single_real + step;
+                    p_fake = this.convertToFakePercent(p_real) + this.coords.p_gap;
+                    break;
+
+                case "to":
+                    p_real = this.coords.p_to_real + step;
+                    p_fake = this.convertToFakePercent(p_real) + this.coords.p_gap;
+                    break;
+
+                case "from":
+                    p_real = this.coords.p_from_real + step;
+                    p_fake = this.convertToFakePercent(p_real) + this.coords.p_gap;
+                    break;
+
+                case "both_one":
+                    // calc()'s "both_one" case centers the interval on the
+                    // pointer's real percent. Move that midpoint by one
+                    // step and keep the click-time coords.p_gap (p_handle /
+                    // 2) so the interval width is unaffected.
+                    p_real = this.result.from_percent + ((this.result.to_percent - this.result.from_percent) / 2) + step;
+                    p_fake = this.convertToFakePercent(p_real) + this.coords.p_gap;
+                    break;
+            }
+
+            if (typeof p_fake === "number") {
+                this.coords.x_pointer = this.toFixed(this.coords.w_rs / 100 * p_fake);
+
+                this.is_key = true;
+                this.calc();
+
+                // #507: only clear once a press has actually moved the pair
+                // apart -- checked here, after calc() has run, rather than
+                // before it, so a press that resolves to a handle whose step
+                // is itself clamped right back to the same coincident value
+                // (e.g. increasing "to" from an already-maxed 100/100) keeps
+                // the flag armed for the next, opposite-direction press to
+                // resolve instead of stranding the pair.
+                if (this.coincident_key_pending && this.result.from !== this.result.to) {
+                    this.coincident_key_pending = false;
+                }
+            }
+        },
+
+        /**
+         * Move the whole drag_interval "both" (bar drag) interval by one
+         * step, keeping its width.
+         *
+         * calc()'s "both" case derives p_from_real/p_to_real from a single
+         * synthesized pointer position offset by p_gap_left/p_gap_right
+         * captured at drag start, then clamps each side independently
+         * through checkDiapason -- so no single pointer position can be
+         * relied on to land both handles on their exact one-step target
+         * once an edge clamp is involved. A live mouse drag never shows
+         * that because pointerDown pins min_interval to the pre-drag width
+         * for the whole gesture (setTempMinInterval()), so calc()'s own
+         * checkMinInterval keeps re-widening the gap back open on every
+         * pointer-move tick of that same drag; a single keyboard step has no
+         * equivalent pinned window to fall back on. This computes
+         * and clamps p_from_real/p_to_real directly instead -- the same
+         * width-preserving edge shift calc()'s own "both_one" case already
+         * uses -- then feeds them straight into calc()'s shared
+         * post-switch rendering by bypassing its target-driven derivation
+         * for this one call. calc() itself is not touched, so the mouse
+         * path is unaffected.
+         *
+         * @param step {Number} signed real-percent step (+coords.p_step to
+         *   move right, -coords.p_step to move left)
+         */
+        moveIntervalByKey: function (step) {
+            if (this.options.from_fixed || this.options.to_fixed) {
+                return;
+            }
+
+            var from_bound_min = this.convertToPercent(typeof this.options.from_min === "number" ? this.options.from_min : this.options.min),
+                from_bound_max = this.convertToPercent(typeof this.options.from_max === "number" ? this.options.from_max : this.options.max),
+                to_bound_min = this.convertToPercent(typeof this.options.to_min === "number" ? this.options.to_min : this.options.min),
+                to_bound_max = this.convertToPercent(typeof this.options.to_max === "number" ? this.options.to_max : this.options.max),
+                new_from = this.coords.p_from_real + step,
+                new_to = this.coords.p_to_real + step,
+                overflow, shortfall,
+                target = this.target;
+
+            if (new_to > to_bound_max) {
+                overflow = new_to - to_bound_max;
+                new_to -= overflow;
+                new_from -= overflow;
+            }
+
+            if (new_from < from_bound_min) {
+                shortfall = from_bound_min - new_from;
+                new_from += shortfall;
+                new_to += shortfall;
+            }
+
+            new_from = this.checkDiapason(new_from, this.options.from_min, this.options.from_max);
+            new_to = this.checkDiapason(new_to, this.options.to_min, this.options.to_max);
+
+            this.coords.p_from_real = new_from;
+            this.coords.p_from_fake = this.convertToFakePercent(new_from);
+            this.coords.p_to_real = new_to;
+            this.coords.p_to_fake = this.convertToFakePercent(new_to);
+
+            // Keep calc()'s "both" branch (the mouse path) from re-deriving
+            // from/to from the pointer and overwriting the values just set;
+            // its switch matches none of the other targets, so it falls
+            // through to the shared post-switch rendering untouched.
+            this.target = null;
             this.is_key = true;
             this.calc();
+            this.target = target;
         },
 
         /**
          * Set visibility and content
          * of Min and Max labels
+         * and mirror the undecorated text onto result.min_pretty/max_pretty
          */
         setMinMax: function () {
             if (!this.options) {
                 return;
             }
+
+            var min_pretty, max_pretty;
+
+            if (this.options.values.length) {
+                min_pretty = this.options.p_values[this.options.min];
+                max_pretty = this.options.p_values[this.options.max];
+            } else {
+                min_pretty = this._prettifyMinMax(this.options.min);
+                max_pretty = this._prettifyMinMax(this.options.max);
+            }
+
+            // result carries the prettified entry regardless of hide_min_max, so
+            // callback consumers always get current data; decorate() (prefix/
+            // postfix), the DOM writes and the width measurement below are
+            // display-only, so they stay below the hide_min_max check (and
+            // labels.w_min/w_max stay 0 for hidden labels, as before) while the
+            // result writes sit above it (#852)
+            this.result.min_pretty = min_pretty;
+            this.result.max_pretty = max_pretty;
 
             if (this.options.hide_min_max) {
                 this.$cache.min[0].style.display = "none";
@@ -950,15 +1292,9 @@
             }
 
             if (this.options.values.length) {
-                this.$cache.min.html(this.decorate(this.options.p_values[this.options.min]));
-                this.$cache.max.html(this.decorate(this.options.p_values[this.options.max]));
+                this.$cache.min.html(this.decorate(min_pretty));
+                this.$cache.max.html(this.decorate(max_pretty));
             } else {
-                var min_pretty = this._prettify(this.options.min);
-                var max_pretty = this._prettify(this.options.max);
-
-                this.result.min_pretty = min_pretty;
-                this.result.max_pretty = max_pretty;
-
                 this.$cache.min.html(this.decorate(min_pretty, this.options.min));
                 this.$cache.max.html(this.decorate(max_pretty, this.options.max));
             }
@@ -1081,12 +1417,41 @@
 
                     this.coords.p_from_real = this.convertToRealPercent(handle_x);
                     this.coords.p_from_real = this.calcWithStep(this.coords.p_from_real);
-                    if (this.coords.p_from_real > this.coords.p_to_real) {
-                        this.coords.p_from_real = this.coords.p_to_real;
+
+                    // #302 scope: push only applies to a genuine drag. A click on
+                    // the line resolves to this same "from"/"to" case (target
+                    // "click" -> chooseHandle(), calc()'s own pre-switch step) with
+                    // is_click already set by pointerClick() before calc() runs --
+                    // without the !this.is_click guard, a click landing inside a
+                    // min_interval-wide gap would push the far handle even though
+                    // the option (and its docs) describe drag-only behavior.
+                    if (this.options.drag_over_limit && !this.is_key && !this.is_click) {
+                        // #302 fix: clamp the dragged handle to its own diapason
+                        // BEFORE computing the push target. Pushing from the raw,
+                        // unclamped pointer position would push "to" further than
+                        // "from" can actually travel, leaving a stale gap once
+                        // "from" gets clamped back afterward (and, compounded with
+                        // max_interval, could pull "from" back out past its own
+                        // from_max/from_min).
+                        this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max);
+
+                        var from_pushed = this.pushHandle(this.coords.p_from_real, this.coords.p_to_real, this.options.to_min, this.options.to_max, this.options.to_fixed, "from");
+
+                        this.coords.p_from_real = from_pushed.current;
+                        this.coords.p_to_real = from_pushed.next;
+
+                        this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max);
+                        this.coords.p_from_real = this.checkMaxInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
+
+                        this.coords.p_to_fake = this.convertToFakePercent(this.coords.p_to_real);
+                    } else {
+                        if (this.coords.p_from_real > this.coords.p_to_real) {
+                            this.coords.p_from_real = this.coords.p_to_real;
+                        }
+                        this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max);
+                        this.coords.p_from_real = this.checkMinInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
+                        this.coords.p_from_real = this.checkMaxInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
                     }
-                    this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max);
-                    this.coords.p_from_real = this.checkMinInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
-                    this.coords.p_from_real = this.checkMaxInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
 
                     this.coords.p_from_fake = this.convertToFakePercent(this.coords.p_from_real);
 
@@ -1099,12 +1464,30 @@
 
                     this.coords.p_to_real = this.convertToRealPercent(handle_x);
                     this.coords.p_to_real = this.calcWithStep(this.coords.p_to_real);
-                    if (this.coords.p_to_real < this.coords.p_from_real) {
-                        this.coords.p_to_real = this.coords.p_from_real;
+
+                    if (this.options.drag_over_limit && !this.is_key && !this.is_click) {
+                        // #302 fix: mirror of the "from" case above -- clamp the
+                        // dragged "to" handle to its own diapason before the push
+                        // target is computed from it.
+                        this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max);
+
+                        var to_pushed = this.pushHandle(this.coords.p_to_real, this.coords.p_from_real, this.options.from_min, this.options.from_max, this.options.from_fixed, "to");
+
+                        this.coords.p_to_real = to_pushed.current;
+                        this.coords.p_from_real = to_pushed.next;
+
+                        this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max);
+                        this.coords.p_to_real = this.checkMaxInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
+
+                        this.coords.p_from_fake = this.convertToFakePercent(this.coords.p_from_real);
+                    } else {
+                        if (this.coords.p_to_real < this.coords.p_from_real) {
+                            this.coords.p_to_real = this.coords.p_from_real;
+                        }
+                        this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max);
+                        this.coords.p_to_real = this.checkMinInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
+                        this.coords.p_to_real = this.checkMaxInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
                     }
-                    this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max);
-                    this.coords.p_to_real = this.checkMinInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
-                    this.coords.p_to_real = this.checkMaxInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
 
                     this.coords.p_to_fake = this.convertToFakePercent(this.coords.p_to_real);
 
@@ -1117,16 +1500,61 @@
 
                     handle_x = this.toFixed(handle_x + (this.coords.p_handle * 0.001));
 
-                    this.coords.p_from_real = this.convertToRealPercent(handle_x) - this.coords.p_gap_left;
-                    this.coords.p_from_real = this.calcWithStep(this.coords.p_from_real);
-                    this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max);
-                    this.coords.p_from_real = this.checkMinInterval(this.coords.p_from_real, this.coords.p_to_real, "from");
-                    this.coords.p_from_fake = this.convertToFakePercent(this.coords.p_from_real);
+                    // #319: both candidates must be resolved BEFORE either
+                    // checkMinInterval call. Resolving "from" (including its
+                    // checkMinInterval) all the way before "to" was ever
+                    // recomputed meant "from" got checked against the
+                    // PREVIOUS tick's this.coords.p_to_real -- stale by one
+                    // pointer-move tick (several calc() calls can land per
+                    // animation frame) -- instead of this tick's fresh "to"
+                    // candidate, causing a spurious clamp (and a doubled
+                    // onChange) on every step boundary while dragging right.
+                    //
+                    // p_gap_left/p_gap_right (captured in changeLevel's
+                    // "both" case) are REAL-percent offsets of the pointer
+                    // from from/to at drag start, so subtracting p_gap_left
+                    // from convertToRealPercent(handle_x) here stays in one
+                    // consistent percent space throughout; "to" is derived
+                    // from that snapped "from" (see the #867 note below), not
+                    // from the pointer.
+                    //
+                    // #867: only "from" is snapped to the step grid; "to" is
+                    // derived from the snapped "from" plus the exact width
+                    // captured at drag start (p_gap_left + p_gap_right),
+                    // instead of being step-snapped independently. Snapping
+                    // both ends independently rounds each to its OWN nearest
+                    // step, which drifts in and out of sync as the pointer
+                    // moves whenever the width isn't a whole number of
+                    // steps -- the reported width alternated between two
+                    // neighboring values instead of staying pinned. Known
+                    // trade-off: "to" now sits off the step grid whenever
+                    // the width itself does (e.g. 807, 812 for a 502-wide
+                    // interval on a step-5 grid).
+                    var p_from_real = this.convertToRealPercent(handle_x) - this.coords.p_gap_left;
+                    p_from_real = this.calcWithStep(p_from_real);
+                    var p_to_real = this.toFixed(p_from_real + this.coords.p_gap_left + this.coords.p_gap_right);
+                    p_from_real = this.checkDiapason(p_from_real, this.options.from_min, this.options.from_max);
+                    p_to_real = this.checkDiapason(p_to_real, this.options.to_min, this.options.to_max);
 
-                    this.coords.p_to_real = this.convertToRealPercent(handle_x) + this.coords.p_gap_right;
-                    this.coords.p_to_real = this.calcWithStep(this.coords.p_to_real);
-                    this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max);
-                    this.coords.p_to_real = this.checkMinInterval(this.coords.p_to_real, this.coords.p_from_real, "to");
+                    // checkMinInterval can push a handle past its OWN
+                    // diapason to hold the pinned gap open (e.g. dragging
+                    // left past from_min: from is held by its clamp while
+                    // to's candidate keeps falling, so checkMinInterval(
+                    // "from") restores the pinned width by pulling from
+                    // below from_min) -- each handle's value must be
+                    // re-clamped to its own diapason right after its
+                    // checkMinInterval call, before the other handle's check
+                    // reads it, or the pushed-past-the-floor/ceiling value
+                    // gets treated as valid and never corrected.
+                    p_from_real = this.checkMinInterval(p_from_real, p_to_real, "from");
+                    p_from_real = this.checkDiapason(p_from_real, this.options.from_min, this.options.from_max);
+                    this.coords.p_from_real = p_from_real;
+
+                    p_to_real = this.checkMinInterval(p_to_real, this.coords.p_from_real, "to");
+                    p_to_real = this.checkDiapason(p_to_real, this.options.to_min, this.options.to_max);
+                    this.coords.p_to_real = p_to_real;
+
+                    this.coords.p_from_fake = this.convertToFakePercent(this.coords.p_from_real);
                     this.coords.p_to_fake = this.convertToFakePercent(this.coords.p_to_real);
 
                     break;
@@ -1171,10 +1599,17 @@
 
                 this.result.from_percent = this.coords.p_single_real;
                 this.result.from = this.convertToValue(this.coords.p_single_real);
-                this.result.from_pretty = this._prettify(this.result.from);
 
                 if (this.options.values.length) {
+                    // #661: values mode reads the entry's prettified text from
+                    // options.p_values (validate() ran prettify once per entry
+                    // with the real value); calling _prettify(this.result.from)
+                    // here would hand the user's prettify function the index
+                    // instead of the value.
+                    this.result.from_pretty = this.options.p_values[this.result.from];
                     this.result.from_value = this.options.values[this.result.from];
+                } else {
+                    this.result.from_pretty = this._prettify(this.result.from);
                 }
             } else {
                 this.coords.p_bar_x = this.toFixed(this.coords.p_from_fake + (this.coords.p_handle / 2));
@@ -1182,14 +1617,18 @@
 
                 this.result.from_percent = this.coords.p_from_real;
                 this.result.from = this.convertToValue(this.coords.p_from_real);
-                this.result.from_pretty = this._prettify(this.result.from);
                 this.result.to_percent = this.coords.p_to_real;
                 this.result.to = this.convertToValue(this.coords.p_to_real);
-                this.result.to_pretty = this._prettify(this.result.to);
 
                 if (this.options.values.length) {
+                    // #661: values mode -- see the single branch's comment above.
+                    this.result.from_pretty = this.options.p_values[this.result.from];
                     this.result.from_value = this.options.values[this.result.from];
+                    this.result.to_pretty = this.options.p_values[this.result.to];
                     this.result.to_value = this.options.values[this.result.to];
+                } else {
+                    this.result.from_pretty = this._prettify(this.result.from);
+                    this.result.to_pretty = this._prettify(this.result.to);
                 }
             }
 
@@ -1415,7 +1854,17 @@
 
                 this.writeToInput();
 
-                if ((this.old_from !== this.result.from || this.old_to !== this.result.to) && !this.is_start) {
+                // #851: pointerUp()'s forced redraw re-enters this block
+                // even when the last pointer-move tick already drew this
+                // exact value (the normal way most mouse/touch drags end),
+                // so onChange must be gated on an actual value delta, not
+                // just on force_redraw/is_key. Computed once here, before
+                // old_from/old_to are overwritten below, and reused for the
+                // change/input DOM-event trigger, which already made the
+                // same comparison.
+                var changed = this.old_from !== this.result.from || this.old_to !== this.result.to;
+
+                if (changed && !this.is_start) {
                     this.$cache.input.trigger("change");
                     this.$cache.input.trigger("input");
                 }
@@ -1424,7 +1873,7 @@
                 this.old_to = this.result.to;
 
                 // callbacks call
-                if (!this.is_resize && !this.is_update && !this.is_start && !this.is_finish) {
+                if (changed && !this.is_resize && !this.is_update && !this.is_start && !this.is_finish) {
                     this.callOnChange();
                 }
                 if (this.is_key || this.is_click) {
@@ -1714,6 +2163,35 @@
                 }
             }
         },
+        /**
+         * Fires onInit callback
+         *
+         * Fires exactly once per construction, right after the initial
+         * render pass (init() calls this.drawHandles() directly, then
+         * this.callOnInit(), before arming the idle render loop) -- unlike
+         * onStart, which fires before that pass. DOM edits made inside
+         * onInit therefore stick, where the same edit made inside onStart
+         * would be overwritten by that first render. Exception: a
+         * container hidden (zero width) at construction has no real render
+         * yet at this point (drawHandles() bails out early when the
+         * container has no width), so an edit made here does not survive
+         * the later render that runs once the container becomes visible.
+         */
+        callOnInit: function () {
+            if (!this.options) {
+                return;
+            }
+
+            this.writeToInput();
+
+            if (this.options.onInit && typeof this.options.onInit === "function") {
+                if (this.options.scope) {
+                    this.options.onInit.call(this.options.scope, this.result);
+                } else {
+                    this.options.onInit(this.result);
+                }
+            }
+        },
 
 
 
@@ -1762,6 +2240,41 @@
         },
 
         /**
+         * Count the number of decimal places in a number.
+         *
+         * #684: Number#toString() switches to exponent notation for
+         * |x| < 1e-6 (e.g. "1e-8") and |x| >= 1e21 (e.g. "2.5e+21"), so a
+         * plain split on "." either finds nothing or a "." that belongs to
+         * the mantissa, not the whole number. Split the mantissa and
+         * exponent apart first in that case and derive the decimal count
+         * from both.
+         *
+         * @param num {Number}
+         * @returns {Number} number of decimal places (0 when there are none)
+         */
+        getDecimalPlaces: function (num) {
+            var num_str = num.toString(),
+                e_index = num_str.indexOf("e"),
+                mantissa, exponent, mantissa_decimals, decimals;
+
+            // Number#toString() emits a lowercase "e" only; validate() has
+            // already coerced every option this sees to a Number.
+            if (e_index === -1) {
+                decimals = num_str.split(".")[1] ? num_str.split(".")[1].length : 0;
+            } else {
+                mantissa = num_str.slice(0, e_index);
+                exponent = parseInt(num_str.slice(e_index + 1), 10);
+                mantissa_decimals = mantissa.split(".")[1] ? mantissa.split(".")[1].length : 0;
+                decimals = Math.max(0, mantissa_decimals - exponent);
+            }
+
+            // Number#toFixed() throws above 20 digits on the ES3/ES5 engines
+            // this file targets (the toFixed helper below relies on the same
+            // ceiling), so never hand back more than that.
+            return Math.min(20, decimals);
+        },
+
+        /**
          * Convert percent to real values
          *
          * @param percent {Number} X in percent
@@ -1770,8 +2283,8 @@
         convertToValue: function (percent) {
             var min = this.options.min,
                 max = this.options.max,
-                min_decimals = min.toString().split(".")[1],
-                max_decimals = max.toString().split(".")[1],
+                min_decimals = this.getDecimalPlaces(min),
+                max_decimals = this.getDecimalPlaces(max),
                 min_length, max_length,
                 avg_decimals = 0,
                 abs = 0;
@@ -1783,13 +2296,52 @@
                 return this.options.max;
             }
 
+            // #869: with step_from_min every value is min plus a whole number
+            // of steps (min, min + step, min + 2 * step, ... plus max). The
+            // rounding at the end only cleans binary float noise off a scale
+            // point the arithmetic has already placed, which is why it takes
+            // the widest decimal count of step, min and max instead of the
+            // step's alone. No negative-min shift is needed here: the distance
+            // is measured from min, wherever min sits. validate() guarantees
+            // step > 0. The clamp helpers (checkDiapason, checkMinInterval,
+            // checkMaxInterval) compare values exactly but hand the limit back
+            // as a percent, and the next convertToValue() call rounds that
+            // percent onto the nearest scale point, so a from_min/from_max/
+            // to_min/to_max, min_interval or max_interval that is not on the
+            // scale is crossed by up to half a step (the branch below does the
+            // same for integer steps with a min at or above zero). The branch
+            // below rounds to the step's decimals, so with a min at or above
+            // zero an integer step lands on whole numbers and the min's
+            // fraction is dropped (a negative min is shifted first, see #760
+            // below); it stays byte-identical while step_from_min is off,
+            // which is the default.
+            if (this.options.step_from_min) {
+                var step_offset = (this.options.max - this.options.min) / 100 * percent,
+                    step_count = Math.round(step_offset / this.options.step),
+                    step_value = this.options.min + (step_count * this.options.step),
+                    step_precision = Math.max(this.getDecimalPlaces(this.options.step), min_decimals, max_decimals);
+
+                if (step_precision) {
+                    step_value = +step_value.toFixed(step_precision);
+                } else {
+                    step_value = this.toFixed(step_value);
+                }
+
+                if (step_value < this.options.min) {
+                    step_value = this.options.min;
+                } else if (step_value > this.options.max) {
+                    step_value = this.options.max;
+                }
+
+                return step_value;
+            }
 
             if (min_decimals) {
-                min_length = min_decimals.length;
+                min_length = min_decimals;
                 avg_decimals = min_length;
             }
             if (max_decimals) {
-                max_length = max_decimals.length;
+                max_length = max_decimals;
                 avg_decimals = max_length;
             }
             if (min_length && max_length) {
@@ -1802,12 +2354,27 @@
                 max = +(max + abs).toFixed(avg_decimals);
             }
 
+            // #760: the pre-shift rounding uses the step's own decimals
+            // only, unchanged from 2.4.1. For a negative min the shift
+            // above moves the origin to exactly 0 (x + (-x) is +0 in IEEE
+            // 754), so the lattice here is k * step; rounding to the
+            // ORIGINAL min's decimals instead would land BETWEEN lattice
+            // points -- for the reporter's {min: -39.9, max: 111, step: 1}
+            // the 25/50/75 % grid ticks would read -2.2 / 35.6 / 73.3
+            // instead of -1.9 / 35.1 / 73.1. min's own
+            // decimals come back through the subtraction below and are
+            // handled by the final rounding. For min >= 0 there is no
+            // shift, so this rounding is left unwidened on purpose:
+            // widening it would move {min: 0.01, step: 1}'s values such as
+            // 1, 2, 3 to 1.01, 2.01, 3.01 -- a behavior change kept out of
+            // a patch release.
             var number = ((max - min) / 100 * percent) + min,
-                string = this.options.step.toString().split(".")[1],
+                string = this.getDecimalPlaces(this.options.step),
+                precision,
                 result;
 
             if (string) {
-                number = +number.toFixed(string.length);
+                number = +number.toFixed(string);
             } else {
                 number = number / this.options.step;
                 number = number * this.options.step;
@@ -1819,8 +2386,20 @@
                 number -= abs;
             }
 
-            if (string) {
-                result = +number.toFixed(string.length);
+            // #760: shifting back by `abs` can reintroduce binary float
+            // noise (e.g. 38 - 39.9 = -1.8999999999999986) even though the
+            // lattice point itself is correct. With a whole-number step the
+            // final rounding therefore uses the decimals of min and max, so
+            // the noise is cleaned up instead of round-tripped untouched
+            // through toFixed(20). A fractional step keeps 2.4.1's rounding
+            // to its own decimals: they already bound the result there (no
+            // noise), and widening would move values, not just clean them
+            // ({min: -198.53, step: 0.5}: -197.7 would become -197.73), a
+            // change kept for a minor release.
+            precision = string ? string : Math.max(min_decimals, max_decimals);
+
+            if (precision) {
+                result = +number.toFixed(precision);
             } else {
                 result = this.toFixed(number);
             }
@@ -1851,6 +2430,59 @@
             }
 
             return this.toFixed(rounded);
+        },
+
+        /**
+         * #302: with drag_over_limit enabled, the dragged handle pushes the
+         * other handle along instead of clamping against it. The pushed
+         * handle still obeys its own diapason (checkDiapason) and its own
+         * from_fixed/to_fixed; min_interval is a mandatory gap preserved
+         * while pushing -- once the pushed handle can't move far enough to
+         * keep that gap open (own limit reached, or fixed), the dragged
+         * handle clamps back so the gap is never violated. Mouse/touch drag
+         * only -- calc()'s "from"/"to" cases guard this on !this.is_key so
+         * keyboard keeps the old clamp (v1 scope).
+         *
+         * @param p_current {Number} dragged handle's real percent, already step-snapped AND already clamped to its own diapason (checkDiapason) -- the push target is computed from where the dragged handle actually ends up, not its raw pointer position
+         * @param p_next {Number} other (pushed) handle's current real percent
+         * @param next_min {Number|null} pushed handle's diapason min (from_min/to_min)
+         * @param next_max {Number|null} pushed handle's diapason max (from_max/to_max)
+         * @param next_fixed {Boolean} pushed handle's from_fixed/to_fixed
+         * @param type {String} "from" or "to" -- which handle is being dragged
+         * @returns {Object} { current: Number, next: Number } final real percents for both handles
+         */
+        pushHandle: function (p_current, p_next, next_min, next_max, next_fixed, type) {
+            var min_gap = this.options.min_interval || 0,
+                current = this.convertToValue(p_current),
+                next = this.convertToValue(p_next),
+                required;
+
+            if (type === "from") {
+                required = current + min_gap;
+
+                if (!next_fixed && next < required) {
+                    next = this.convertToValue(this.checkDiapason(this.convertToPercent(required), next_min, next_max));
+                }
+
+                if (next - current < min_gap) {
+                    current = next - min_gap;
+                }
+            } else {
+                required = current - min_gap;
+
+                if (!next_fixed && next > required) {
+                    next = this.convertToValue(this.checkDiapason(this.convertToPercent(required), next_min, next_max));
+                }
+
+                if (current - next < min_gap) {
+                    current = next + min_gap;
+                }
+            }
+
+            return {
+                current: this.convertToPercent(current),
+                next: this.convertToPercent(next)
+            };
         },
 
         checkMinInterval: function (p_current, p_next, type) {
@@ -1956,6 +2588,48 @@
             return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + this.options.prettify_separator);
         },
 
+        /**
+         * Shared fallback chain for the per-surface prettify options (#306):
+         * the surface's own option function if set, else the shared
+         * `prettify` option (and, through it, the built-in thousands-
+         * separator formatting) via _prettify(). prettify_enabled: false
+         * disables this surface too, same as the default prettify.
+         * @param {string} option_name "prettify_grid" or "prettify_min_max"
+         * @param {number} num
+         * @returns {string|number}
+         */
+        _prettifySurface: function (option_name, num) {
+            if (!this.options.prettify_enabled) {
+                return num;
+            }
+
+            if (this.options[option_name] && typeof this.options[option_name] === "function") {
+                return this.options[option_name](num);
+            }
+
+            return this._prettify(num);
+        },
+
+        /**
+         * Format a number for the grid tick labels, falling back to the
+         * shared `prettify` option when prettify_grid is unset (#306).
+         * @param {number} num
+         * @returns {string|number}
+         */
+        _prettifyGrid: function (num) {
+            return this._prettifySurface("prettify_grid", num);
+        },
+
+        /**
+         * Format a number for the min/max labels, falling back to the
+         * shared `prettify` option when prettify_min_max is unset (#306).
+         * @param {number} num
+         * @returns {string|number}
+         */
+        _prettifyMinMax: function (num) {
+            return this._prettifySurface("prettify_min_max", num);
+        },
+
         checkEdges: function (left, width) {
             if (!this.options.force_edges) {
                 return this.toFixed(left);
@@ -1973,9 +2647,10 @@
         validate: function () {
             var o = this.options,
                 r = this.result,
-                v = o.values,
+                v = (o.values = o.values.slice()), // clone so validate never mutates the caller's array (#506)
                 vl = v.length,
                 value,
+                prettify_option_name,
                 i;
 
             if (typeof o.min === "string") o.min = +o.min;
@@ -1991,6 +2666,34 @@
 
             if (typeof o.grid_num === "string") o.grid_num = +o.grid_num;
 
+            // prettify, prettify_grid and prettify_min_max (#306) may each be given
+            // as the name of a global function instead of a function reference
+            // (#535), e.g. for data-* / JSON-only config where a function value
+            // can't be expressed. Resolved once here per option, against window
+            // (bracket access only, no eval) -- the binding is captured now, so
+            // redefining window[name] later is only picked up by a later update()
+            // that re-passes the string. Because update() re-runs validate(), this
+            // still stays current across update({ prettify: "name" }) calls. Must run
+            // before the values-mode loop below, which calls _prettify() per entry.
+            // An unresolved (or denylisted, see prettify_denylist above) name is left
+            // as-is and the surface falls back to the default formatter, same as any
+            // other non-function value -- no throw either way.
+            for (i = 0; i < prettify_option_names.length; i++) {
+                prettify_option_name = prettify_option_names[i];
+
+                if (typeof o[prettify_option_name] === "string" && o[prettify_option_name] !== "") {
+                    if (prettify_denylist.indexOf(o[prettify_option_name]) !== -1) {
+                        if (typeof console !== "undefined" && console.warn) {
+                            console.warn(prettify_option_name + ": \"" + o[prettify_option_name] + "\" is not allowed, falling back to default number formatting");
+                        }
+                    } else if (typeof window[o[prettify_option_name]] === "function") {
+                        o[prettify_option_name] = window[o[prettify_option_name]];
+                    } else if (typeof console !== "undefined" && console.warn) {
+                        console.warn(prettify_option_name + ": \"" + o[prettify_option_name] + "\" is not a function on window, falling back to default number formatting");
+                    }
+                }
+            }
+
             if (o.max < o.min) {
                 o.max = o.min;
             }
@@ -2004,11 +2707,28 @@
                 o.grid_snap = true;
 
                 for (i = 0; i < vl; i++) {
-                    value = +v[i];
+                    // #505: values_raw keeps a values entry exactly as given
+                    // instead of converting a numeric-looking string to a
+                    // number. Entries that are already numbers are exempt, so
+                    // values: [1000, 2000] still gets the thousands-separator
+                    // prettify below whether values_raw is on or off.
+                    // Turning values_raw on later through update() cannot restore
+                    // entries this loop has already converted, because the clone
+                    // holds numbers by then; pass values again in the same update() call.
+                    if (o.values_raw && typeof v[i] !== "number") {
+                        value = NaN;
+                    } else {
+                        value = +v[i];
+                    }
 
                     if (!isNaN(value)) {
                         v[i] = value;
                         value = this._prettify(value);
+                    } else if (o.prettify_all_values) {
+                        // non-numeric entries are only prettified when explicitly
+                        // opted in (#276), so a numeric-only custom prettify never
+                        // starts receiving strings on an existing setup
+                        value = this._prettify(v[i]);
                     } else {
                         value = v[i];
                     }
@@ -2070,7 +2790,7 @@
                 o.to = o.to_min;
             }
 
-            if (typeof o.to_max === "number" && o.from > o.to_max) {
+            if (typeof o.to_max === "number" && o.to > o.to_max) {
                 o.to = o.to_max;
             }
 
@@ -2113,6 +2833,12 @@
             var decorated = "",
                 o = this.options;
 
+            if (o.min_prefix && (o.values.length ? num === o.p_values[o.min] : original === o.min)) {
+                decorated += o.min_prefix;
+            } else if (o.max_prefix && (o.values.length ? num === o.p_values[o.max] : original === o.max)) {
+                decorated += o.max_prefix;
+            }
+
             if (o.prefix) {
                 decorated += o.prefix;
             }
@@ -2143,7 +2869,16 @@
         updateFrom: function () {
             this.result.from = this.options.from;
             this.result.from_percent = this.convertToPercent(this.result.from);
-            this.result.from_pretty = this._prettify(this.result.from);
+
+            if (this.options.values.length) {
+                // #661: values mode -- see calc()'s single-branch comment above.
+                this.result.from_pretty = this.options.p_values[this.result.from];
+            } else {
+                this.result.from_pretty = this._prettify(this.result.from);
+            }
+
+            this.result.from_min = this.options.from_min;
+            this.result.from_max = this.options.from_max;
             if (this.options.values) {
                 this.result.from_value = this.options.values[this.result.from];
             }
@@ -2152,7 +2887,16 @@
         updateTo: function () {
             this.result.to = this.options.to;
             this.result.to_percent = this.convertToPercent(this.result.to);
-            this.result.to_pretty = this._prettify(this.result.to);
+
+            if (this.options.values.length) {
+                // #661: values mode -- see calc()'s single-branch comment above.
+                this.result.to_pretty = this.options.p_values[this.result.to];
+            } else {
+                this.result.to_pretty = this._prettify(this.result.to);
+            }
+
+            this.result.to_min = this.options.to_min;
+            this.result.to_max = this.options.to_max;
             if (this.options.values) {
                 this.result.to_value = this.options.values[this.result.to];
             }
@@ -2188,6 +2932,10 @@
                 small_w = 0,
 
                 result,
+                pols = [],
+                lefts = [],
+                texts = [],
+                kept = 0,
                 html = '';
 
 
@@ -2216,6 +2964,7 @@
 
             for (i = 0; i < big_num + 1; i++) {
                 local_small_max = small_max;
+                pols[i] = '';
 
                 big_w = this.toFixed(big_p * i);
 
@@ -2233,21 +2982,51 @@
 
                     small_w = this.toFixed(big_w - (small_p * z));
 
-                    html += '<span class="irs-grid-pol small" style="left: ' + small_w + '%"></span>';
+                    pols[i] += '<span class="irs-grid-pol small" style="left: ' + small_w + '%"></span>';
                 }
 
-                html += '<span class="irs-grid-pol" style="left: ' + big_w + '%"></span>';
+                pols[i] += '<span class="irs-grid-pol" style="left: ' + big_w + '%"></span>';
 
                 result = this.convertToValue(big_w);
                 if (o.values.length) {
                     result = o.p_values[result];
                 } else {
-                    result = this._prettify(result);
+                    result = this._prettifyGrid(result);
                 }
 
-                html += '<span class="irs-grid-text js-grid-text-' + i + '" style="left: ' + big_w + '%">' + result + '</span>';
+                lefts[i] = big_w;
+                texts[i] = String(result);
             }
             this.coords.big_num = Math.ceil(big_num + 1);
+
+            // #772: a range holding fewer steps than grid_num can snap two
+            // neighbouring ticks to the same value; equal neighbouring
+            // labels are shown once. The first tick always keeps its label,
+            // and the last tick (exactly max) keeps its own rather than an
+            // earlier twin, unless every label is equal (min === max), where
+            // only the first stays. Compared as strings so a custom prettify_grid that
+            // maps two values to one text is deduplicated the same way.
+            // Values mode is exempt: each tick is a real values entry, so a
+            // duplicate entry or a merging prettify is the user's own data.
+            if (!o.values.length) {
+                for (i = 1; i < texts.length; i++) {
+                    if (texts[i] === texts[kept]) {
+                        if (i === texts.length - 1 && kept !== 0) {
+                            // the last tick is exactly max: it wins over its twin
+                            texts[kept] = "";
+                            kept = i;
+                        } else {
+                            texts[i] = "";
+                        }
+                    } else {
+                        kept = i;
+                    }
+                }
+            }
+
+            for (i = 0; i < texts.length; i++) {
+                html += pols[i] + '<span class="irs-grid-text js-grid-text-' + i + '" style="left: ' + lefts[i] + '%">' + texts[i] + '</span>';
+            }
 
 
 

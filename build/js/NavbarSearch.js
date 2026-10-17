@@ -1,112 +1,67 @@
-/**
- * --------------------------------------------
- * AdminLTE NavbarSearch.js
- * License MIT
- * --------------------------------------------
- */
-
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'NavbarSearch'
-const DATA_KEY = 'lte.navbar-search'
-const JQUERY_NO_CONFLICT = $.fn[NAME]
+import { delegate, getConfig, getInstance, setInstance } from './Native'
 
 const SELECTOR_TOGGLE_BUTTON = '[data-widget="navbar-search"]'
-const SELECTOR_SEARCH_BLOCK = '.navbar-search-block'
 const SELECTOR_SEARCH_INPUT = '.form-control'
-
 const CLASS_NAME_OPEN = 'navbar-search-open'
 
 const Default = {
   resetOnClose: true,
-  target: SELECTOR_SEARCH_BLOCK
+  target: '.navbar-search-block'
 }
 
-/**
- * Class Definition
- * ====================================================
- */
-
 class NavbarSearch {
-  constructor(_element, _options) {
-    this._element = _element
-    this._config = _options
+  constructor(element, options = {}) {
+    this._element = element
+    this._config = getConfig(element, Default, options)
+    this._target = document.querySelector(this._config.target)
+    setInstance(NavbarSearch, element, this)
   }
 
-  // Public
-
   open() {
-    $(this._config.target).css('display', 'flex').hide().fadeIn().addClass(CLASS_NAME_OPEN)
-    $(`${this._config.target} ${SELECTOR_SEARCH_INPUT}`).focus()
+    if (!this._target) {
+      return
+    }
+
+    this._target.style.display = 'flex'
+    requestAnimationFrame(() => this._target.classList.add(CLASS_NAME_OPEN))
+    this._target.querySelector(SELECTOR_SEARCH_INPUT)?.focus()
   }
 
   close() {
-    $(this._config.target).fadeOut().removeClass(CLASS_NAME_OPEN)
+    if (!this._target) {
+      return
+    }
 
+    this._target.classList.remove(CLASS_NAME_OPEN)
+    this._target.style.display = 'none'
     if (this._config.resetOnClose) {
-      $(`${this._config.target} ${SELECTOR_SEARCH_INPUT}`).val('')
+      const input = this._target.querySelector(SELECTOR_SEARCH_INPUT)
+      if (input) {
+        input.value = ''
+      }
     }
   }
 
   toggle() {
-    if ($(this._config.target).hasClass(CLASS_NAME_OPEN)) {
+    if (this._target?.classList.contains(CLASS_NAME_OPEN)) {
       this.close()
     } else {
       this.open()
     }
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
+  static getInstance(element) {
+    return getInstance(NavbarSearch, element)
+  }
 
-      if (!data) {
-        data = new NavbarSearch($(this), _config)
-        $(this).data(DATA_KEY, data)
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      }
-    })
+  static getOrCreateInstance(element, options = {}) {
+    return NavbarSearch.getInstance(element) ?? new NavbarSearch(element, options)
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-$(document).on('click', SELECTOR_TOGGLE_BUTTON, event => {
+delegate(document, 'click', SELECTOR_TOGGLE_BUTTON, (event, element) => {
   event.preventDefault()
-
-  let button = $(event.currentTarget)
-
-  if (button.data('widget') !== 'navbar-search') {
-    button = button.closest(SELECTOR_TOGGLE_BUTTON)
-  }
-
-  NavbarSearch._jQueryInterface.call(button, 'toggle')
+  NavbarSearch.getOrCreateInstance(element).toggle()
 })
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = NavbarSearch._jQueryInterface
-$.fn[NAME].Constructor = NavbarSearch
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return NavbarSearch._jQueryInterface
-}
 
 export default NavbarSearch

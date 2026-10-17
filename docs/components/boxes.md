@@ -11,7 +11,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 <div class="row">
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-envelope"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Messages</span>
         <span class="info-box-number">1,410</span>
@@ -20,7 +20,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box bg-success">
-      <span class="info-box-icon"><i class="far fa-flag"></i></span>
+      <span class="info-box-icon"><i class="fa-regular fa-flag"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Bookmarks</span>
         <span class="info-box-number">410</span>
@@ -29,7 +29,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box bg-gradient-warning">
-      <span class="info-box-icon"><i class="far fa-copy"></i></span>
+      <span class="info-box-icon"><i class="fa-regular fa-copy"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Uploads</span>
         <span class="info-box-number">13,648</span>
@@ -41,7 +41,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 <div class="row" markdown="1">
 ```html
 <div class="info-box">
-  <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+  <span class="info-box-icon bg-info"><i class="fa-regular fa-envelope"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Messages</span>
     <span class="info-box-number">1,410</span>
@@ -51,7 +51,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 {: .col-md-4 .col-sm-6 .col-12}
 ```html
 <div class="info-box bg-success">
-  <span class="info-box-icon"><i class="far fa-flag"></i></span>
+  <span class="info-box-icon"><i class="fa-regular fa-flag"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Bookmarks</span>
     <span class="info-box-number">410</span>
@@ -61,7 +61,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 {: .col-md-4 .col-sm-6 .col-12}
 ```html
 <div class="info-box bg-gradient-warning">
-  <span class="info-box-icon"><i class="far fa-copy"></i></span>
+  <span class="info-box-icon"><i class="fa-regular fa-copy"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Uploads</span>
     <span class="info-box-number">13,648</span>
@@ -82,7 +82,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 <div class="row">
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-bookmark"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Bookmarks</span>
         <span class="info-box-number">41,410</span>
@@ -97,7 +97,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box bg-success">
-      <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+      <span class="info-box-icon"><i class="fa-regular fa-thumbs-up"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Likes</span>
         <span class="info-box-number">41,410</span>
@@ -112,7 +112,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box bg-gradient-warning">
-      <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+      <span class="info-box-icon"><i class="fa-regular fa-calendar-days"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Events</span>
         <span class="info-box-number">41,410</span>
@@ -130,7 +130,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 <div class="row" markdown="1">
 ```html
 <div class="info-box">
-  <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+  <span class="info-box-icon bg-info"><i class="fa-regular fa-bookmark"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Bookmarks</span>
     <span class="info-box-number">41,410</span>
@@ -146,7 +146,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 {: .col-md-4 .col-sm-6 .col-12 .max-height-300}
 ```html
 <div class="info-box bg-success">
-  <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+  <span class="info-box-icon"><i class="fa-regular fa-thumbs-up"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Likes</span>
     <span class="info-box-number">41,410</span>
@@ -162,7 +162,7 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 {: .col-md-4 .col-sm-6 .col-12 .max-height-300}
 ```html
 <div class="info-box bg-gradient-warning">
-  <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+  <span class="info-box-icon"><i class="fa-regular fa-calendar-days"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Events</span>
     <span class="info-box-number">41,410</span>
@@ -190,10 +190,10 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
         <p>New Orders</p>
       </div>
       <div class="icon">
-        <i class="fas fa-shopping-cart"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
       </div>
       <a href="#" class="small-box-footer">
-        More info <i class="fas fa-arrow-circle-right"></i>
+        More info <i class="fa-solid fa-circle-arrow-right"></i>
       </a>
     </div>
   </div>
@@ -204,10 +204,10 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
         <p>User Registrations</p>
       </div>
       <div class="icon">
-        <i class="fas fa-user-plus"></i>
+        <i class="fa-solid fa-user-plus"></i>
       </div>
       <a href="#" class="small-box-footer">
-        More info <i class="fas fa-arrow-circle-right"></i>
+        More info <i class="fa-solid fa-circle-arrow-right"></i>
       </a>
     </div>
   </div>
@@ -221,10 +221,10 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
     <p>New Orders</p>
   </div>
   <div class="icon">
-    <i class="fas fa-shopping-cart"></i>
+    <i class="fa-solid fa-cart-shopping"></i>
   </div>
   <a href="#" class="small-box-footer">
-    More info <i class="fas fa-arrow-circle-right"></i>
+    More info <i class="fa-solid fa-circle-arrow-right"></i>
   </a>
 </div>
 ```
@@ -236,10 +236,10 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
     <p>User Registrations</p>
   </div>
   <div class="icon">
-    <i class="fas fa-user-plus"></i>
+    <i class="fa-solid fa-user-plus"></i>
   </div>
   <a href="#" class="small-box-footer">
-    More info <i class="fas fa-arrow-circle-right"></i>
+    More info <i class="fa-solid fa-circle-arrow-right"></i>
   </a>
 </div>
 ```
@@ -254,31 +254,31 @@ There are two types of boxes, info boxes & small boxes. Both boxes are used to d
 To simulate a loading state, simply place this code before the `.info-box` / `.small-box` closing tag. 
 
 > ##### Tip!
-> We recommend `.fa-2x` for Info Boxes and `.fa-3x` for Small Boxes to get a nicely sized loading icon, <br> like in this documentation. 
+> We recommend `.fa-2xl` for Info Boxes and `.fa-3x` for Small Boxes to get a nicely sized loading icon, <br> like in this documentation.
 {: .quote-info}
 
 ```html
 <div class="overlay">
-  <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+  <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
 </div>
 ```
 
 <div class="row">
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box clearfix">
-      <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-envelope"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Messages</span>
         <span class="info-box-number">1,410</span>
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-bookmark"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Bookmarks</span>
         <span class="info-box-number">41,410</span>
@@ -290,7 +290,7 @@ To simulate a loading state, simply place this code before the `.info-box` / `.s
         </span>
       </div>
       <div class="overlay">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -301,13 +301,13 @@ To simulate a loading state, simply place this code before the `.info-box` / `.s
         <p>New Orders</p>
       </div>
       <div class="icon">
-        <i class="fas fa-shopping-cart"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
       </div>
       <a href="#" class="small-box-footer">
-        More info <i class="fas fa-arrow-circle-right"></i>
+        More info <i class="fa-solid fa-circle-arrow-right"></i>
       </a>
       <div class="overlay">
-        <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-3x fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -318,26 +318,26 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
 
 ```html
 <div class="overlay dark">
-  <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+  <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
 </div>
 ```
 
 <div class="row">
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box clearfix">
-      <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-envelope"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Messages</span>
         <span class="info-box-number">1,410</span>
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
   <div class="col-md-4 col-sm-6 col-12">
     <div class="info-box">
-      <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
+      <span class="info-box-icon bg-info"><i class="fa-regular fa-bookmark"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Bookmarks</span>
         <span class="info-box-number">41,410</span>
@@ -349,7 +349,7 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         </span>
       </div>
       <div class="overlay dark">
-        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-2xl fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>
@@ -360,13 +360,13 @@ You can also use a dark loading style with adding `.dark` to `.overlay` like thi
         <p>New Orders</p>
       </div>
       <div class="icon">
-        <i class="fas fa-shopping-cart"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
       </div>
       <a href="#" class="small-box-footer">
-        More info <i class="fas fa-arrow-circle-right"></i>
+        More info <i class="fa-solid fa-circle-arrow-right"></i>
       </a>
       <div class="overlay dark">
-        <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+        <i class="fa-solid fa-3x fa-rotate fa-spin"></i>
       </div>
     </div>
   </div>

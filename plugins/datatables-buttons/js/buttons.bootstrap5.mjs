@@ -1,16 +1,15 @@
-/*! Bootstrap integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Bootstrap 5 styling 4.1.2 for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-import jQuery from 'jquery';
 import DataTable from 'datatables.net-bs5';
 import Buttons from 'datatables.net-buttons';
 
-// Allow reassignment of the $ variable
-let $ = jQuery;
 
+var Dom = DataTable.Dom;
+var util = DataTable.util;
 
-$.extend(true, DataTable.Buttons.defaults, {
+util.object.assignDeep(DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			className: 'dt-buttons btn-group flex-wrap'
@@ -24,17 +23,25 @@ $.extend(true, DataTable.Buttons.defaults, {
 		collection: {
 			container: {
 				tag: 'div',
-				className: 'dropdown-menu dt-button-collection'
+				className: 'dt-button-collection',
+				content: {
+					tag: 'ul',
+					className: 'dropdown-menu show'
+				}
 			},
 			closeButton: false,
 			button: {
-				tag: 'a',
-				className: 'dt-button dropdown-item',
-				active: 'dt-button-active',
+				tag: 'li',
+				className: 'dt-button',
+				active: 'dt-button-active-a',
 				disabled: 'disabled',
+				liner: {
+					tag: 'a',
+					className: 'dropdown-item'
+				},
 				spacer: {
-					className: 'dropdown-divider',
-					tag: 'hr'
+					className: 'divider',
+					tag: 'li'
 				}
 			}
 		},
@@ -59,8 +66,10 @@ $.extend(true, DataTable.Buttons.defaults, {
 			}
 		}
 	},
-	buttonCreated: function (config, button) {
-		return config.buttons ? $('<div class="btn-group"/>').append(button) : button;
+	buttonCreated: function (config, button, inCollection) {
+		return config.buttons && ! inCollection
+			? Dom.c('div').classAdd('btn-group a').append(button)
+			: button;
 	}
 });
 
@@ -68,3 +77,4 @@ DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';
 
 
 export default DataTable;
+

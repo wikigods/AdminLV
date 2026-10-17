@@ -100,11 +100,31 @@ $(function () {
   sparkline2.draw([515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921])
   sparkline3.draw([15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21])
 
-  // The Calender
-  $('#calendar').datetimepicker({
-    format: 'L',
-    inline: true
-  })
+  // The calendar
+  var calendarElement = document.getElementById('calendar')
+  if (calendarElement && typeof AirDatepicker !== 'undefined') {
+    new AirDatepicker(calendarElement, {
+      inline: true,
+      autoClose: false,
+      fixedHeight: true,
+      selectedDates: [new Date()],
+      navTitles: {
+        days: 'MMMM yyyy'
+      },
+      locale: {
+        days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        today: 'Today',
+        clear: 'Clear',
+        dateFormat: 'MM/dd/yyyy',
+        timeFormat: 'hh:mm aa',
+        firstDay: 0
+      }
+    })
+  }
 
   // SLIMSCROLL FOR CHAT WIDGET
   $('#chat-box').overlayScrollbars({
@@ -147,20 +167,20 @@ $(function () {
   var salesChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
-    legend: {
-      display: false
+    plugins: {
+      legend: { display: false }
     },
     scales: {
-      xAxes: [{
-        gridLines: {
+      x: {
+        grid: {
           display: false
         }
-      }],
-      yAxes: [{
-        gridLines: {
+      },
+      y: {
+        grid: {
           display: false
         }
-      }]
+      }
     }
   }
 
@@ -188,8 +208,8 @@ $(function () {
     ]
   }
   var pieOptions = {
-    legend: {
-      display: false
+    plugins: {
+      legend: { display: false }
     },
     maintainAspectRatio: false,
     responsive: true
@@ -214,7 +234,7 @@ $(function () {
         label: 'Digital Goods',
         fill: false,
         borderWidth: 2,
-        lineTension: 0,
+        tension: 0,
         spanGaps: true,
         borderColor: '#efefef',
         pointRadius: 3,
@@ -229,31 +249,31 @@ $(function () {
   var salesGraphChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
-    legend: {
-      display: false
+    plugins: {
+      legend: { display: false }
     },
     scales: {
-      xAxes: [{
+      x: {
         ticks: {
-          fontColor: '#efefef'
+          color: '#efefef'
         },
-        gridLines: {
+        grid: {
           display: false,
           color: '#efefef',
           drawBorder: false
         }
-      }],
-      yAxes: [{
+      },
+      y: {
         ticks: {
           stepSize: 5000,
-          fontColor: '#efefef'
+          color: '#efefef'
         },
-        gridLines: {
+        grid: {
           display: true,
           color: '#efefef',
           drawBorder: false
         }
-      }]
+      }
     }
   }
 

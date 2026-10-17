@@ -1,4 +1,4 @@
-/*! Bootstrap 5 styling wrapper for FixedHeader
- * © SpryMedia Ltd - datatables.net/license
+/*! FixedHeader Bootstrap 5 styling 5.1.2 for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
-import jQuery from"jquery";import DataTable from"datatables.net-bs5";import FixedHeader from"datatables.net-fixedheader";let $=jQuery;export default DataTable;
+import DataTable from"datatables.net-bs5";import FixedHeader from"datatables.net-fixedheader";export default DataTable;

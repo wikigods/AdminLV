@@ -14,17 +14,17 @@
 
     &.btn {
       &:hover {
-        border-color: darken($color, 10%);
-        color: darken(color-contrast($color), 7.5%);
+        border-color: shade-color($color, 10%);
+        color: shade-color(color-contrast($color), 7.5%);
       }
 
       &:not(:disabled):not(.disabled):active,
       &:not(:disabled):not(.disabled).active,
       &:active,
       &.active {
-        background-color: darken($color, 10%) !important;
-        border-color: darken($color, 12.5%);
-        color: color-contrast(darken($color, 10%));
+        background-color: shade-color($color, 10%) !important;
+        border-color: shade-color($color, 12.5%);
+        color: color-contrast(shade-color($color, 10%));
       }
     }
   }
@@ -44,18 +44,18 @@
       }
 
       &:hover {
-        background: $color linear-gradient(180deg, mix($body-bg, darken($color, 7.5%), 15%), darken($color, 7.5%)) repeat-x !important;
-        border-color: darken($color, 10%);
-        color: darken(color-contrast($color), 7.5%);
+        background: $color linear-gradient(180deg, mix($body-bg, shade-color($color, 7.5%), 15%), shade-color($color, 7.5%)) repeat-x !important;
+        border-color: shade-color($color, 10%);
+        color: shade-color(color-contrast($color), 7.5%);
       }
 
       &:not(:disabled):not(.disabled):active,
       &:not(:disabled):not(.disabled).active,
       &:active,
       &.active {
-        background: $color linear-gradient(180deg, mix($body-bg, darken($color, 10%), 15%), darken($color, 10%)) repeat-x !important;
-        border-color: darken($color, 12.5%);
-        color: color-contrast(darken($color, 10%));
+        background: $color linear-gradient(180deg, mix($body-bg, shade-color($color, 10%), 15%), shade-color($color, 10%)) repeat-x !important;
+        border-color: shade-color($color, 12.5%);
+        color: color-contrast(shade-color($color, 10%));
       }
 
       &:disabled,

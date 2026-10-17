@@ -27,14 +27,14 @@ The jQuery API provides more customizable options that allows the developer to p
 ##### HTML Markup
 Place this HTML Markup after `div.user-panel`.
 ```html
-<div class="form-inline">
+<div class="d-flex flex-wrap align-items-center">
   <div class="input-group" data-widget="sidebar-search">
     <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-    <div class="input-group-append">
+    
       <button class="btn btn-sidebar">
-        <i class="fas fa-search fa-fw"></i>
+        <i class="fa-solid fa-magnifying-glass fa-fw"></i>
       </button>
-    </div>
+    
   </div>
 </div>
 ```

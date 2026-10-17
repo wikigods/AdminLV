@@ -1,338 +1,169 @@
-/**
- * --------------------------------------------
- * AdminLTE ControlSidebar.js
- * License MIT
- * --------------------------------------------
- */
+/** AdminLTE ControlSidebar, implemented without jQuery. */
+/* eslint-disable max-statements-per-line */
+import { dispatch, getConfig, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'ControlSidebar'
-const DATA_KEY = 'lte.controlsidebar'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_COLLAPSED = `collapsed${EVENT_KEY}`
-const EVENT_COLLAPSED_DONE = `collapsed-done${EVENT_KEY}`
-const EVENT_EXPANDED = `expanded${EVENT_KEY}`
-
-const SELECTOR_CONTROL_SIDEBAR = '.control-sidebar'
-const SELECTOR_CONTROL_SIDEBAR_CONTENT = '.control-sidebar-content'
-const SELECTOR_DATA_TOGGLE = '[data-widget="control-sidebar"]'
-const SELECTOR_HEADER = '.main-header'
-const SELECTOR_FOOTER = '.main-footer'
-
-const CLASS_NAME_CONTROL_SIDEBAR_ANIMATE = 'control-sidebar-animate'
-const CLASS_NAME_CONTROL_SIDEBAR_OPEN = 'control-sidebar-open'
-const CLASS_NAME_CONTROL_SIDEBAR_SLIDE = 'control-sidebar-slide-open'
-const CLASS_NAME_LAYOUT_FIXED = 'layout-fixed'
-const CLASS_NAME_NAVBAR_FIXED = 'layout-navbar-fixed'
-const CLASS_NAME_NAVBAR_SM_FIXED = 'layout-sm-navbar-fixed'
-const CLASS_NAME_NAVBAR_MD_FIXED = 'layout-md-navbar-fixed'
-const CLASS_NAME_NAVBAR_LG_FIXED = 'layout-lg-navbar-fixed'
-const CLASS_NAME_NAVBAR_XL_FIXED = 'layout-xl-navbar-fixed'
-const CLASS_NAME_FOOTER_FIXED = 'layout-footer-fixed'
-const CLASS_NAME_FOOTER_SM_FIXED = 'layout-sm-footer-fixed'
-const CLASS_NAME_FOOTER_MD_FIXED = 'layout-md-footer-fixed'
-const CLASS_NAME_FOOTER_LG_FIXED = 'layout-lg-footer-fixed'
-const CLASS_NAME_FOOTER_XL_FIXED = 'layout-xl-footer-fixed'
-
-const Default = {
-  controlsidebarSlide: true,
-  scrollbarTheme: 'os-theme-light',
-  scrollbarAutoHide: 'l',
-  target: SELECTOR_CONTROL_SIDEBAR,
-  animationSpeed: 300
-}
-
-/**
- * Class Definition
- * ====================================================
- */
+const KEY = '.lte.controlsidebar'
+const SELECTOR = '.control-sidebar'
+const CLASS_OPEN = 'control-sidebar-open'
+const CLASS_SLIDE = 'control-sidebar-slide-open'
+const CLASS_ANIMATE = 'control-sidebar-animate'
+const DEFAULT = { controlsidebarSlide: true, scrollbarTheme: 'os-theme-light', scrollbarAutoHide: 'l', target: SELECTOR, animationSpeed: 300 }
 
 class ControlSidebar {
-  constructor(element, config) {
-    this._element = element
-    this._config = config
+  constructor(element, config = {}) {
+    this._element = element; this._config = getConfig(element, DEFAULT, config); setInstance(ControlSidebar, element, this); this._init()
   }
 
-  // Public
-
   collapse() {
-    const $body = $('body')
-    const $html = $('html')
-
-    // Show the control sidebar
+    const { body } = document
     if (this._config.controlsidebarSlide) {
-      $html.addClass(CLASS_NAME_CONTROL_SIDEBAR_ANIMATE)
-      $body.removeClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE).delay(300).queue(function () {
-        $(SELECTOR_CONTROL_SIDEBAR).hide()
-        $html.removeClass(CLASS_NAME_CONTROL_SIDEBAR_ANIMATE)
-        $(this).dequeue()
-      })
+      document.documentElement.classList.add(CLASS_ANIMATE); body.classList.remove(CLASS_SLIDE)
+      window.setTimeout(() => {
+        document.querySelectorAll(SELECTOR).forEach(sidebar => {
+          sidebar.style.display = 'none'
+        }); document.documentElement.classList.remove(CLASS_ANIMATE)
+      }, 300)
     } else {
-      $body.removeClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN)
+      body.classList.remove(CLASS_OPEN)
     }
 
-    $(this._element).trigger($.Event(EVENT_COLLAPSED))
-
-    setTimeout(() => {
-      $(this._element).trigger($.Event(EVENT_COLLAPSED_DONE))
-    }, this._config.animationSpeed)
+    dispatch(this._element, `collapsed${KEY}`)
+    window.setTimeout(() => dispatch(this._element, `collapsed-done${KEY}`), this._config.animationSpeed)
   }
 
   show(toggle = false) {
-    const $body = $('body')
-    const $html = $('html')
+    const { body } = document
+    const target = document.querySelector(this._config.target)
+    if (!target) {
+      return
+    }
 
     if (toggle) {
-      $(SELECTOR_CONTROL_SIDEBAR).hide()
-    }
-
-    // Collapse the control sidebar
-    if (this._config.controlsidebarSlide) {
-      $html.addClass(CLASS_NAME_CONTROL_SIDEBAR_ANIMATE)
-      $(this._config.target).show().delay(10).queue(function () {
-        $body.addClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE).delay(300).queue(function () {
-          $html.removeClass(CLASS_NAME_CONTROL_SIDEBAR_ANIMATE)
-          $(this).dequeue()
-        })
-        $(this).dequeue()
+      document.querySelectorAll(SELECTOR).forEach(sidebar => {
+        sidebar.style.display = 'none'
       })
-    } else {
-      $body.addClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN)
     }
 
-    this._fixHeight()
-    this._fixScrollHeight()
+    if (this._config.controlsidebarSlide) {
+      document.documentElement.classList.add(CLASS_ANIMATE); target.style.display = 'block'
+      window.setTimeout(() => {
+        body.classList.add(CLASS_SLIDE); window.setTimeout(() => document.documentElement.classList.remove(CLASS_ANIMATE), 300)
+      }, 10)
+    } else {
+      target.style.display = 'block'
+      body.classList.add(CLASS_OPEN)
+    }
 
-    $(this._element).trigger($.Event(EVENT_EXPANDED))
+    this._fixHeight(); this._fixScrollHeight()
+    dispatch(this._element, `expanded${KEY}`)
   }
 
   toggle() {
-    const $body = $('body')
-    const { target } = this._config
-
-    const notVisible = !$(target).is(':visible')
-    const shouldClose = ($body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) ||
-      $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE))
-    const shouldToggle = notVisible && ($body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) ||
-      $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE))
-
-    if (notVisible || shouldToggle) {
-      // Open the control sidebar
-      this.show(notVisible)
-    } else if (shouldClose) {
-      // Close the control sidebar
+    const target = document.querySelector(this._config.target)
+    const { body } = document
+    const isOpen = body.classList.contains(CLASS_OPEN) || body.classList.contains(CLASS_SLIDE)
+    if (!target || getComputedStyle(target).display === 'none' || !isOpen) {
+      this.show(!isOpen)
+    } else {
       this.collapse()
     }
   }
 
-  // Private
-
   _init() {
-    const $body = $('body')
-    const shouldNotHideAll = $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) ||
-        $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE)
-
-    if (shouldNotHideAll) {
-      $(SELECTOR_CONTROL_SIDEBAR).not(this._config.target).hide()
-      $(this._config.target).css('display', 'block')
-    } else {
-      $(SELECTOR_CONTROL_SIDEBAR).hide()
-    }
-
-    this._fixHeight()
-    this._fixScrollHeight()
-
-    $(window).resize(() => {
-      this._fixHeight()
-      this._fixScrollHeight()
-    })
-
-    $(window).scroll(() => {
-      const $body = $('body')
-      const shouldFixHeight = $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) ||
-          $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE)
-
-      if (shouldFixHeight) {
-        this._fixScrollHeight()
+    const open = document.body.classList.contains(CLASS_OPEN) || document.body.classList.contains(CLASS_SLIDE)
+    document.querySelectorAll(SELECTOR).forEach(sidebar => {
+      if (open && sidebar.matches(this._config.target)) {
+        sidebar.style.display = 'block'
+      } else if (!open) {
+        sidebar.style.display = 'none'
       }
     })
+    this._fixHeight(); this._fixScrollHeight()
+    if (!this._listeners) {
+      this._listeners = true
+      window.addEventListener('resize', () => {
+        this._fixHeight(); this._fixScrollHeight()
+      })
+      window.addEventListener('scroll', () => {
+        if (document.body.classList.contains(CLASS_OPEN) || document.body.classList.contains(CLASS_SLIDE)) {
+          this._fixScrollHeight()
+        }
+      })
+    }
   }
 
   _isNavbarFixed() {
-    const $body = $('body')
-    return (
-      $body.hasClass(CLASS_NAME_NAVBAR_FIXED) ||
-        $body.hasClass(CLASS_NAME_NAVBAR_SM_FIXED) ||
-        $body.hasClass(CLASS_NAME_NAVBAR_MD_FIXED) ||
-        $body.hasClass(CLASS_NAME_NAVBAR_LG_FIXED) ||
-        $body.hasClass(CLASS_NAME_NAVBAR_XL_FIXED)
-    )
+    return ['layout-navbar-fixed', 'layout-sm-navbar-fixed', 'layout-md-navbar-fixed', 'layout-lg-navbar-fixed', 'layout-xl-navbar-fixed'].some(cls => document.body.classList.contains(cls))
   }
 
   _isFooterFixed() {
-    const $body = $('body')
-    return (
-      $body.hasClass(CLASS_NAME_FOOTER_FIXED) ||
-        $body.hasClass(CLASS_NAME_FOOTER_SM_FIXED) ||
-        $body.hasClass(CLASS_NAME_FOOTER_MD_FIXED) ||
-        $body.hasClass(CLASS_NAME_FOOTER_LG_FIXED) ||
-        $body.hasClass(CLASS_NAME_FOOTER_XL_FIXED)
-    )
-  }
-
-  _fixScrollHeight() {
-    const $body = $('body')
-    const $controlSidebar = $(this._config.target)
-
-    if (!$body.hasClass(CLASS_NAME_LAYOUT_FIXED)) {
-      return
-    }
-
-    const heights = {
-      scroll: $(document).height(),
-      window: $(window).height(),
-      header: $(SELECTOR_HEADER).outerHeight(),
-      footer: $(SELECTOR_FOOTER).outerHeight()
-    }
-    const positions = {
-      bottom: Math.abs((heights.window + $(window).scrollTop()) - heights.scroll),
-      top: $(window).scrollTop()
-    }
-
-    const navbarFixed = this._isNavbarFixed() && $(SELECTOR_HEADER).css('position') === 'fixed'
-
-    const footerFixed = this._isFooterFixed() && $(SELECTOR_FOOTER).css('position') === 'fixed'
-
-    const $controlsidebarContent = $(`${this._config.target}, ${this._config.target} ${SELECTOR_CONTROL_SIDEBAR_CONTENT}`)
-
-    if (positions.top === 0 && positions.bottom === 0) {
-      $controlSidebar.css({
-        bottom: heights.footer,
-        top: heights.header
-      })
-      $controlsidebarContent.css('height', heights.window - (heights.header + heights.footer))
-    } else if (positions.bottom <= heights.footer) {
-      if (footerFixed === false) {
-        const top = heights.header - positions.top
-        $controlSidebar.css('bottom', heights.footer - positions.bottom).css('top', top >= 0 ? top : 0)
-        $controlsidebarContent.css('height', heights.window - (heights.footer - positions.bottom))
-      } else {
-        $controlSidebar.css('bottom', heights.footer)
-      }
-    } else if (positions.top <= heights.header) {
-      if (navbarFixed === false) {
-        $controlSidebar.css('top', heights.header - positions.top)
-        $controlsidebarContent.css('height', heights.window - (heights.header - positions.top))
-      } else {
-        $controlSidebar.css('top', heights.header)
-      }
-    } else if (navbarFixed === false) {
-      $controlSidebar.css('top', 0)
-      $controlsidebarContent.css('height', heights.window)
-    } else {
-      $controlSidebar.css('top', heights.header)
-    }
-
-    if (footerFixed && navbarFixed) {
-      $controlsidebarContent.css('height', '100%')
-      $controlSidebar.css('height', '')
-    } else if (footerFixed || navbarFixed) {
-      $controlsidebarContent.css('height', '100%')
-      $controlsidebarContent.css('height', '')
-    }
+    return ['layout-footer-fixed', 'layout-sm-footer-fixed', 'layout-md-footer-fixed', 'layout-lg-footer-fixed', 'layout-xl-footer-fixed'].some(cls => document.body.classList.contains(cls))
   }
 
   _fixHeight() {
-    const $body = $('body')
-    const $controlSidebar = $(`${this._config.target} ${SELECTOR_CONTROL_SIDEBAR_CONTENT}`)
-
-    if (!$body.hasClass(CLASS_NAME_LAYOUT_FIXED)) {
-      $controlSidebar.attr('style', '')
+    const content = document.querySelector(`${this._config.target} .control-sidebar-content`)
+    if (!content) {
       return
     }
 
-    const heights = {
-      window: $(window).height(),
-      header: $(SELECTOR_HEADER).outerHeight(),
-      footer: $(SELECTOR_FOOTER).outerHeight()
+    if (!document.body.classList.contains('layout-fixed')) {
+      content.removeAttribute('style'); return
     }
 
-    let sidebarHeight = heights.window - heights.header
+    const header = document.querySelector('.main-header')?.getBoundingClientRect().height || 0
+    const footer = document.querySelector('.main-footer')?.getBoundingClientRect().height || 0
+    const footerFixed = this._isFooterFixed() && getComputedStyle(document.querySelector('.main-footer') || document.body).position === 'fixed'
+    content.style.height = `${window.innerHeight - header - (footerFixed ? footer : 0)}px`
+    content.style.overflowY = 'auto'
+  }
 
-    if (this._isFooterFixed() && $(SELECTOR_FOOTER).css('position') === 'fixed') {
-      sidebarHeight = heights.window - heights.header - heights.footer
+  _fixScrollHeight() {
+    if (!document.body.classList.contains('layout-fixed')) {
+      return
     }
 
-    $controlSidebar.css('height', sidebarHeight)
+    const sidebar = document.querySelector(this._config.target)
+    const content = sidebar?.querySelector('.control-sidebar-content')
+    if (!sidebar || !content) {
+      return
+    }
 
-    if (typeof $.fn.overlayScrollbars !== 'undefined') {
-      $controlSidebar.overlayScrollbars({
-        className: this._config.scrollbarTheme,
-        sizeAutoCapable: true,
-        scrollbars: {
-          autoHide: this._config.scrollbarAutoHide,
-          clickScrolling: true
-        }
-      })
+    const header = document.querySelector('.main-header')?.getBoundingClientRect().height || 0
+    const footer = document.querySelector('.main-footer')?.getBoundingClientRect().height || 0
+    const top = window.scrollY
+    const bottom = Math.max(0, document.documentElement.scrollHeight - window.innerHeight - top)
+    const navFixed = this._isNavbarFixed() && getComputedStyle(document.querySelector('.main-header') || document.body).position === 'fixed'
+    const footerFixed = this._isFooterFixed() && getComputedStyle(document.querySelector('.main-footer') || document.body).position === 'fixed'
+    if (top === 0 && bottom === 0) {
+      sidebar.style.top = `${header}px`; sidebar.style.bottom = `${footer}px`; content.style.height = `${window.innerHeight - header - footer}px`
+    } else if (bottom <= footer && !footerFixed) {
+      sidebar.style.bottom = `${footer - bottom}px`; sidebar.style.top = `${Math.max(0, header - top)}px`; content.style.height = `${window.innerHeight - footer + bottom}px`
+    } else if (top <= header && !navFixed) {
+      sidebar.style.top = `${header - top}px`; content.style.height = `${window.innerHeight - header + top}px`
+    } else if (!navFixed) {
+      sidebar.style.top = '0'; content.style.height = `${window.innerHeight}px`
+    } else {
+      sidebar.style.top = `${header}px`
+    }
+
+    if (footerFixed && navFixed) {
+      content.style.height = '100%'; sidebar.style.height = ''
     }
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
+  static getOrCreateInstance(element, config = {}) {
+    return getOrCreateInstance(ControlSidebar, element, config)
+  }
 
-      if (!data) {
-        data = new ControlSidebar($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
+  static _interface(element, method) {
+    const instance = ControlSidebar.getOrCreateInstance(element); setInstance(ControlSidebar, element, instance); if (method) {
+      instance[method]()
+    }
   }
 }
 
-/**
- *
- * Data Api implementation
- * ====================================================
- */
-$(document).on('click', SELECTOR_DATA_TOGGLE, function (event) {
-  event.preventDefault()
-
-  ControlSidebar._jQueryInterface.call($(this), 'toggle')
+delegate(document, 'click', '[data-widget="control-sidebar"]', (event, trigger) => {
+  event.preventDefault(); ControlSidebar._interface(trigger, 'toggle')
 })
-
-$(document).ready(() => {
-  ControlSidebar._jQueryInterface.call($(SELECTOR_DATA_TOGGLE), '_init')
-})
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = ControlSidebar._jQueryInterface
-$.fn[NAME].Constructor = ControlSidebar
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return ControlSidebar._jQueryInterface
-}
-
+onReady(() => document.querySelectorAll('[data-widget="control-sidebar"]').forEach(element => ControlSidebar._interface(element)))
 export default ControlSidebar

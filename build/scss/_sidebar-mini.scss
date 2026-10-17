@@ -292,7 +292,7 @@
           .form-control-sidebar {
             display: inline-block;
           }
-          .form-control-sidebar ~ .input-group-append {
+          .form-control-sidebar ~ .btn {
             display: flex;
           }
           .sidebar-search-open .sidebar-search-results {
@@ -491,7 +491,7 @@
 .nav-sidebar .nav-item > .nav-link {
   position: relative;
 
-  > .float-right {
+  > .float-end {
     margin-top: -7px;
     position: absolute;
     right: 10px;

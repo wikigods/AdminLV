@@ -21,7 +21,7 @@ The layout consists of four major parts:
 > You cannot use both layout-boxed and layout-navbar-fixed or layout-footer-fixed at the same time. Anything else can be mixed together.
 {: .quote-danger}
 
-AdminLTE 3.2 provides a set of options to apply to your main layout. Each one of these classes can be added to the body tag to get the desired goal.
+AdminLTE 4.0 provides a set of options to apply to your main layout. Each one of these classes can be added to the body tag to get the desired goal.
 
 - Fixed Sidebar: use the class `.layout-fixed` to get a fixed sidebar.
 - Fixed Navbar: use the class `.layout-navbar-fixed` to get a fixed navbar.
@@ -68,14 +68,18 @@ Preloader to avoid [https://github.com/ColorlibHQ/AdminLTE/discussions/3319](htt
 
 #### Dark Mode
 
-AdminLTE 3.2 provides a dark mode option. You can add in body tag:
+AdminLTE 4.0 supports Bootstrap 5.3 color modes. Set the Bootstrap theme attribute on the root element to enable dark mode:
 
-- `.dark-mode`
+```html
+<html lang="en" data-bs-theme="dark">
+```
+
+You can also scope dark mode to a component by adding `data-bs-theme="dark"` to its container.
 
 
 #### Color Variations
 
-AdminLTE 3.2 provides a set of color variations to apply to your sidebar (light & dark) & navbar. You can combine any available color with these class prefixes:
+AdminLTE 4.0 provides a set of color variations to apply to your sidebar (light & dark) & navbar. You can combine any available color with these class prefixes:
 
 - `.navbar-*`
 - `.sidebar-dark-*`
@@ -142,17 +146,17 @@ The following colors are available:
 
 For custom colored custom-checkbox & custom-radio you can add this classes:
 
-- `.custom-control-input-*`
+- `.form-check-input-*`
 
-You can also change the look to outlined checkbox & radio with adding the `.custom-control-input-outline` on the custom control input.
+You can also change the look to outlined checkbox & radio with adding the `.form-check-input-outline` on the custom control input.
 
-For custom colored custom-range you can add this classes:
+For custom colored form ranges you can add this class:
 
-- `.custom-range-*`
+- `.form-range-*`
 
-For custom colored custom-range you can add this classes:
+For custom colored form ranges you can add this class:
 
-- `.custom-range-*`
+- `.form-range-*`
 
 For custom colored custom-switch you can add this classes:
 

@@ -3,24 +3,18 @@ layout: page
 title: Browser Support
 ---
 
-AdminLTE comes with the same browser support as Bootstrap 4.
+AdminLTE v4 supports the latest stable versions of major browsers, recent mobile browsers, and Firefox ESR. Internet Explorer 10 and 11 are not supported.
 
-> ##### Excerpt from Bootstrap's official Documentation!
-> Bootstrap supports the __latest, stable releases__ of all major browsers and platforms. On Windows, __we support Internet Explorer 10-11 / Microsoft Edge__.
+> ##### Bootstrap 5 browser support
+> Bootstrap 5 supports current browsers and has dropped Internet Explorer 10 and 11.
 >
-> For more details [look here](https://getbootstrap.com/docs/4.4/getting-started/browsers-devices/#supported-browsers).
+> See the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/) for details.
 
 You can find our supported range of browsers and their versions in [our .browserslistrc file](https://github.com/ColorlibHQ/AdminLTE/blob/master/.browserslistrc):
 
-```
-# https://github.com/browserslist/browserslist#readme
-
->= 0.2%
+```text
+>= 0.5%
 last 2 major versions
 not dead
 Firefox ESR
-Edge >= 16
-Explorer >= 10
-iOS >= 9
-Safari >= 9
 ```

@@ -23,7 +23,7 @@ This attribute, when attached to a button, allows the box to be collapsed/expand
       <div class="card-header">
         <h3 class="card-title">Collapsible Card Example</h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa-solid fa-minus"></i></button>
         </div>
       </div>
       <div class="card-body">
@@ -38,7 +38,7 @@ This attribute, when attached to a button, allows the box to be collapsed/expand
     <h3 class="card-title">Collapsible Card Example</h3>
     <div class="card-tools">
       <!-- Collapse Button -->
-      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa-solid fa-minus"></i></button>
     </div>
     <!-- /.card-tools -->
   </div>
@@ -64,7 +64,7 @@ This attribute, when attached to a button, allows the box to be removed when cli
       <div class="card-header">
         <h3 class="card-title">Removable Card Example</h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
       <div class="card-body">
@@ -79,7 +79,7 @@ This attribute, when attached to a button, allows the box to be removed when cli
     <h3 class="card-title">Removable Card Example</h3>
     <div class="card-tools">
       <!-- Remove Button -->
-      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <!-- /.card-tools -->
   </div>
@@ -105,7 +105,7 @@ This attribute, when attached to a button, allows the box to be maximize/minimiz
       <div class="card-header">
         <h3 class="card-title">Maximizable Card Example</h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fa-solid fa-expand"></i></button>
         </div>
       </div>
       <div class="card-body">
@@ -120,7 +120,7 @@ This attribute, when attached to a button, allows the box to be maximize/minimiz
     <h3 class="card-title">Maximizable Card Example</h3>
     <div class="card-tools">
       <!-- Maximize Button -->
-      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fa-solid fa-expand"></i></button>
     </div>
     <!-- /.card-tools -->
   </div>
@@ -160,7 +160,7 @@ $('#my-card').CardWidget(options)
 > ##### Tip!
 > You can use any option via the data-attributes like this.
 > ```html
-> <button type="button" class="btn btn-tool" data-card-widget="collapse" data-animation-speed="1000"><i class="fas fa-minus"></i></button>
+> <button type="button" class="btn btn-tool" data-card-widget="collapse" data-animation-speed="1000"><i class="fa-solid fa-minus"></i></button>
 > ```
 {: .quote-info}
 

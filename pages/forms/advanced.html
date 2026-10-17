@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Advanced form elements</title>
+  <title>AdminLTE 4 | Advanced form elements</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -15,13 +15,11 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Air Datepicker -->
+  <link rel="stylesheet" href="../../plugins/air-datepicker/air-datepicker.css">
   <!-- Select2 -->
   <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-theme-bootstrap5/select2-bootstrap.css">
   <!-- BS Stepper -->
   <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
@@ -36,7 +34,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa-solid fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="../../index3.html" class="nav-link">Home</a>
@@ -51,20 +49,20 @@
       <!-- Navbar Search -->
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
+          <i class="fa-solid fa-magnifying-glass"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form class="d-flex flex-wrap align-items-center">
             <div class="input-group input-group-sm">
               <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
+              
                 <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
+                  <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
                 <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
-              </div>
+              
             </div>
           </form>
         </div>
@@ -72,22 +70,22 @@
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+          <i class="fa-regular fa-comments"></i>
+          <span class="badge bg-danger navbar-badge">3</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
+            <div class="d-flex">
+              <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 me-3 img-circle">
+              <div class="flex-fill">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                  <span class="float-end text-sm text-danger"><i class="fa-solid fa-star"></i></span>
                 </h3>
                 <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                <p class="text-sm text-muted"><i class="fa-regular fa-clock me-1"></i> 4 Hours Ago</p>
               </div>
             </div>
             <!-- Message End -->
@@ -95,15 +93,15 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
+            <div class="d-flex">
+              <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle me-3">
+              <div class="flex-fill">
                 <h3 class="dropdown-item-title">
                   John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                  <span class="float-end text-sm text-muted"><i class="fa-solid fa-star"></i></span>
                 </h3>
                 <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                <p class="text-sm text-muted"><i class="fa-regular fa-clock me-1"></i> 4 Hours Ago</p>
               </div>
             </div>
             <!-- Message End -->
@@ -111,15 +109,15 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
-            <div class="media">
-              <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
+            <div class="d-flex">
+              <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle me-3">
+              <div class="flex-fill">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                  <span class="float-end text-sm text-warning"><i class="fa-solid fa-star"></i></span>
                 </h3>
                 <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                <p class="text-sm text-muted"><i class="fa-regular fa-clock me-1"></i> 4 Hours Ago</p>
               </div>
             </div>
             <!-- Message End -->
@@ -130,26 +128,26 @@
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge bg-warning navbar-badge">15</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
           <span class="dropdown-item dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+            <i class="fa-solid fa-envelope me-2"></i> 4 new messages
+            <span class="float-end text-muted text-sm">3 mins</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+            <i class="fa-solid fa-users me-2"></i> 8 friend requests
+            <span class="float-end text-muted text-sm">12 hours</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
+            <i class="fa-solid fa-file me-2"></i> 3 new reports
+            <span class="float-end text-muted text-sm">2 days</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
@@ -157,12 +155,12 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+          <i class="fa-solid fa-maximize"></i>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+        <a class="nav-link" data-widget="control-sidebar" data-bs-slide="true" href="#" role="button">
+          <i class="fa-solid fa-table-cells-large"></i>
         </a>
       </li>
     </ul>
@@ -174,7 +172,7 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text fw-light">AdminLTE 4</span>
     </a>
 
     <!-- Sidebar -->
@@ -190,14 +188,14 @@
       </div>
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
+      <div class="d-flex flex-wrap align-items-center">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
+          
             <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
+              <i class="fa-solid fa-magnifying-glass fa-fw"></i>
             </button>
-          </div>
+          
         </div>
       </div>
 
@@ -208,28 +206,28 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fa-solid fa-gauge-high"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fa-solid fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../../index.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Dashboard v1</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../../index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Dashboard v2</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../../index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Dashboard v3</p>
                 </a>
               </li>
@@ -237,68 +235,68 @@
           </li>
           <li class="nav-item">
             <a href="../widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fa-solid fa-table-cells"></i>
               <p>
                 Widgets
-                <span class="right badge badge-danger">New</span>
+                <span class="right badge bg-danger">New</span>
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fa-solid fa-copy"></i>
               <p>
                 Layout Options
-                <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <i class="fa-solid fa-angle-left right"></i>
+                <span class="badge bg-info right">6</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../layout/top-nav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Top Navigation</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/top-nav-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Top Navigation + Sidebar</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/boxed.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Boxed</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/fixed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Fixed Sidebar</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/fixed-sidebar-custom.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Fixed Sidebar <small>+ Custom Area</small></p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/fixed-topnav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Fixed Navbar</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/fixed-footer.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Fixed Footer</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../layout/collapsed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Collapsed Sidebar</p>
                 </a>
               </li>
@@ -306,34 +304,34 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fa-solid fa-chart-pie"></i>
               <p>
                 Charts
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fa-solid fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>ChartJS</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Flot</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Inline</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../charts/uplot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>uPlot</p>
                 </a>
               </li>
@@ -341,58 +339,58 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fa-solid fa-tree"></i>
               <p>
                 UI Elements
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../UI/general.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>General</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/icons.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Icons</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/buttons.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Buttons</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/sliders.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Sliders</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/modals.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Modals & Alerts</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/navbar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Navbar & Tabs</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/timeline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Timeline</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../UI/ribbons.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Ribbons</p>
                 </a>
               </li>
@@ -400,34 +398,34 @@
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fa-solid fa-pen-to-square"></i>
               <p>
                 Forms
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../forms/general.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>General Elements</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../forms/advanced.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Advanced Elements</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Editors</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Validation</p>
                 </a>
               </li>
@@ -435,28 +433,28 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa-solid fa-table"></i>
               <p>
                 Tables
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Simple Tables</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>DataTables</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>jsGrid</p>
                 </a>
               </li>
@@ -465,16 +463,16 @@
           <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
             <a href="../calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fa-regular fa-calendar-days"></i>
               <p>
                 Calendar
-                <span class="badge badge-info right">2</span>
+                <span class="badge bg-info right">2</span>
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="../gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+              <i class="nav-icon fa-regular fa-image"></i>
               <p>
                 Gallery
               </p>
@@ -482,7 +480,7 @@
           </li>
           <li class="nav-item">
             <a href="../kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fa-solid fa-table-columns"></i>
               <p>
                 Kanban Board
               </p>
@@ -490,28 +488,28 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
+              <i class="nav-icon fa-regular fa-envelope"></i>
               <p>
                 Mailbox
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../mailbox/mailbox.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Inbox</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Compose</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../mailbox/read-mail.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Read</p>
                 </a>
               </li>
@@ -519,70 +517,70 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
+              <i class="nav-icon fa-solid fa-book"></i>
               <p>
                 Pages
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../examples/invoice.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Invoice</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/profile.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Profile</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/e-commerce.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>E-commerce</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/projects.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Projects</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/project-add.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Project Add</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/project-edit.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Project Edit</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/project-detail.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Project Detail</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/contacts.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Contacts</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/faq.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>FAQ</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/contact-us.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Contact us</p>
                 </a>
               </li>
@@ -590,43 +588,43 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
+              <i class="nav-icon fa-regular fa-square-plus"></i>
               <p>
                 Extras
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>
                     Login & Register v1
-                    <i class="fas fa-angle-left right"></i>
+                    <i class="fa-solid fa-angle-left right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="../examples/login.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Login v1</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/register.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Register v1</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/forgot-password.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Forgot Password v1</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/recover-password.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Recover Password v1</p>
                     </a>
                   </li>
@@ -634,34 +632,34 @@
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>
                     Login & Register v2
-                    <i class="fas fa-angle-left right"></i>
+                    <i class="fa-solid fa-angle-left right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="../examples/login-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Login v2</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/register-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Register v2</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/forgot-password-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Forgot Password v2</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="../examples/recover-password-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle nav-icon"></i>
                       <p>Recover Password v2</p>
                     </a>
                   </li>
@@ -669,49 +667,49 @@
               </li>
               <li class="nav-item">
                 <a href="../examples/lockscreen.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Lockscreen</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/legacy-user-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Legacy User Menu</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/language-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Language Menu</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/404.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Error 404</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/500.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Error 500</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/pace.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Pace</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../examples/blank.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Blank Page</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../../starter.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Starter Page</p>
                 </a>
               </li>
@@ -719,22 +717,22 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-search"></i>
+              <i class="nav-icon fa-solid fa-magnifying-glass"></i>
               <p>
                 Search
-                <i class="fas fa-angle-left right"></i>
+                <i class="fa-solid fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../search/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Simple Search</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../search/enhanced.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Enhanced</p>
                 </a>
               </li>
@@ -743,62 +741,62 @@
           <li class="nav-header">MISCELLANEOUS</li>
           <li class="nav-item">
             <a href="../../iframe.html" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fa-solid fa-ellipsis"></i>
               <p>Tabbed IFrame Plugin</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
+              <i class="nav-icon fa-solid fa-file"></i>
               <p>Documentation</p>
             </a>
           </li>
           <li class="nav-header">MULTI LEVEL EXAMPLE</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
+              <i class="fa-solid fa-circle nav-icon"></i>
               <p>Level 1</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
+              <i class="nav-icon fa-solid fa-circle"></i>
               <p>
                 Level 1
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fa-solid fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Level 2</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>
                     Level 2
-                    <i class="right fas fa-angle-left"></i>
+                    <i class="right fa-solid fa-angle-left"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle-dot nav-icon"></i>
                       <p>Level 3</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle-dot nav-icon"></i>
                       <p>Level 3</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
+                      <i class="fa-regular fa-circle-dot nav-icon"></i>
                       <p>Level 3</p>
                     </a>
                   </li>
@@ -806,7 +804,7 @@
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa-regular fa-circle nav-icon"></i>
                   <p>Level 2</p>
                 </a>
               </li>
@@ -814,26 +812,26 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
+              <i class="fa-solid fa-circle nav-icon"></i>
               <p>Level 1</p>
             </a>
           </li>
           <li class="nav-header">LABELS</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
+              <i class="nav-icon fa-regular fa-circle text-danger"></i>
               <p class="text">Important</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
+              <i class="nav-icon fa-regular fa-circle text-warning"></i>
               <p>Warning</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
+              <i class="nav-icon fa-regular fa-circle text-info"></i>
               <p>Informational</p>
             </a>
           </li>
@@ -854,7 +852,7 @@
             <h1>Advanced Form</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+            <ol class="breadcrumb float-sm-end">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Advanced Form</li>
             </ol>
@@ -866,6 +864,19 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Required field</h3>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="requiredExample" class="required">Name</label>
+              <input id="requiredExample" type="text" class="form-control" placeholder="Enter your name" required>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
@@ -873,10 +884,10 @@
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
+                <i class="fa-solid fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
+                <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
           </div>
@@ -884,7 +895,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Minimal</label>
                   <select class="form-control select2" style="width: 100%;">
                     <option selected="selected">Alabama</option>
@@ -896,8 +907,8 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
-                <div class="form-group">
+                <!-- /.mb-3 -->
+                <div class="mb-3">
                   <label>Disabled</label>
                   <select class="form-control select2" disabled="disabled" style="width: 100%;">
                     <option selected="selected">Alabama</option>
@@ -909,11 +920,11 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Multiple</label>
                   <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                     <option>Alabama</option>
@@ -925,8 +936,8 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
-                <div class="form-group">
+                <!-- /.mb-3 -->
+                <div class="mb-3">
                   <label>Disabled Result</label>
                   <select class="form-control select2" style="width: 100%;">
                     <option selected="selected">Alabama</option>
@@ -938,7 +949,7 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
             </div>
@@ -947,7 +958,7 @@
             <h5>Custom Color Variants</h5>
             <div class="row">
               <div class="col-12 col-sm-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Minimal (.select2-danger)</label>
                   <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
                     <option selected="selected">Alabama</option>
@@ -959,11 +970,11 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
               <div class="col-12 col-sm-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Multiple (.select2-purple)</label>
                   <div class="select2-purple">
                     <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-purple" style="width: 100%;">
@@ -977,7 +988,7 @@
                     </select>
                   </div>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
             </div>
@@ -994,14 +1005,14 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Select2 (Bootstrap4 Theme)</h3>
+            <h3 class="card-title">Select2 (Bootstrap5 Theme)</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
+                <i class="fa-solid fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
+                <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
           </div>
@@ -1009,22 +1020,22 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Minimal</label>
-                  <select class="form-control select2bs4" style="width: 100%;">
-                    <option selected="selected">Alabama</option>
+                  <select class="form-control select2bs5" style="width: 100%;">
+                    <option>Alabama</option>
                     <option>Alaska</option>
                     <option>California</option>
                     <option>Delaware</option>
-                    <option>Tennessee</option>
+                    <option selected="selected">Tennessee</option>
                     <option>Texas</option>
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
-                <div class="form-group">
+                <!-- /.mb-3 -->
+                <div class="mb-3">
                   <label>Disabled</label>
-                  <select class="form-control select2bs4" disabled="disabled" style="width: 100%;">
+                  <select class="form-control select2bs5" disabled="disabled" style="width: 100%;">
                     <option selected="selected">Alabama</option>
                     <option>Alaska</option>
                     <option>California</option>
@@ -1034,13 +1045,13 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Multiple</label>
-                  <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
+                  <select class="select2bs5" multiple="multiple" data-placeholder="Select a State"
                           style="width: 100%;">
                     <option>Alabama</option>
                     <option>Alaska</option>
@@ -1048,13 +1059,13 @@
                     <option>Delaware</option>
                     <option>Tennessee</option>
                     <option>Texas</option>
-                    <option>Washington</option>
+                    <option selected="selected">Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
-                <div class="form-group">
+                <!-- /.mb-3 -->
+                <div class="mb-3">
                   <label>Disabled Result</label>
-                  <select class="form-control select2bs4" style="width: 100%;">
+                  <select class="form-control select2bs5" style="width: 100%;">
                     <option selected="selected">Alabama</option>
                     <option>Alaska</option>
                     <option disabled="disabled">California (disabled)</option>
@@ -1064,7 +1075,7 @@
                     <option>Washington</option>
                   </select>
                 </div>
-                <!-- /.form-group -->
+                <!-- /.mb-3 -->
               </div>
               <!-- /.col -->
             </div>
@@ -1078,45 +1089,186 @@
         </div>
         <!-- /.card -->
 
+        <!-- SELECT2 SIZING -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Bootstrap Duallistbox</h3>
+            <h3 class="card-title">Select2 Sizing</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
+                <i class="fa-solid fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="mb-3">Native Bootstrap 5 Select</h6>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="native-bs5-size-lg">Large (lg)</label>
+                  <select id="native-bs5-size-lg" class="form-select form-select-lg">
+                    <option>Alabama</option>
+                    <option selected="selected">Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="native-bs5-size-default">Default</label>
+                  <select id="native-bs5-size-default" class="form-select">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option selected="selected">California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="native-bs5-size-sm">Small (sm)</label>
+                  <select id="native-bs5-size-sm" class="form-select form-select-sm">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>California</option>
+                    <option selected="selected">Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <h6 class="mb-3">Select2 Bootstrap Theme</h6>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group-lg mb-3">
+                  <label for="select2-size-lg">Large (lg)</label>
+                  <select id="select2-size-lg" class="form-control select2bs5" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option selected="selected">Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="select2-size-default">Default</label>
+                  <select id="select2-size-default" class="form-control select2bs5" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option selected="selected">California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group-sm mb-3">
+                  <label for="select2-size-sm">Small (sm)</label>
+                  <select id="select2-size-sm" class="form-control select2bs5" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>California</option>
+                    <option selected="selected">Delaware</option>
+                    <option>Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group-lg mb-3">
+                  <label for="select2-size-multiple-lg">Multiple (lg)</label>
+                  <select id="select2-size-multiple-lg" class="form-control select2bs5" multiple="multiple"
+                          data-placeholder="Select multiple states" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option selected="selected">Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option selected="selected">Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="select2-size-multiple-default">Multiple (default)</label>
+                  <select id="select2-size-multiple-default" class="form-control select2bs5" multiple="multiple"
+                          data-placeholder="Select multiple states" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option selected="selected">Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option selected="selected">Tennessee</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group-sm mb-3">
+                  <label for="select2-size-multiple-sm">Multiple (sm)</label>
+                  <select id="select2-size-multiple-sm" class="form-control select2bs5" multiple="multiple"
+                          data-placeholder="Select multiple states" style="width: 100%;">
+                    <option>Alabama</option>
+                    <option selected="selected">Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option selected="selected">Tennessee</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+
+        <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title">Native dual list</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <label>Multiple</label>
-                  <select class="duallistbox" multiple="multiple">
-                    <option selected>Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
-                  </select>
-                </div>
-                <!-- /.form-group -->
+            <div class="row align-items-center" id="state-dual-list">
+              <div class="col-12 col-lg-5 mb-3 mb-lg-0">
+                <label for="available-states" class="form-label">Available states</label>
+                <select id="available-states" class="form-select" multiple size="8" aria-label="Available states">
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
               </div>
-              <!-- /.col -->
+              <div class="col-12 col-lg-2 d-flex flex-row flex-lg-column justify-content-center gap-2 mb-3 mb-lg-0">
+                <button type="button" class="btn btn-outline-primary" data-move-selected="right" aria-label="Move selected to chosen">&gt;</button>
+                <button type="button" class="btn btn-outline-primary" data-move-all="right" aria-label="Move all to chosen">&gt;&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" data-move-selected="left" aria-label="Return selected to available">&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" data-move-all="left" aria-label="Return all to available">&lt;&lt;</button>
+              </div>
+              <div class="col-12 col-lg-5">
+                <label for="chosen-states" class="form-label">Chosen states</label>
+                <select id="chosen-states" class="form-select" multiple size="8" aria-label="Chosen states">
+                  <option selected>Alabama</option>
+                </select>
+              </div>
             </div>
-            <!-- /.row -->
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            Visit <a href="https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox#readme">Bootstrap Duallistbox</a> for more examples and information about
-            the plugin.
+            Select one or more states and use the arrow buttons or double-click an option to move it between lists.
           </div>
         </div>
         <!-- /.card -->
@@ -1130,13 +1282,13 @@
               </div>
               <div class="card-body">
                 <!-- Date dd/mm/yyyy -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date masks:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-regular fa-calendar-days"></i></span>
+                    
                     <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
                   </div>
                   <!-- /.input group -->
@@ -1144,11 +1296,11 @@
                 <!-- /.form group -->
 
                 <!-- Date mm/dd/yyyy -->
-                <div class="form-group">
+                <div class="mb-3">
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-regular fa-calendar-days"></i></span>
+                    
                     <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/dd/yyyy" data-mask>
                   </div>
                   <!-- /.input group -->
@@ -1156,13 +1308,13 @@
                 <!-- /.form group -->
 
                 <!-- phone mask -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>US phone mask:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                    
                     <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                   </div>
                   <!-- /.input group -->
@@ -1170,13 +1322,13 @@
                 <!-- /.form group -->
 
                 <!-- phone mask -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Intl US phone mask:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                    
                     <input type="text" class="form-control"
                            data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
                   </div>
@@ -1185,13 +1337,13 @@
                 <!-- /.form group -->
 
                 <!-- IP mask -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>IP mask:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-laptop"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-solid fa-laptop"></i></span>
+                    
                     <input type="text" class="form-control" data-inputmask="'alias': 'ip'" data-mask>
                   </div>
                   <!-- /.input group -->
@@ -1209,42 +1361,38 @@
               </div>
               <div class="card-body">
                 <!-- Color Picker -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Color picker:</label>
                   <input type="text" class="form-control my-colorpicker1">
                 </div>
                 <!-- /.form group -->
 
                 <!-- Color Picker -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Color picker with addon:</label>
 
                   <div class="input-group my-colorpicker2">
                     <input type="text" class="form-control">
 
-                    <div class="input-group-append">
-                      <span class="input-group-text"><i class="fas fa-square"></i></span>
-                    </div>
+                    
+                      <span class="input-group-text"><i class="fa-solid fa-square"></i></span>
+                    
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
                 <!-- time Picker -->
-                <div class="bootstrap-timepicker">
-                  <div class="form-group">
+                <div class="mb-3">
                     <label>Time picker:</label>
 
-                    <div class="input-group date" id="timepicker" data-target-input="nearest">
-                      <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"/>
-                      <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="far fa-clock"></i></div>
-                      </div>
-                      </div>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="timepicker" autocomplete="off">
+                      <span class="input-group-text" role="button" tabindex="0" aria-label="Open time picker" data-toggle="datepicker" data-target="#timepicker"><i class="fa-regular fa-clock"></i></span>
+                    </div>
                     <!-- /.input group -->
-                  </div>
-                  <!-- /.form group -->
                 </div>
+                <!-- /.form group -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -1259,72 +1407,67 @@
               </div>
               <div class="card-body">
                 <!-- Date -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date:</label>
-                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="reservationdate" autocomplete="off">
+                      <span class="input-group-text" role="button" tabindex="0" aria-label="Open date picker" data-toggle="datepicker" data-target="#reservationdate"><i class="fa-regular fa-calendar-days"></i></span>
                     </div>
                 </div>
                 <!-- Date and time -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date and time:</label>
-                    <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime"/>
-                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="reservationdatetime" autocomplete="off">
+                      <span class="input-group-text" role="button" tabindex="0" aria-label="Open date and time picker" data-toggle="datepicker" data-target="#reservationdatetime"><i class="fa-regular fa-calendar-days"></i></span>
                     </div>
                 </div>
                 <!-- /.form group -->
                 <!-- Date range -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date range:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
+                    
                       <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
+                        <i class="fa-regular fa-calendar-days"></i>
                       </span>
-                    </div>
-                    <input type="text" class="form-control float-right" id="reservation">
+                    
+                    <input type="text" class="form-control float-end" id="reservation">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
                 <!-- Date and time range -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date and time range:</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-clock"></i></span>
-                    </div>
-                    <input type="text" class="form-control float-right" id="reservationtime">
+                    
+                      <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
+                    
+                    <input type="text" class="form-control float-end" id="reservationtime">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
                 <!-- Date and time range -->
-                <div class="form-group">
+                <div class="mb-3">
                   <label>Date range button:</label>
 
                   <div class="input-group">
-                    <button type="button" class="btn btn-default float-right" id="daterange-btn">
-                      <i class="far fa-calendar-alt"></i> Date range picker
-                      <i class="fas fa-caret-down"></i>
+                    <button type="button" class="btn btn-default float-end" id="daterange-btn">
+                      <i class="fa-regular fa-calendar-days"></i> Date range picker
+                      <i class="fa-solid fa-caret-down"></i>
                     </button>
                   </div>
                 </div>
                 <!-- /.form group -->
               </div>
                 <div class="card-footer">
-                  Visit <a href="https://getdatepicker.com/5-4/">tempusdominus </a> for more examples and information about
-                  the plugin.
+                  Visit <a href="https://air-datepicker.com/">Air Datepicker</a> for more examples and information about the plugin.
                 </div>
               <!-- /.card-body -->
             </div>
@@ -1340,7 +1483,7 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <!-- checkbox -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-primary d-inline">
                         <input type="checkbox" id="checkboxPrimary1" checked>
                         <label for="checkboxPrimary1">
@@ -1361,7 +1504,7 @@
                   </div>
                   <div class="col-sm-6">
                     <!-- radio -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-primary d-inline">
                         <input type="radio" id="radioPrimary1" name="r1" checked>
                         <label for="radioPrimary1">
@@ -1385,7 +1528,7 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <!-- checkbox -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-danger d-inline">
                         <input type="checkbox" checked id="checkboxDanger1">
                         <label for="checkboxDanger1">
@@ -1406,7 +1549,7 @@
                   </div>
                   <div class="col-sm-6">
                     <!-- radio -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-danger d-inline">
                         <input type="radio" name="r2" checked id="radioDanger1">
                         <label for="radioDanger1">
@@ -1430,7 +1573,7 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <!-- checkbox -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-success d-inline">
                         <input type="checkbox" checked id="checkboxSuccess1">
                         <label for="checkboxSuccess1">
@@ -1451,7 +1594,7 @@
                   </div>
                   <div class="col-sm-6">
                     <!-- radio -->
-                    <div class="form-group clearfix">
+                    <div class="mb-3 clearfix">
                       <div class="icheck-success d-inline">
                         <input type="radio" name="r3" checked id="radioSuccess1">
                         <label for="radioSuccess1">
@@ -1484,6 +1627,31 @@
         <!-- /.row -->
         <div class="row">
           <div class="col-md-12">
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Bootstrap Switch</h3>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center gap-1">
+                  <label class="adminlte-switch">
+                    <input type="checkbox" role="switch" aria-label="Primary switch" checked>
+                    <span class="adminlte-switch-on">ON</span>
+                    <span class="adminlte-switch-off">OFF</span>
+                  </label>
+                  <label class="adminlte-switch adminlte-switch-success">
+                    <input type="checkbox" role="switch" aria-label="Success switch" checked>
+                    <span class="adminlte-switch-on">ON</span>
+                    <span class="adminlte-switch-off">OFF</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-md-12">
             <div class="card card-default">
               <div class="card-header">
                 <h3 class="card-title">bs-stepper</h3>
@@ -1509,27 +1677,22 @@
                   <div class="bs-stepper-content">
                     <!-- your steps content here -->
                     <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                       </div>
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                       </div>
                       <button class="btn btn-primary" onclick="stepper.next()">Next</button>
                     </div>
                     <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                      <div class="form-group">
+                      <div class="mb-3">
                         <label for="exampleInputFile">File input</label>
                         <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                          </div>
-                          <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                          </div>
+                          <input type="file" class="form-control" id="exampleInputFile">
+                          <span class="input-group-text">Upload</span>
                         </div>
                       </div>
                       <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
@@ -1558,15 +1721,15 @@
                   <div class="col-lg-6">
                     <div class="btn-group w-100">
                       <span class="btn btn-success col fileinput-button">
-                        <i class="fas fa-plus"></i>
+                        <i class="fa-solid fa-plus"></i>
                         <span>Add files</span>
                       </span>
                       <button type="submit" class="btn btn-primary col start">
-                        <i class="fas fa-upload"></i>
+                        <i class="fa-solid fa-upload"></i>
                         <span>Start upload</span>
                       </button>
                       <button type="reset" class="btn btn-warning col cancel">
-                        <i class="fas fa-times-circle"></i>
+                        <i class="fa-solid fa-circle-xmark"></i>
                         <span>Cancel upload</span>
                       </button>
                     </div>
@@ -1599,15 +1762,15 @@
                     <div class="col-auto d-flex align-items-center">
                       <div class="btn-group">
                         <button class="btn btn-primary start">
-                          <i class="fas fa-upload"></i>
+                          <i class="fa-solid fa-upload"></i>
                           <span>Start</span>
                         </button>
                         <button data-dz-remove class="btn btn-warning cancel">
-                          <i class="fas fa-times-circle"></i>
+                          <i class="fa-solid fa-circle-xmark"></i>
                           <span>Cancel</span>
                         </button>
                         <button data-dz-remove class="btn btn-danger delete">
-                          <i class="fas fa-trash"></i>
+                          <i class="fa-solid fa-trash"></i>
                           <span>Delete</span>
                         </button>
                       </div>
@@ -1631,8 +1794,8 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
+    <div class="float-end d-none d-sm-block">
+      <b>Version</b> 4.0.0
     </div>
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
@@ -1647,12 +1810,10 @@
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
+<!-- Bootstrap 5 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Select2 -->
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
-<!-- Bootstrap4 Duallistbox -->
-<script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/moment/moment.min.js"></script>
 <script src="../../plugins/inputmask/jquery.inputmask.min.js"></script>
@@ -1660,8 +1821,8 @@
 <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- bootstrap color picker -->
 <script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Air Datepicker -->
+<script src="../../plugins/air-datepicker/air-datepicker.js"></script>
 <!-- BS-Stepper -->
 <script src="../../plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- dropzonejs -->
@@ -1677,8 +1838,8 @@
     $('.select2').select2()
 
     //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
+    $('.select2bs5').select2({
+      theme: 'bootstrap'
     })
 
     //Datemask dd/mm/yyyy
@@ -1688,13 +1849,76 @@
     //Money Euro
     $('[data-mask]').inputmask()
 
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
+    // Air Datepicker preserves date-only, date/time, and time-only inputs.
+    const datepickerLocale = {
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      today: 'Today',
+      clear: 'Clear',
+      dateFormat: 'MM/dd/yyyy',
+      timeFormat: 'hh:mm aa',
+      firstDay: 0
+    }
 
-    //Date and time picker
-    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+    const reservationDatePicker = new AirDatepicker('#reservationdate', {
+      locale: datepickerLocale,
+      autoClose: true,
+      showEvent: false
+    })
+
+    const reservationDateTimePicker = new AirDatepicker('#reservationdatetime', {
+      locale: datepickerLocale,
+      timepicker: true,
+      dateFormat: 'MM/dd/yyyy',
+      timeFormat: 'hh:mm aa',
+      autoClose: true,
+      showEvent: false
+    })
+
+    const timePicker = new AirDatepicker('#timepicker', {
+      locale: datepickerLocale,
+      timepicker: true,
+      onlyTimepicker: true,
+      timeFormat: 'hh:mm aa',
+      autoClose: true,
+      showEvent: false
+    })
+
+    const datePickerTriggers = [
+      ['reservationdate', reservationDatePicker],
+      ['reservationdatetime', reservationDateTimePicker],
+      ['timepicker', timePicker]
+    ]
+    datePickerTriggers.forEach(([inputId, picker]) => {
+      const input = document.getElementById(inputId)
+      const toggle = document.querySelector(`[data-toggle="datepicker"][data-target="#${inputId}"]`)
+
+      toggle?.addEventListener('click', () => {
+        picker.show()
+      })
+
+      toggle?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          picker.show()
+        }
+      })
+
+      document.addEventListener('click', (event) => {
+        const clickedSelect2 = event.target.closest('.select2-container')
+        const calendar = document.querySelector('.air-datepicker')
+        const clickedInput = input.contains(event.target)
+        const clickedToggle = toggle?.contains(event.target)
+        const clickedCalendar = calendar?.contains(event.target)
+
+        if (!clickedInput && !clickedToggle && !clickedCalendar && picker.visible && !clickedSelect2) {
+          picker.hide()
+        }
+      })
+    })
 
     //Date range picker
     $('#reservation').daterangepicker()
@@ -1725,15 +1949,11 @@
       }
     )
 
-    //Timepicker
-    $('#timepicker').datetimepicker({
-      format: 'LT'
-    })
-
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
-
     //Colorpicker
+    // Bootstrap 5.3 renamed Popover's tip accessor; this plugin still calls the 5.1 name.
+    if (window.bootstrap?.Popover && typeof window.bootstrap.Popover.prototype.getTipElement !== 'function') {
+      window.bootstrap.Popover.prototype.getTipElement = window.bootstrap.Popover.prototype._getTipElement
+    }
     $('.my-colorpicker1').colorpicker()
     //color picker with addon
     $('.my-colorpicker2').colorpicker()
@@ -1742,6 +1962,29 @@
       $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
     })
   })
+  // Native dual list controls
+  const dualList = document.getElementById('state-dual-list')
+  if (dualList) {
+    const availableStates = dualList.querySelector('#available-states')
+    const chosenStates = dualList.querySelector('#chosen-states')
+
+    const moveOptions = (source, target, selectedOnly) => {
+      Array.from(source.options)
+        .filter(option => !selectedOnly || option.selected)
+        .forEach(option => {
+          option.selected = true
+          target.add(option)
+        })
+      source.selectedIndex = -1
+    }
+
+    dualList.querySelector('[data-move-selected="right"]').addEventListener('click', () => moveOptions(availableStates, chosenStates, true))
+    dualList.querySelector('[data-move-all="right"]').addEventListener('click', () => moveOptions(availableStates, chosenStates, false))
+    dualList.querySelector('[data-move-selected="left"]').addEventListener('click', () => moveOptions(chosenStates, availableStates, true))
+    dualList.querySelector('[data-move-all="left"]').addEventListener('click', () => moveOptions(chosenStates, availableStates, false))
+    availableStates.addEventListener('dblclick', () => moveOptions(availableStates, chosenStates, true))
+    chosenStates.addEventListener('dblclick', () => moveOptions(chosenStates, availableStates, true))
+  }
   // BS-Stepper Init
   document.addEventListener('DOMContentLoaded', function () {
     window.stepper = new Stepper(document.querySelector('.bs-stepper'))

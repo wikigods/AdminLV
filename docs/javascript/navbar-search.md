@@ -27,20 +27,20 @@ The jQuery API provides more customizable options that allows the developer to p
 Place this HTML Markup after inside the header.
 ```html
 <a data-widget="navbar-search" href="#" role="button">
-  <i class="fas fa-search"></i>
+  <i class="fa-solid fa-magnifying-glass"></i>
 </a>
 <div class="navbar-search-block">
-  <form class="form-inline">
+  <form class="d-flex flex-wrap align-items-center">
     <div class="input-group input-group-sm">
       <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-      <div class="input-group-append">
+      
         <button class="btn btn-navbar" type="submit">
-          <i class="fas fa-search"></i>
+          <i class="fa-solid fa-magnifying-glass"></i>
         </button>
         <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-          <i class="fas fa-times"></i>
+          <i class="fa-solid fa-xmark"></i>
         </button>
-      </div>
+      
     </div>
   </form>
 </div>
@@ -50,20 +50,20 @@ Or you can place the search button inside the navbar as nav-item with this marku
 ```html
 <li class="nav-item">
   <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-    <i class="fas fa-search"></i>
+    <i class="fa-solid fa-magnifying-glass"></i>
   </a>
   <div class="navbar-search-block">
-    <form class="form-inline">
+    <form class="d-flex flex-wrap align-items-center">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
+        
           <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
           <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-            <i class="fas fa-times"></i>
+            <i class="fa-solid fa-xmark"></i>
           </button>
-        </div>
+        
       </div>
     </form>
   </div>

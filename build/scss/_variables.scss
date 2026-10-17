@@ -50,7 +50,7 @@ $boxed-layout-max-width: 1250px !default;
 // Body background (Affects main content background only)
 $main-bg: #f4f6f9 !default;
 
-$dark-main-bg: lighten($dark, 7.5%) !important;
+$dark-main-bg: tint-color($dark, 7.5%) !important;
 
 // Content padding
 $content-padding-y: 0 !default;
@@ -85,11 +85,11 @@ $main-header-dark-form-control-border-color: $gray-600 !default;
 $main-header-dark-form-control-focused-border-color: $gray-600 !default;
 $main-header-dark-placeholder-color: rgba($white, .6) !default;
 
-$main-header-light-form-control-bg: darken($gray-200, 5%) !default;
-$main-header-light-form-control-focused-bg: darken($gray-200, 7.5%) !default;
+$main-header-light-form-control-bg: shade-color($gray-200, 5%) !default;
+$main-header-light-form-control-focused-bg: shade-color($gray-200, 7.5%) !default;
 $main-header-light-form-control-focused-color: $gray-400 !default;
 $main-header-light-form-control-border-color: $gray-400 !default;
-$main-header-light-form-control-focused-border-color: darken($gray-400, 2.5%) !default;
+$main-header-light-form-control-focused-border-color: shade-color($gray-400, 2.5%) !default;
 $main-header-light-placeholder-color: rgba(0, 0, 0, .6) !default;
 
 // MAIN FOOTER
@@ -147,7 +147,7 @@ $control-sidebar-width: $sidebar-width !default;
 // Cards
 // --------------------------------------------------------
 $card-border-color: $gray-100 !default;
-$card-dark-border-color: lighten($gray-900, 10%) !default;
+$card-dark-border-color: tint-color($gray-900, 10%) !default;
 $card-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2) !default;
 $card-title-font-size: 1.1rem !default;
 $card-title-font-size-sm: 1rem !default;
@@ -234,42 +234,8 @@ $ribbon-xl-width: 240px !default;
 $ribbon-xl-top: 47px !default;
 $ribbon-xl-right: 4px !default;
 
-// CUSTOM FORM SELECT
-// --------------------------------------------------------
-
-$custom-select-dark-indicator-color:     $white !default;
-$custom-select-dark-indicator:           url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'><path fill='#{$custom-select-dark-indicator-color}' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>") !default;
-$custom-select-dark-background:          none;//escape-svg($custom-select-dark-indicator) right $custom-select-padding-x center / $custom-select-bg-size no-repeat !default; // Used so we can have multiple background elements (e.g., arrow and feedback icon)
-
 // ENABLE DARK MODE
 // --------------------------------------------------------
 $enable-dark-mode: true !default;  // requires `@import "variables-alt";`
 
 //
-$table-dark-bg: $gray-900 !default;
-$custom-checkbox-indicator-icon-checked: "\f0aa";
-$table-dark-border-color: lighten($gray-900, 10%) !default;
-$custom-control-indicator-checked-color: #0e0707;
-$table-cell-padding: .75rem !default;
-
-// Close
-$close-font-size:                   $font-size-base * 1.5 !default;
-$close-font-weight:                 $font-weight-bold !default;
-$close-color:                       $black !default;
-$close-text-shadow:                 0 1px 0 $white !default;
-
-// scss-docs-start close-variables
-$btn-close-width:            1em !default;
-$btn-close-height:           $btn-close-width !default;
-$btn-close-padding-x:        .25em !default;
-$btn-close-padding-y:        $btn-close-padding-x !default;
-$btn-close-color:            $black !default;
-$btn-close-bg:               url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$btn-close-color}'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/></svg>") !default;
-$btn-close-focus-shadow:     $focus-ring-box-shadow !default;
-$btn-close-opacity:          .5 !default;
-$btn-close-hover-opacity:    .75 !default;
-$btn-close-focus-opacity:    1 !default;
-$btn-close-disabled-opacity: .25 !default;
-$btn-close-filter:           null !default;
-$btn-close-white-filter:     invert(1) grayscale(100%) brightness(200%) !default; // Deprecated in v5.3.4
-// scss-docs-end close-variables

@@ -1,103 +1,56 @@
-/**
- * --------------------------------------------
- * AdminLTE PushMenu.js
- * License MIT
- * --------------------------------------------
- */
+/** AdminLTE PushMenu, implemented without jQuery. */
+import { dispatch, getConfig, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'PushMenu'
-const DATA_KEY = 'lte.pushmenu'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_COLLAPSED = `collapsed${EVENT_KEY}`
-const EVENT_COLLAPSED_DONE = `collapsed-done${EVENT_KEY}`
-const EVENT_SHOWN = `shown${EVENT_KEY}`
-
-const SELECTOR_TOGGLE_BUTTON = '[data-widget="pushmenu"]'
-const SELECTOR_BODY = 'body'
-const SELECTOR_OVERLAY = '#sidebar-overlay'
-const SELECTOR_WRAPPER = '.wrapper'
-
-const CLASS_NAME_COLLAPSED = 'sidebar-collapse'
-const CLASS_NAME_OPEN = 'sidebar-open'
-const CLASS_NAME_IS_OPENING = 'sidebar-is-opening'
-const CLASS_NAME_CLOSED = 'sidebar-closed'
-
-const Default = {
-  autoCollapseSize: 992,
-  enableRemember: false,
-  noTransitionAfterReload: true,
-  animationSpeed: 300
-}
-
-/**
- * Class Definition
- * ====================================================
- */
+const EVENT_KEY = '.lte.pushmenu'
+const COLLAPSED = 'sidebar-collapse'
+const OPEN = 'sidebar-open'
+const OPENING = 'sidebar-is-opening'
+const CLOSED = 'sidebar-closed'
+const DEFAULT = { autoCollapseSize: 992, enableRemember: false, noTransitionAfterReload: true, animationSpeed: 300 }
 
 class PushMenu {
-  constructor(element, options) {
+  constructor(element, options = {}) {
     this._element = element
-    this._options = options
-
-    if ($(SELECTOR_OVERLAY).length === 0) {
-      this._addOverlay()
-    }
-
+    this._options = getConfig(element, DEFAULT, options)
+    setInstance(PushMenu, element, this)
+    this._addOverlay()
     this._init()
   }
 
-  // Public
-
   expand() {
-    const $bodySelector = $(SELECTOR_BODY)
-
-    if (this._options.autoCollapseSize && $(window).width() <= this._options.autoCollapseSize) {
-      $bodySelector.addClass(CLASS_NAME_OPEN)
+    const { body } = document
+    if (this._options.autoCollapseSize && window.innerWidth <= this._options.autoCollapseSize) {
+      body.classList.add(OPEN)
     }
 
-    $bodySelector.addClass(CLASS_NAME_IS_OPENING).removeClass(`${CLASS_NAME_COLLAPSED} ${CLASS_NAME_CLOSED}`).delay(50).queue(function () {
-      $bodySelector.removeClass(CLASS_NAME_IS_OPENING)
-      $(this).dequeue()
-    })
-
+    body.classList.add(OPENING)
+    body.classList.remove(COLLAPSED, CLOSED)
+    window.setTimeout(() => body.classList.remove(OPENING), 50)
     if (this._options.enableRemember) {
-      localStorage.setItem(`remember${EVENT_KEY}`, CLASS_NAME_OPEN)
+      localStorage.setItem(`remember${EVENT_KEY}`, OPEN)
     }
 
-    $(this._element).trigger($.Event(EVENT_SHOWN))
+    dispatch(this._element, `shown${EVENT_KEY}`)
   }
 
   collapse() {
-    const $bodySelector = $(SELECTOR_BODY)
-
-    if (this._options.autoCollapseSize && $(window).width() <= this._options.autoCollapseSize) {
-      $bodySelector.removeClass(CLASS_NAME_OPEN).addClass(CLASS_NAME_CLOSED)
+    const { body } = document
+    if (this._options.autoCollapseSize && window.innerWidth <= this._options.autoCollapseSize) {
+      body.classList.remove(OPEN)
+      body.classList.add(CLOSED)
     }
 
-    $bodySelector.addClass(CLASS_NAME_COLLAPSED)
-
+    body.classList.add(COLLAPSED)
     if (this._options.enableRemember) {
-      localStorage.setItem(`remember${EVENT_KEY}`, CLASS_NAME_COLLAPSED)
+      localStorage.setItem(`remember${EVENT_KEY}`, COLLAPSED)
     }
 
-    $(this._element).trigger($.Event(EVENT_COLLAPSED))
-
-    setTimeout(() => {
-      $(this._element).trigger($.Event(EVENT_COLLAPSED_DONE))
-    }, this._options.animationSpeed)
+    dispatch(this._element, `collapsed${EVENT_KEY}`)
+    window.setTimeout(() => dispatch(this._element, `collapsed-done${EVENT_KEY}`), this._options.animationSpeed)
   }
 
   toggle() {
-    if ($(SELECTOR_BODY).hasClass(CLASS_NAME_COLLAPSED)) {
+    if (document.body.classList.contains(COLLAPSED)) {
       this.expand()
     } else {
       this.collapse()
@@ -109,16 +62,15 @@ class PushMenu {
       return
     }
 
-    const $bodySelector = $(SELECTOR_BODY)
-
-    if ($(window).width() <= this._options.autoCollapseSize) {
-      if (!$bodySelector.hasClass(CLASS_NAME_OPEN)) {
+    const { body } = document
+    if (window.innerWidth <= this._options.autoCollapseSize) {
+      if (!body.classList.contains(OPEN)) {
         this.collapse()
       }
-    } else if (resize === true) {
-      if ($bodySelector.hasClass(CLASS_NAME_OPEN)) {
-        $bodySelector.removeClass(CLASS_NAME_OPEN)
-      } else if ($bodySelector.hasClass(CLASS_NAME_CLOSED)) {
+    } else if (resize) {
+      if (body.classList.contains(OPEN)) {
+        body.classList.remove(OPEN)
+      } else if (body.classList.contains(CLOSED)) {
         this.expand()
       }
     }
@@ -129,105 +81,63 @@ class PushMenu {
       return
     }
 
-    const $body = $('body')
-    const toggleState = localStorage.getItem(`remember${EVENT_KEY}`)
-
-    if (toggleState === CLASS_NAME_COLLAPSED) {
-      if (this._options.noTransitionAfterReload) {
-        $body.addClass('hold-transition').addClass(CLASS_NAME_COLLAPSED).delay(50).queue(function () {
-          $(this).removeClass('hold-transition')
-          $(this).dequeue()
-        })
-      } else {
-        $body.addClass(CLASS_NAME_COLLAPSED)
-      }
-    } else if (this._options.noTransitionAfterReload) {
-      $body.addClass('hold-transition').removeClass(CLASS_NAME_COLLAPSED).delay(50).queue(function () {
-        $(this).removeClass('hold-transition')
-        $(this).dequeue()
-      })
+    const { body } = document
+    const state = localStorage.getItem(`remember${EVENT_KEY}`)
+    if (state === COLLAPSED) {
+      body.classList.add(COLLAPSED)
     } else {
-      $body.removeClass(CLASS_NAME_COLLAPSED)
+      body.classList.remove(COLLAPSED)
+    }
+
+    if (this._options.noTransitionAfterReload) {
+      body.classList.add('hold-transition')
+      window.setTimeout(() => body.classList.remove('hold-transition'), 50)
     }
   }
-
-  // Private
 
   _init() {
     this.remember()
     this.autoCollapse()
-
-    $(window).resize(() => {
-      this.autoCollapse(true)
-    })
+    if (!this._resizeHandler) {
+      this._resizeHandler = () => this.autoCollapse(true)
+      window.addEventListener('resize', this._resizeHandler)
+    }
   }
 
   _addOverlay() {
-    const overlay = $('<div />', {
-      id: 'sidebar-overlay'
-    })
+    if (document.querySelector('#sidebar-overlay')) {
+      return
+    }
 
-    overlay.on('click', () => {
-      this.collapse()
-    })
+    const wrapper = document.querySelector('.wrapper')
+    if (!wrapper) {
+      return
+    }
 
-    $(SELECTOR_WRAPPER).append(overlay)
+    const overlay = document.createElement('div')
+    overlay.id = 'sidebar-overlay'
+    overlay.addEventListener('click', () => this.collapse())
+    wrapper.append(overlay)
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
+  static getOrCreateInstance(element, config = {}) {
+    return getOrCreateInstance(PushMenu, element, config)
+  }
 
-      if (!data) {
-        data = new PushMenu($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
+  static _interface(element, method) {
+    const instance = PushMenu.getOrCreateInstance(element)
+    if (method) {
+      instance[method]()
+    } else {
+      setInstance(PushMenu, element, instance)
+    }
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-
-$(document).on('click', SELECTOR_TOGGLE_BUTTON, event => {
+delegate(document, 'click', '[data-widget="pushmenu"]', (event, button) => {
   event.preventDefault()
-
-  let button = event.currentTarget
-
-  if ($(button).data('widget') !== 'pushmenu') {
-    button = $(button).closest(SELECTOR_TOGGLE_BUTTON)
-  }
-
-  PushMenu._jQueryInterface.call($(button), 'toggle')
+  PushMenu._interface(button, 'toggle')
 })
-
-$(window).on('load', () => {
-  PushMenu._jQueryInterface.call($(SELECTOR_TOGGLE_BUTTON))
-})
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = PushMenu._jQueryInterface
-$.fn[NAME].Constructor = PushMenu
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return PushMenu._jQueryInterface
-}
+onReady(() => document.querySelectorAll('[data-widget="pushmenu"]').forEach(button => PushMenu._interface(button)))
 
 export default PushMenu

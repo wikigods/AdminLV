@@ -600,7 +600,7 @@ body:not(.layout-fixed) {
 .main-footer {
   background-color: $main-footer-bg;
   border-top: $main-footer-border-top;
-  color: lighten($gray-700, 25%);
+  color: tint-color($gray-700, 25%);
   padding: $main-footer-padding;
 
   .text-sm &,
@@ -695,10 +695,10 @@ body:not(.layout-fixed) {
   }
   .main-footer {
     background-color: $dark;
-    border-color: lighten($dark, 10%);
+    border-color: tint-color($dark, 10%);
   }
   .content-wrapper {
-    background-color: lighten($dark, 7.5%);
+    background-color: tint-color($dark, 7.5%);
     color: $white;
 
     .content-header {

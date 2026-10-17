@@ -1,29 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE CardRefresh.js
- * License MIT
- * --------------------------------------------
- */
+import { delegate, dispatch, getConfig, getInstance, onReady, setInstance } from './Native'
 
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'CardRefresh'
-const DATA_KEY = 'lte.cardrefresh'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_LOADED = `loaded${EVENT_KEY}`
-const EVENT_OVERLAY_ADDED = `overlay.added${EVENT_KEY}`
-const EVENT_OVERLAY_REMOVED = `overlay.removed${EVENT_KEY}`
-
-const CLASS_NAME_CARD = 'card'
-
-const SELECTOR_CARD = `.${CLASS_NAME_CARD}`
+const EVENT_LOADED = 'loaded.lte.cardrefresh'
+const EVENT_OVERLAY_ADDED = 'overlay.added.lte.cardrefresh'
+const EVENT_OVERLAY_REMOVED = 'overlay.removed.lte.cardrefresh'
 const SELECTOR_DATA_REFRESH = '[data-card-widget="card-refresh"]'
 
 const Default = {
@@ -36,135 +15,162 @@ const Default = {
   loadOnInit: true,
   loadErrorTemplate: true,
   responseType: '',
-  overlayTemplate: '<div class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>',
+  overlayTemplate: '<div class="overlay"><i class="fa-solid fa-2xl fa-rotate fa-spin"></i></div>',
   errorTemplate: '<span class="text-danger"></span>',
   onLoadStart() {},
   onLoadDone(response) {
     return response
   },
-  onLoadFail(_jqXHR, _textStatus, _errorThrown) {}
+  onLoadFail() {}
 }
 
 class CardRefresh {
-  constructor(element, settings) {
+  constructor(element, settings = {}) {
     this._element = element
-    this._parent = element.parents(SELECTOR_CARD).first()
-    this._settings = $.extend({}, Default, settings)
-    this._overlay = $(this._settings.overlayTemplate)
-
-    if (element.hasClass(CLASS_NAME_CARD)) {
-      this._parent = element
+    this._settings = getConfig(element, Default, settings)
+    this._parent = element.matches('.card') ? element : element.closest('.card')
+    this._initialized = false
+    this._controller = null
+    if (!this._parent) {
+      throw new Error('CardRefresh control must be inside a .card element.')
     }
 
-    if (this._settings.source === '') {
+    if (!this._settings.source) {
       throw new Error('Source url was not defined. Please specify a url in your CardRefresh source option.')
     }
+
+    setInstance(CardRefresh, element, this)
   }
 
-  load() {
+  async load() {
+    this._controller?.abort()
+    this._controller = new AbortController()
+    this._removeOverlay()
     this._addOverlay()
-    this._settings.onLoadStart.call($(this))
+    this._settings.onLoadStart.call(this._element)
+    dispatch(this._element, EVENT_LOADED)
 
-    $.get(this._settings.source, this._settings.params, response => {
-      if (this._settings.loadInContent) {
-        if (this._settings.sourceSelector !== '') {
-          response = $(response).find(this._settings.sourceSelector).html()
+    // fetch and URL are unavailable in legacy Opera Mini, which is outside the supported browser set.
+    const url = new URL(this._settings.source, window.location.href)
+    for (const [key, value] of Object.entries(this._settings.params ?? {})) {
+      if (Array.isArray(value)) {
+        value.forEach(item => url.searchParams.append(key, item))
+      } else if (value != null) {
+        url.searchParams.set(key, value)
+      }
+    }
+
+    // Browsers block fetch() for file:// URLs. The widgets demo embeds the
+    // refresh response in the same document, so use that local template there.
+    if (url.protocol === 'file:' && url.pathname === window.location.pathname && this._settings.sourceSelector) {
+      const localSource = document.querySelector(this._settings.sourceSelector)
+      if (localSource) {
+        const content = localSource.innerHTML
+        if (this._settings.loadInContent) {
+          const target = this._parent.querySelector(this._settings.content)
+          if (target) {
+            target.innerHTML = content
+          }
         }
 
-        this._parent.find(this._settings.content).html(response)
+        this._settings.onLoadDone.call(this._element, content)
+        this._removeOverlay()
+        return
+      }
+    }
+
+    let response
+    try {
+      response = await fetch(url, { signal: this._controller.signal })
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`)
       }
 
-      this._settings.onLoadDone.call($(this), response)
-      this._removeOverlay()
-    }, this._settings.responseType !== '' && this._settings.responseType)
-    .fail((jqXHR, textStatus, errorThrown) => {
-      this._removeOverlay()
+      let content = this._settings.responseType === 'json' ? await response.json() : await response.text()
+      if (this._settings.loadInContent) {
+        if (this._settings.sourceSelector) {
+          const parser = new DOMParser()
+          const remote = parser.parseFromString(String(content), 'text/html')
+          content = remote.querySelector(this._settings.sourceSelector)?.innerHTML ?? ''
+        }
 
+        const target = this._parent.querySelector(this._settings.content)
+        if (target) {
+          target.innerHTML = typeof content === 'string' ? content : JSON.stringify(content)
+        }
+      }
+
+      this._settings.onLoadDone.call(this._element, content)
+      this._removeOverlay()
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return
+      }
+
+      this._removeOverlay()
       if (this._settings.loadErrorTemplate) {
-        const msg = $(this._settings.errorTemplate).text(errorThrown)
-        this._parent.find(this._settings.content).empty().append(msg)
+        const target = this._parent.querySelector(this._settings.content)
+        if (target) {
+          const template = document.createElement('template')
+          template.innerHTML = this._settings.errorTemplate
+          const message = template.content.firstElementChild ?? document.createElement('span')
+          message.textContent = error.message
+          target.replaceChildren(message)
+        }
       }
 
-      this._settings.onLoadFail.call($(this), jqXHR, textStatus, errorThrown)
-    })
-
-    $(this._element).trigger($.Event(EVENT_LOADED))
+      this._settings.onLoadFail.call(this._element, response, 'error', error)
+    }
   }
 
   _addOverlay() {
-    this._parent.append(this._overlay)
-    $(this._element).trigger($.Event(EVENT_OVERLAY_ADDED))
+    const template = document.createElement('template')
+    template.innerHTML = this._settings.overlayTemplate.trim()
+    this._overlay = template.content.firstElementChild
+    if (this._overlay) {
+      this._parent.append(this._overlay)
+    }
+
+    dispatch(this._element, EVENT_OVERLAY_ADDED)
   }
 
   _removeOverlay() {
-    this._parent.find(this._overlay).remove()
-    $(this._element).trigger($.Event(EVENT_OVERLAY_REMOVED))
+    if (!this._overlay) {
+      return
+    }
+
+    this._overlay?.remove()
+    this._overlay = null
+    dispatch(this._element, EVENT_OVERLAY_REMOVED)
   }
 
-  // Private
+  init() {
+    if (this._initialized) {
+      return
+    }
 
-  _init() {
-    $(this).find(this._settings.trigger).on('click', () => {
-      this.load()
-    })
-
+    this._initialized = true
     if (this._settings.loadOnInit) {
       this.load()
     }
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
+  static getInstance(element) {
+    return getInstance(CardRefresh, element)
+  }
 
-      if (!data) {
-        data = new CardRefresh($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
+  static getOrCreateInstance(element, config = {}) {
+    return CardRefresh.getInstance(element) ?? new CardRefresh(element, config)
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-
-$(document).on('click', SELECTOR_DATA_REFRESH, function (event) {
-  if (event) {
-    event.preventDefault()
-  }
-
-  CardRefresh._jQueryInterface.call($(this), 'load')
+delegate(document, 'click', SELECTOR_DATA_REFRESH, (event, element) => {
+  event.preventDefault()
+  CardRefresh.getOrCreateInstance(element).load()
 })
 
-$(() => {
-  $(SELECTOR_DATA_REFRESH).each(function () {
-    CardRefresh._jQueryInterface.call($(this))
-  })
+onReady(() => {
+  document.querySelectorAll(SELECTOR_DATA_REFRESH).forEach(element => CardRefresh.getOrCreateInstance(element).init())
 })
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = CardRefresh._jQueryInterface
-$.fn[NAME].Constructor = CardRefresh
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return CardRefresh._jQueryInterface
-}
 
 export default CardRefresh

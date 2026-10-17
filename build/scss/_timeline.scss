@@ -86,12 +86,11 @@
 
     /* stylelint-disable selector-class-pattern */
     // The icons at line
-    > .fa,
-    > .fas,
-    > .far,
-    > .fab,
-    > .fal,
-    > .fad,
+    > .fa-solid,
+    > .fa-regular,
+    > .fa-brands,
+    > .fa-light,
+    > .fa-duotone,
     > .svg-inline--fa,
     > .ion {
       background-color: $gray-500;

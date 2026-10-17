@@ -7,12 +7,29 @@
     margin-right: 10px;
   }
 
-  .close {
-    color: $black;
-    opacity: .2;
+  .btn-close {
+    background-image: none;
+    background-color: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    opacity: .5;
+    padding: .75rem 1.25rem;
+    text-shadow: 0 1px 0 $white;
+    width: auto;
+    height: auto;
+    appearance: none;
+
+    &::before {
+      content: "×";
+      display: block;
+    }
 
     &:hover {
-      opacity: .5;
+      opacity: .75;
     }
   }
 
@@ -25,27 +42,43 @@
 //Alert Variants
 @each $color, $value in $theme-colors {
   .alert-#{$color} {
-    color: color-contrast($value);
-    background-color: $value;
-    border-color: darken($value, 5%);
+    --#{$prefix}alert-color: #{color-contrast($value)};
+    --#{$prefix}alert-bg: #{$value};
+    --#{$prefix}alert-border-color: #{shade-color($value, 5%)};
+    --#{$prefix}alert-link-color: #{shade-color(color-contrast($value), 20%)};
   }
 
-  //.alert-default-#{$color} {
-  //  @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
-  //}
+  .alert-default-#{$color} {
+    $alert-background: shift-color($value, -80%);
+    $alert-border: shift-color($value, -70%);
+    $alert-foreground: shift-color($value, 40%);
+
+    --#{$prefix}alert-color: #{$alert-foreground};
+    --#{$prefix}alert-bg: #{$alert-background};
+    --#{$prefix}alert-border-color: #{$alert-border};
+    --#{$prefix}alert-link-color: #{shade-color($alert-foreground, 20%)};
+  }
 }
 
 @include dark-mode () {
   @each $color, $value in $theme-colors-alt {
     .alert-#{$color} {
-      color: color-contrast($value);
-      background-color: $value;
-      border-color: darken($value, 5%);
+      --#{$prefix}alert-color: #{color-contrast($value)};
+      --#{$prefix}alert-bg: #{$value};
+      --#{$prefix}alert-border-color: #{shade-color($value, 5%)};
+      --#{$prefix}alert-link-color: #{shade-color(color-contrast($value), 20%)};
     }
 
-    //.alert-default-#{$color} {
-    //  @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
-    //}
+    .alert-default-#{$color} {
+      $alert-background: shift-color($value, -80%);
+      $alert-border: shift-color($value, -70%);
+      $alert-foreground: shift-color($value, 40%);
+
+      --#{$prefix}alert-color: #{$alert-foreground};
+      --#{$prefix}alert-bg: #{$alert-background};
+      --#{$prefix}alert-border-color: #{$alert-border};
+      --#{$prefix}alert-link-color: #{shade-color($alert-foreground, 20%)};
+    }
   }
 }
 

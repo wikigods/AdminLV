@@ -22,10 +22,14 @@
 
   background-color: $thumbnail-bg;
   border: $thumbnail-border-width solid $thumbnail-border-color;
+  color: inherit;
+  cursor: pointer;
   display: flex;
+  font: inherit;
   margin-right: 1rem;
   max-width: 6.5rem + ($thumbnail-padding * 2);
   padding: $thumbnail-padding * 2;
+  text-align: left;
 
   img {
     @include img-fluid ();

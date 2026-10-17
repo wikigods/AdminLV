@@ -1,264 +1,127 @@
-/**
- * --------------------------------------------
- * AdminLTE Layout.js
- * License MIT
- * --------------------------------------------
- */
+/** AdminLTE Layout, implemented without jQuery. */
+/* eslint-disable max-statements-per-line */
+import { getConfig, getInstance, getOrCreateInstance, setInstance, onReady } from './Native'
 
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'Layout'
-const DATA_KEY = 'lte.layout'
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const SELECTOR_HEADER = '.main-header'
-const SELECTOR_MAIN_SIDEBAR = '.main-sidebar'
-const SELECTOR_SIDEBAR = '.main-sidebar .sidebar'
 const SELECTOR_CONTENT = '.content-wrapper'
-const SELECTOR_CONTROL_SIDEBAR_CONTENT = '.control-sidebar-content'
-const SELECTOR_CONTROL_SIDEBAR_BTN = '[data-widget="control-sidebar"]'
-const SELECTOR_FOOTER = '.main-footer'
-const SELECTOR_PUSHMENU_BTN = '[data-widget="pushmenu"]'
-const SELECTOR_LOGIN_BOX = '.login-box'
-const SELECTOR_REGISTER_BOX = '.register-box'
-const SELECTOR_PRELOADER = '.preloader'
-
-const CLASS_NAME_SIDEBAR_COLLAPSED = 'sidebar-collapse'
-const CLASS_NAME_SIDEBAR_FOCUSED = 'sidebar-focused'
-const CLASS_NAME_LAYOUT_FIXED = 'layout-fixed'
-const CLASS_NAME_CONTROL_SIDEBAR_SLIDE_OPEN = 'control-sidebar-slide-open'
-const CLASS_NAME_CONTROL_SIDEBAR_OPEN = 'control-sidebar-open'
-const CLASS_NAME_IFRAME_MODE = 'iframe-mode'
-
-const Default = {
-  scrollbarTheme: 'os-theme-light',
-  scrollbarAutoHide: 'l',
-  panelAutoHeight: true,
-  panelAutoHeightMode: 'min-height',
-  preloadDuration: 200,
-  loginRegisterAutoHeight: true
-}
-
-/**
- * Class Definition
- * ====================================================
- */
+const CLASS_FIXED = 'layout-fixed'
+const DEFAULT = { scrollbarTheme: 'os-theme-light', scrollbarAutoHide: 'l', panelAutoHeight: true, panelAutoHeightMode: 'min-height', preloadDuration: 200, loginRegisterAutoHeight: true }
 
 class Layout {
-  constructor(element, config) {
-    this._config = config
-    this._element = element
+  constructor(element, config = {}) {
+    this._element = element; this._config = getConfig(element, DEFAULT, config)
+    setInstance(Layout, element, this)
   }
 
-  // Public
-
   fixLayoutHeight(extra = null) {
-    const $body = $('body')
-    let controlSidebar = 0
-
-    if ($body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_SLIDE_OPEN) || $body.hasClass(CLASS_NAME_CONTROL_SIDEBAR_OPEN) || extra === 'control_sidebar') {
-      controlSidebar = $(SELECTOR_CONTROL_SIDEBAR_CONTENT).outerHeight()
-    }
-
-    const heights = {
-      window: $(window).height(),
-      header: $(SELECTOR_HEADER).length > 0 ? $(SELECTOR_HEADER).outerHeight() : 0,
-      footer: $(SELECTOR_FOOTER).length > 0 ? $(SELECTOR_FOOTER).outerHeight() : 0,
-      sidebar: $(SELECTOR_SIDEBAR).length > 0 ? $(SELECTOR_SIDEBAR).height() : 0,
-      controlSidebar
-    }
-
-    const max = this._max(heights)
+    const { body } = document
+    const first = selector => document.querySelector(selector)
+    const height = selector => first(selector)?.getBoundingClientRect().height || 0
+    const control = body.classList.contains('control-sidebar-slide-open') || body.classList.contains('control-sidebar-open') || extra === 'control_sidebar' ? height('.control-sidebar-content') : 0
+    const heights = { window: window.innerHeight, header: height('.main-header'), footer: height('.main-footer'), sidebar: height('.main-sidebar .sidebar'), control }
+    const max = Math.max(...Object.values(heights))
+    const content = first(SELECTOR_CONTENT)
     let offset = this._config.panelAutoHeight
-
     if (offset === true) {
       offset = 0
     }
 
-    const $contentSelector = $(SELECTOR_CONTENT)
-
-    if (offset !== false) {
-      if (max === heights.controlSidebar) {
-        $contentSelector.css(this._config.panelAutoHeightMode, (max + offset))
-      } else if (max === heights.window) {
-        $contentSelector.css(this._config.panelAutoHeightMode, (max + offset) - heights.header - heights.footer)
-      } else {
-        $contentSelector.css(this._config.panelAutoHeightMode, (max + offset) - heights.header)
+    if (content && offset !== false) {
+      let minHeight = max === heights.control ? max + offset : (max === heights.window ? max + offset - heights.header - heights.footer : max + offset - heights.header)
+      if (getComputedStyle(first('.main-footer') || body).position === 'fixed') {
+        minHeight += heights.footer
       }
 
-      if (this._isFooterFixed()) {
-        $contentSelector.css(this._config.panelAutoHeightMode, parseFloat($contentSelector.css(this._config.panelAutoHeightMode)) + heights.footer)
+      content.style[this._config.panelAutoHeightMode] = `${minHeight}px`
+    }
+
+    if (body.classList.contains(CLASS_FIXED)) {
+      const sidebar = first('.main-sidebar .sidebar')
+      if (sidebar) {
+        sidebar.style.overflowY = 'auto'
       }
-    }
-
-    if (!$body.hasClass(CLASS_NAME_LAYOUT_FIXED)) {
-      return
-    }
-
-    if (typeof $.fn.overlayScrollbars !== 'undefined') {
-      $(SELECTOR_SIDEBAR).overlayScrollbars({
-        className: this._config.scrollbarTheme,
-        sizeAutoCapable: true,
-        scrollbars: {
-          autoHide: this._config.scrollbarAutoHide,
-          clickScrolling: true
-        }
-      })
-    } else {
-      $(SELECTOR_SIDEBAR).css('overflow-y', 'auto')
     }
   }
 
   fixLoginRegisterHeight() {
-    const $body = $('body')
-    const $selector = $(`${SELECTOR_LOGIN_BOX}, ${SELECTOR_REGISTER_BOX}`)
-
-    if ($body.hasClass(CLASS_NAME_IFRAME_MODE)) {
-      $body.css('height', '100%')
-      $('.wrapper').css('height', '100%')
-      $('html').css('height', '100%')
-    } else if ($selector.length === 0) {
-      $body.css('height', 'auto')
-      $('html').css('height', 'auto')
-    } else {
-      const boxHeight = $selector.height()
-
-      if ($body.css(this._config.panelAutoHeightMode) !== boxHeight) {
-        $body.css(this._config.panelAutoHeightMode, boxHeight)
+    const { body } = document
+    const html = document.documentElement
+    if (body.classList.contains('iframe-mode')) {
+      body.style.height = '100%'
+      html.style.height = '100%'
+      const wrapper = document.querySelector('.wrapper'); if (wrapper) {
+        wrapper.style.height = '100%'
       }
+
+      return
     }
+
+    const box = document.querySelector('.login-box, .register-box')
+    if (!box) {
+      body.style.height = 'auto'
+      html.style.height = 'auto'
+      return
+    }
+
+    body.style[this._config.panelAutoHeightMode] = `${box.getBoundingClientRect().height}px`
   }
 
-  // Private
-
   _init() {
-    // Activate layout height watcher
     this.fixLayoutHeight()
-
     if (this._config.loginRegisterAutoHeight === true) {
       this.fixLoginRegisterHeight()
-    } else if (this._config.loginRegisterAutoHeight === parseInt(this._config.loginRegisterAutoHeight, 10)) {
-      setInterval(this.fixLoginRegisterHeight, this._config.loginRegisterAutoHeight)
+    } else if (this._config.loginRegisterAutoHeight !== false && Number.isInteger(Number(this._config.loginRegisterAutoHeight))) {
+      window.setInterval(() => this.fixLoginRegisterHeight(), Number(this._config.loginRegisterAutoHeight))
     }
 
-    $(SELECTOR_SIDEBAR)
-      .on('collapsed.lte.treeview expanded.lte.treeview', () => {
-        this.fixLayoutHeight()
-      })
-
-    $(SELECTOR_MAIN_SIDEBAR)
-      .on('mouseenter mouseleave', () => {
-        if ($('body').hasClass(CLASS_NAME_SIDEBAR_COLLAPSED)) {
-          this.fixLayoutHeight()
-        }
-      })
-
-    $(SELECTOR_PUSHMENU_BTN)
-      .on('collapsed.lte.pushmenu shown.lte.pushmenu', () => {
-        setTimeout(() => {
-          this.fixLayoutHeight()
-        }, 300)
-      })
-
-    $(SELECTOR_CONTROL_SIDEBAR_BTN)
-      .on('collapsed.lte.controlsidebar', () => {
-        this.fixLayoutHeight()
-      })
-      .on('expanded.lte.controlsidebar', () => {
-        this.fixLayoutHeight('control_sidebar')
-      })
-
-    $(window).resize(() => {
-      this.fixLayoutHeight()
+    window.addEventListener('resize', () => {
+      this.fixLayoutHeight(); this.fixLoginRegisterHeight()
     })
-
-    setTimeout(() => {
-      $('body.hold-transition').removeClass('hold-transition')
-    }, 50)
-
-    setTimeout(() => {
-      const $preloader = $(SELECTOR_PRELOADER)
-      if ($preloader) {
-        $preloader.css('height', 0)
-        setTimeout(() => {
-          $preloader.children().hide()
-        }, 200)
+    document.addEventListener('collapsed.lte.treeview', () => this.fixLayoutHeight())
+    document.addEventListener('expanded.lte.treeview', () => this.fixLayoutHeight())
+    document.addEventListener('mouseenter', event => {
+      if (event.target.matches?.('.main-sidebar') && document.body.classList.contains('sidebar-collapse')) {
+        this.fixLayoutHeight()
+      }
+    }, true)
+    document.addEventListener('mouseleave', event => {
+      if (event.target.matches?.('.main-sidebar') && document.body.classList.contains('sidebar-collapse')) {
+        this.fixLayoutHeight()
+      }
+    }, true)
+    document.addEventListener('collapsed.lte.pushmenu', () => window.setTimeout(() => this.fixLayoutHeight(), 300))
+    document.addEventListener('shown.lte.pushmenu', () => window.setTimeout(() => this.fixLayoutHeight(), 300))
+    document.addEventListener('collapsed.lte.controlsidebar', () => this.fixLayoutHeight())
+    document.addEventListener('expanded.lte.controlsidebar', () => this.fixLayoutHeight('control_sidebar'))
+    window.setTimeout(() => document.body.classList.remove('hold-transition'), 50)
+    window.setTimeout(() => {
+      const preloader = document.querySelector('.preloader')
+      if (preloader) {
+        preloader.style.height = '0'
+        window.setTimeout(() => preloader.remove(), 200)
       }
     }, this._config.preloadDuration)
   }
 
-  _max(numbers) {
-    // Calculate the maximum number in a list
-    let max = 0
-
-    Object.keys(numbers).forEach(key => {
-      if (numbers[key] > max) {
-        max = numbers[key]
-      }
-    })
-
-    return max
+  static _interface(element) {
+    const instance = Layout.getOrCreateInstance(element); instance._init()
   }
 
-  _isFooterFixed() {
-    return $(SELECTOR_FOOTER).css('position') === 'fixed'
+  static getInstance(element) {
+    return getInstance(Layout, element)
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
-
-      if (!data) {
-        data = new Layout($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
+  static getOrCreateInstance(element, config = {}) {
+    return getOrCreateInstance(Layout, element, config)
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-
-$(window).on('load', () => {
-  Layout._jQueryInterface.call($('body'))
+onReady(() => {
+  const { body } = document
+  Layout._interface(body)
+  document.querySelectorAll('.main-sidebar .sidebar a').forEach(link => {
+    link.addEventListener('focusin', () => document.querySelector('.main-sidebar')?.classList.add('sidebar-focused'))
+    link.addEventListener('focusout', () => document.querySelector('.main-sidebar')?.classList.remove('sidebar-focused'))
+  })
 })
-
-$(`${SELECTOR_SIDEBAR} a`)
-  .on('focusin', () => {
-    $(SELECTOR_MAIN_SIDEBAR).addClass(CLASS_NAME_SIDEBAR_FOCUSED)
-  })
-  .on('focusout', () => {
-    $(SELECTOR_MAIN_SIDEBAR).removeClass(CLASS_NAME_SIDEBAR_FOCUSED)
-  })
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = Layout._jQueryInterface
-$.fn[NAME].Constructor = Layout
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return Layout._jQueryInterface
-}
 
 export default Layout

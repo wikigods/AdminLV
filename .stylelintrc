@@ -11,6 +11,7 @@
     "selector-max-id": null,
     "selector-max-specificity": null,
     "selector-max-type": null,
-    "selector-no-qualifying-type": null
+    "selector-no-qualifying-type": null,
+    "selector-class-pattern": null
   }
 }

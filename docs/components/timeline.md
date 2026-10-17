@@ -16,11 +16,11 @@ The timeline component displays an event history. You can use it for description
   </div>
   <div>
   <!-- Before each timeline item corresponds to one icon on the left scale -->
-    <i class="fas fa-envelope bg-blue"></i>
+    <i class="fa-solid fa-envelope bg-blue"></i>
     <!-- Timeline item -->
     <div class="timeline-item">
     <!-- Time -->
-      <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+      <span class="time"><i class="fa-solid fa-clock"></i> 12:05</span>
       <!-- Header. Optional -->
       <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
       <!-- Body -->
@@ -39,7 +39,7 @@ The timeline component displays an event history. You can use it for description
   </div>
   <!-- The last icon means the story is complete -->
   <div>
-    <i class="fas fa-clock bg-gray"></i>
+    <i class="fa-solid fa-clock bg-gray"></i>
   </div>
 </div>
 ```

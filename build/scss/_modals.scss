@@ -16,13 +16,41 @@
     justify-content: center;
     align-items: center;
     background-color: rgba($black, .7);
-    color: darken($gray-600, 2.5%);
+    color: shade-color($gray-600, 2.5%);
     @include border-radius($modal-content-border-radius);
   }
 }
 
 
 // BG Color Variations Fixes
+.modal-title {
+  font-size: 1.5rem;
+}
+
+.modal-header .btn-close {
+  background-image: none;
+  background-color: transparent;
+  color: $gray-600;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: .75;
+  padding: .5rem;
+  text-shadow: none;
+  width: auto;
+  height: auto;
+  appearance: none;
+
+  &::before {
+    content: "×";
+    display: block;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .modal-content {
   &.bg-warning {
     .modal-header,
@@ -36,7 +64,7 @@
   &.bg-info,
   &.bg-danger,
   &.bg-success, {
-    .close {
+    .btn-close {
       color: $white;
       text-shadow: 0 1px 0 $black;
     }
@@ -56,7 +84,7 @@
       .modal-footer {
         border-color: $gray-600;
       }
-      .close {
+      .btn-close {
         color: $dark !important;
         text-shadow: 0 1px 0 $gray-700 !important;
       }

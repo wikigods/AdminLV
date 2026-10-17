@@ -1,6 +1,6 @@
 /* global Chart:false */
 
-$(function () {
+document.addEventListener('DOMContentLoaded', function () {
   'use strict'
 
   /* ChartJS
@@ -12,8 +12,8 @@ $(function () {
   // - MONTHLY SALES CHART -
   //-----------------------
 
-  // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
+  // Get the chart context directly from the canvas.
+  var salesChartCanvas = document.getElementById('salesChart').getContext('2d')
 
   var salesChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -43,27 +43,35 @@ $(function () {
     ]
   }
 
+  var chartTextColor = getComputedStyle(document.body).color
   var salesChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
-    legend: {
-      display: false
+    plugins: {
+      legend: {
+        display: false
+      }
     },
     scales: {
-      xAxes: [{
-        gridLines: {
+      x: {
+        ticks: {
+          color: chartTextColor
+        },
+        grid: {
           display: false
         }
-      }],
-      yAxes: [{
-        gridLines: {
+      },
+      y: {
+        ticks: {
+          color: chartTextColor
+        },
+        grid: {
           display: false
         }
-      }]
+      }
     }
   }
 
-  // This will get the first returned node in the jQuery collection.
   // eslint-disable-next-line no-unused-vars
   var salesChart = new Chart(salesChartCanvas, {
     type: 'line',
@@ -79,8 +87,8 @@ $(function () {
   //-------------
   // - PIE CHART -
   //-------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+  // Get the chart context directly from the canvas.
+  var pieChartCanvas = document.getElementById('pieChart').getContext('2d')
   var pieData = {
     labels: [
       'Chrome',
@@ -98,8 +106,10 @@ $(function () {
     ]
   }
   var pieOptions = {
-    legend: {
-      display: false
+    plugins: {
+      legend: {
+        display: false
+      }
     }
   }
   // Create pie or douhnut chart

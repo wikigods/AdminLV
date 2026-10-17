@@ -45,6 +45,25 @@
   color: #666;
   padding: 20px;
 
+  .login-remember {
+    align-items: center;
+    display: flex;
+    gap: .5rem;
+    min-height: 1.375rem;
+    padding-left: 0;
+
+    .form-check-input {
+      flex: 0 0 1.375rem;
+      height: 1.375rem;
+      margin: 0;
+      width: 1.375rem;
+    }
+
+    .form-check-label {
+      font-weight: 700;
+    }
+  }
+
   .input-group {
     .form-control {
       border-right: 0;
@@ -52,8 +71,7 @@
       &:focus {
         box-shadow: none;
 
-        ~ .input-group-prepend .input-group-text,
-        ~ .input-group-append .input-group-text {
+        ~ .input-group-text {
           border-color: $input-focus-border-color;
         }
       }
@@ -63,8 +81,7 @@
           box-shadow: none;
         }
 
-        ~ .input-group-prepend .input-group-text,
-        ~ .input-group-append .input-group-text {
+        ~ .input-group-text {
           border-color: $success;
         }
       }
@@ -74,7 +91,7 @@
           box-shadow: none;
         }
 
-        ~ .input-group-append .input-group-text {
+        ~ .input-group-text {
           border-color: $danger;
         }
       }
@@ -100,6 +117,10 @@
 
 .social-auth-links {
   margin: 10px 0;
+
+  .btn + .btn {
+    margin-top: .5rem;
+  }
 }
 
 @include dark-mode () {

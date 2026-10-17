@@ -14,9 +14,9 @@
           color: rgba($gray-800, .8);
         }
         &,
-        + .input-group-append > .btn-navbar {
-          background-color: darken($color, 4%);
-          border-color: darken($color, 9%);
+        + .btn-navbar {
+          background-color: shade-color($color, 4%);
+          border-color: shade-color($color, 9%);
           color: rgba($gray-800, .8);
         }
 
@@ -25,9 +25,9 @@
             color: $gray-800;
           }
           &,
-          + .input-group-append .btn-navbar {
-            background-color: darken($color, 5%);
-            border-color: darken($color, 9%) !important;
+          + .btn-navbar {
+            background-color: shade-color($color, 5%);
+            border-color: shade-color($color, 9%) !important;
             color: $gray-800;
           }
         }
@@ -39,9 +39,9 @@
           color: rgba($white, .8);
         }
         &,
-        + .input-group-append > .btn-navbar {
-          background-color: lighten($color, 4%);
-          border-color: lighten($color, 9%);
+        + .btn-navbar {
+          background-color: tint-color($color, 4%);
+          border-color: tint-color($color, 9%);
           color: rgba($white, .8);
         }
 
@@ -50,9 +50,9 @@
             color: $white;
           }
           &,
-          + .input-group-append .btn-navbar {
-            background-color: lighten($color, 5%);
-            border-color: lighten($color, 9%) !important;
+          + .btn-navbar {
+            background-color: tint-color($color, 5%);
+            border-color: tint-color($color, 9%) !important;
             color: $white;
           }
         }

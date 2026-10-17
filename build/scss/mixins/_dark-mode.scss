@@ -4,7 +4,7 @@
 
 @mixin dark-mode {
   @if $enable-dark-mode {
-    .dark-mode {
+    @include color-mode(dark) {
       @content;
     }
   }

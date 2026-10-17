@@ -1,300 +1,177 @@
-/**
- * --------------------------------------------
- * AdminLTE SidebarSearch.js
- * License MIT
- * --------------------------------------------
- */
+/** AdminLTE SidebarSearch, implemented without jQuery. */
+/* eslint-disable max-statements-per-line */
+import { getConfig, getInstance, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 
-import $, { trim } from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'SidebarSearch'
-const DATA_KEY = 'lte.sidebar-search'
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const CLASS_NAME_OPEN = 'sidebar-search-open'
-const CLASS_NAME_ICON_SEARCH = 'fa-search'
-const CLASS_NAME_ICON_CLOSE = 'fa-times'
-const CLASS_NAME_HEADER = 'nav-header'
-const CLASS_NAME_SEARCH_RESULTS = 'sidebar-search-results'
-const CLASS_NAME_LIST_GROUP = 'list-group'
-
-const SELECTOR_DATA_WIDGET = '[data-widget="sidebar-search"]'
-const SELECTOR_SIDEBAR = '.main-sidebar .nav-sidebar'
-const SELECTOR_NAV_LINK = '.nav-link'
-const SELECTOR_NAV_TREEVIEW = '.nav-treeview'
-const SELECTOR_SEARCH_INPUT = `${SELECTOR_DATA_WIDGET} .form-control`
-const SELECTOR_SEARCH_BUTTON = `${SELECTOR_DATA_WIDGET} .btn`
-const SELECTOR_SEARCH_ICON = `${SELECTOR_SEARCH_BUTTON} i`
-const SELECTOR_SEARCH_LIST_GROUP = `.${CLASS_NAME_LIST_GROUP}`
-const SELECTOR_SEARCH_RESULTS = `.${CLASS_NAME_SEARCH_RESULTS}`
-const SELECTOR_SEARCH_RESULTS_GROUP = `${SELECTOR_SEARCH_RESULTS} .${CLASS_NAME_LIST_GROUP}`
-
-const Default = {
-  arrowSign: '->',
-  minLength: 3,
-  maxResults: 7,
-  highlightName: true,
-  highlightPath: false,
-  highlightClass: 'text-light',
-  notFoundText: 'No element found!'
-}
-
-const SearchItems = []
-
-/**
- * Class Definition
- * ====================================================
- */
+const WIDGET = '[data-widget="sidebar-search"]'
+const DEFAULT = { arrowSign: '->', minLength: 3, maxResults: 7, highlightName: true, highlightPath: false, highlightClass: 'text-light', notFoundText: 'No element found!' }
 
 class SidebarSearch {
-  constructor(_element, _options) {
-    this.element = _element
-    this.options = $.extend({}, Default, _options)
-    this.items = []
+  constructor(element, options = {}) {
+    this.element = element; this.options = getConfig(element, DEFAULT, options); this.items = []
+    setInstance(SidebarSearch, element, this)
   }
 
-  // Public
-
   _init() {
-    if ($(SELECTOR_DATA_WIDGET).length === 0) {
+    if (!this.element) {
       return
     }
 
-    if ($(SELECTOR_DATA_WIDGET).next(SELECTOR_SEARCH_RESULTS).length === 0) {
-      $(SELECTOR_DATA_WIDGET).after(
-        $('<div />', { class: CLASS_NAME_SEARCH_RESULTS })
-      )
+    let results = this.element.nextElementSibling
+    if (!results?.classList.contains('sidebar-search-results')) {
+      results = document.createElement('div'); results.className = 'sidebar-search-results'; this.element.after(results)
     }
 
-    if ($(SELECTOR_SEARCH_RESULTS).children(SELECTOR_SEARCH_LIST_GROUP).length === 0) {
-      $(SELECTOR_SEARCH_RESULTS).append(
-        $('<div />', { class: CLASS_NAME_LIST_GROUP })
-      )
+    let group = results.querySelector('.list-group')
+    if (!group) {
+      group = document.createElement('div'); group.className = 'list-group'; results.append(group)
     }
 
+    this.resultsGroup = group
+    this.items = []
+    document.querySelectorAll('.main-sidebar .nav-sidebar').forEach(sidebar => [...sidebar.children].forEach(item => this._parseItem(item)))
     this._addNotFound()
-
-    $(SELECTOR_SIDEBAR).children().each((i, child) => {
-      this._parseItem(child)
-    })
   }
 
   search() {
-    const searchValue = $(SELECTOR_SEARCH_INPUT).val().toLowerCase()
-    if (searchValue.length < this.options.minLength) {
-      $(SELECTOR_SEARCH_RESULTS_GROUP).empty()
-      this._addNotFound()
-      this.close()
-      return
+    const input = this.element.querySelector('.form-control')
+    const value = input?.value.trim().toLowerCase() || ''
+    if (value.length < this.options.minLength) {
+      this.resultsGroup?.replaceChildren(); this._addNotFound(); this.close(); return
     }
 
-    const searchResults = SearchItems.filter(item => (item.name).toLowerCase().includes(searchValue))
-    const endResults = $(searchResults.slice(0, this.options.maxResults))
-    $(SELECTOR_SEARCH_RESULTS_GROUP).empty()
-
-    if (endResults.length === 0) {
+    const matches = this.items.filter(item => item.name.toLowerCase().includes(value)).slice(0, this.options.maxResults)
+    this.resultsGroup?.replaceChildren()
+    if (matches.length === 0) {
       this._addNotFound()
     } else {
-      endResults.each((i, result) => {
-        $(SELECTOR_SEARCH_RESULTS_GROUP).append(this._renderItem(escape(result.name), encodeURI(result.link), result.path))
-      })
+      matches.forEach(item => this.resultsGroup.append(this._renderItem(item.name, item.link, item.path, value)))
     }
 
     this.open()
   }
 
   open() {
-    $(SELECTOR_DATA_WIDGET).parent().addClass(CLASS_NAME_OPEN)
-    $(SELECTOR_SEARCH_ICON).removeClass(CLASS_NAME_ICON_SEARCH).addClass(CLASS_NAME_ICON_CLOSE)
+    this.element.parentElement?.classList.add('sidebar-search-open'); const icon = this.element.querySelector('.btn i'); icon?.classList.replace('fa-magnifying-glass', 'fa-xmark')
   }
 
   close() {
-    $(SELECTOR_DATA_WIDGET).parent().removeClass(CLASS_NAME_OPEN)
-    $(SELECTOR_SEARCH_ICON).removeClass(CLASS_NAME_ICON_CLOSE).addClass(CLASS_NAME_ICON_SEARCH)
+    this.element.parentElement?.classList.remove('sidebar-search-open'); const icon = this.element.querySelector('.btn i'); icon?.classList.replace('fa-xmark', 'fa-magnifying-glass')
   }
 
   toggle() {
-    if ($(SELECTOR_DATA_WIDGET).parent().hasClass(CLASS_NAME_OPEN)) {
+    if (this.element.parentElement?.classList.contains('sidebar-search-open')) {
       this.close()
     } else {
       this.open()
     }
   }
 
-  // Private
-
   _parseItem(item, path = []) {
-    if ($(item).hasClass(CLASS_NAME_HEADER)) {
+    if (item.classList.contains('nav-header')) {
       return
     }
 
-    const itemObject = {}
-    const navLink = $(item).clone().find(`> ${SELECTOR_NAV_LINK}`)
-    const navTreeview = $(item).clone().find(`> ${SELECTOR_NAV_TREEVIEW}`)
+    const linkElement = item.querySelector(':scope > .nav-link')
+    if (!linkElement) {
+      return
+    }
 
-    const link = navLink.attr('href')
-    const name = navLink.find('p').children().remove().end().text()
-
-    itemObject.name = this._trimText(name)
-    itemObject.link = link
-    itemObject.path = path
-
-    if (navTreeview.length === 0) {
-      SearchItems.push(itemObject)
+    const nameNode = linkElement.querySelector('p') || linkElement
+    const name = (nameNode.textContent || '').replace(/(\r\n|\n|\r)/gm, ' ').trim()
+    const childList = item.querySelector(':scope > .nav-treeview')
+    if (childList) {
+      [...childList.children].forEach(child => this._parseItem(child, [...path, name]))
     } else {
-      const newPath = itemObject.path.concat([itemObject.name])
-      navTreeview.children().each((i, child) => {
-        this._parseItem(child, newPath)
-      })
+      this.items.push({ name, link: linkElement.getAttribute('href') || '#', path })
     }
   }
 
-  _trimText(text) {
-    return trim(text.replace(/(\r\n|\n|\r)/gm, ' '))
-  }
-
-  _renderItem(name, link, path) {
-    path = path.join(` ${this.options.arrowSign} `)
-    name = unescape(name)
-    link = decodeURI(link)
-
-    if (this.options.highlightName || this.options.highlightPath) {
-      const searchValue = $(SELECTOR_SEARCH_INPUT).val().toLowerCase()
-      const regExp = new RegExp(searchValue, 'gi')
-
-      if (this.options.highlightName) {
-        name = name.replace(
-          regExp,
-          str => {
-            return `<strong class="${this.options.highlightClass}">${str}</strong>`
-          }
-        )
-      }
-
-      if (this.options.highlightPath) {
-        path = path.replace(
-          regExp,
-          str => {
-            return `<strong class="${this.options.highlightClass}">${str}</strong>`
-          }
-        )
-      }
+  _highlight(container, text, query) {
+    if (!query) {
+      container.textContent = text; return
     }
 
-    const groupItemElement = $('<a/>', {
-      href: decodeURIComponent(link),
-      class: 'list-group-item'
-    })
-    const searchTitleElement = $('<div/>', {
-      class: 'search-title'
-    }).html(name)
-    const searchPathElement = $('<div/>', {
-      class: 'search-path'
-    }).html(path)
+    const lower = text.toLowerCase(); const q = query.toLowerCase(); let offset = 0
+    while (offset < text.length) {
+      const index = lower.indexOf(q, offset)
+      if (index < 0) {
+        container.append(document.createTextNode(text.slice(offset))); break
+      }
 
-    groupItemElement.append(searchTitleElement).append(searchPathElement)
+      container.append(document.createTextNode(text.slice(offset, index)))
+      const strong = document.createElement('strong'); strong.className = this.options.highlightClass; strong.textContent = text.slice(index, index + q.length); container.append(strong)
+      offset = index + q.length
+    }
+  }
 
-    return groupItemElement
+  _renderItem(name, link, path, query = '') {
+    const anchor = document.createElement('a'); anchor.href = link; anchor.className = 'list-group-item'
+    const title = document.createElement('div'); title.className = 'search-title'
+    if (this.options.highlightName) {
+      this._highlight(title, name, query)
+    } else {
+      title.textContent = name
+    }
+
+    const pathEl = document.createElement('div'); pathEl.className = 'search-path'
+    const pathText = path.join(` ${this.options.arrowSign} `)
+    if (this.options.highlightPath) {
+      this._highlight(pathEl, pathText, query)
+    } else {
+      pathEl.textContent = pathText
+    }
+
+    anchor.append(title, pathEl)
+    return anchor
   }
 
   _addNotFound() {
-    $(SELECTOR_SEARCH_RESULTS_GROUP).append(this._renderItem(this.options.notFoundText, '#', []))
-  }
-
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
-      const _config = $.extend({}, Default, typeof config === 'object' ? config : $(this).data())
-
-      if (!data) {
-        data = new SidebarSearch($(this), _config)
-        $(this).data(DATA_KEY, data)
-        data._init()
-      } else if (typeof config === 'string') {
-        if (typeof data[config] === 'undefined') {
-          throw new TypeError(`No method named "${config}"`)
-        }
-
-        data[config]()
-      } else if (typeof config === 'undefined') {
-        data._init()
-      }
-    })
-  }
-}
-
-/**
- * Data API
- * ====================================================
- */
-$(document).on('click', SELECTOR_SEARCH_BUTTON, event => {
-  event.preventDefault()
-
-  SidebarSearch._jQueryInterface.call($(SELECTOR_DATA_WIDGET), 'toggle')
-})
-
-$(document).on('keyup', SELECTOR_SEARCH_INPUT, event => {
-  if (event.keyCode == 38) {
-    event.preventDefault()
-    $(SELECTOR_SEARCH_RESULTS_GROUP).children().last().focus()
-    return
-  }
-
-  if (event.keyCode == 40) {
-    event.preventDefault()
-    $(SELECTOR_SEARCH_RESULTS_GROUP).children().first().focus()
-    return
-  }
-
-  setTimeout(() => {
-    SidebarSearch._jQueryInterface.call($(SELECTOR_DATA_WIDGET), 'search')
-  }, 100)
-})
-
-$(document).on('keydown', SELECTOR_SEARCH_RESULTS_GROUP, event => {
-  const $focused = $(':focus')
-
-  if (event.keyCode == 38) {
-    event.preventDefault()
-
-    if ($focused.is(':first-child')) {
-      $focused.siblings().last().focus()
-    } else {
-      $focused.prev().focus()
+    if (this.resultsGroup) {
+      this.resultsGroup.append(this._renderItem(this.options.notFoundText, '#', []))
     }
   }
 
-  if (event.keyCode == 40) {
-    event.preventDefault()
-
-    if ($focused.is(':last-child')) {
-      $focused.siblings().first().focus()
-    } else {
-      $focused.next().focus()
+  static _interface(element, method) {
+    const instance = SidebarSearch.getOrCreateInstance(element); if (method) {
+      instance[method]()
     }
   }
-})
 
-$(window).on('load', () => {
-  SidebarSearch._jQueryInterface.call($(SELECTOR_DATA_WIDGET), 'init')
-})
+  static getInstance(element) {
+    return getInstance(SidebarSearch, element)
+  }
 
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = SidebarSearch._jQueryInterface
-$.fn[NAME].Constructor = SidebarSearch
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return SidebarSearch._jQueryInterface
+  static getOrCreateInstance(element, options = {}) {
+    return getOrCreateInstance(SidebarSearch, element, options)
+  }
 }
 
+delegate(document, 'click', `${WIDGET} .btn`, event => {
+  event.preventDefault(); const element = event.target.closest(WIDGET); SidebarSearch._interface(element, 'toggle')
+})
+delegate(document, 'input', `${WIDGET} .form-control`, event => SidebarSearch._interface(event.target.closest(WIDGET), 'search'))
+delegate(document, 'keydown', `${WIDGET} .form-control`, (event, input) => {
+  const results = input.closest(WIDGET)?.nextElementSibling?.querySelectorAll('.list-group-item')
+  if (!results?.length) {
+    return
+  }
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault(); results[0].focus()
+  }
+
+  if (event.key === 'ArrowUp') {
+    event.preventDefault(); results[results.length - 1].focus()
+  }
+})
+delegate(document, 'keydown', '.sidebar-search-results .list-group', (event, group) => {
+  const items = [...group.querySelectorAll('.list-group-item')]
+  if (items.length === 0 || !['ArrowUp', 'ArrowDown'].includes(event.key)) {
+    return
+  }
+
+  event.preventDefault(); const index = items.indexOf(document.activeElement); const direction = event.key === 'ArrowDown' ? 1 : -1
+  items[(index + direction + items.length) % items.length].focus()
+})
+onReady(() => document.querySelectorAll(WIDGET).forEach(element => SidebarSearch._interface(element)))
 export default SidebarSearch

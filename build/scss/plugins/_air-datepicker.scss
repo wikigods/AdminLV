@@ -1,0 +1,120 @@
+// Air Datepicker
+// ---------------------------------------------------
+
+.air-datepicker {
+  --adp-font-family: #{$font-family-sans-serif};
+  --adp-font-size: #{$font-size-sm};
+  --adp-z-index: #{$zindex-dropdown};
+  --adp-background-color: #{$white};
+  --adp-background-color-hover: #{$gray-100};
+  --adp-background-color-active: #{$gray-200};
+  --adp-color: #{$body-color};
+  --adp-color-secondary: #{$text-muted};
+  --adp-accent-color: #{$primary};
+  --adp-border-color: #{$border-color};
+  --adp-border-color-inner: #{$border-color};
+  --adp-border-radius: #{$border-radius};
+  --adp-border-color-inline: #{$border-color};
+  --adp-cell-background-color-selected: #{$primary};
+  --adp-cell-background-color-selected-hover: #{shade-color($primary, 5%)};
+  --adp-cell-background-color-in-range: #{rgba($primary, .12)};
+  --adp-cell-background-color-in-range-hover: #{rgba($primary, .2)};
+  --adp-cell-border-color-in-range: #{$primary};
+  --adp-day-name-color: #{$secondary};
+  --adp-day-name-color-hover: #{$primary};
+  --adp-color-current-date: #{$primary};
+  --adp-btn-color: #{$primary};
+  --adp-btn-color-hover: #{$body-color};
+  --adp-time-track-color: #{$gray-300};
+  --adp-time-track-color-hover: #{$gray-500};
+
+  .air-datepicker--pointer::after {
+    background-color: $white;
+  }
+}
+
+// Compact inline calendar used in the dashboard success card.
+#calendar .air-datepicker {
+  --adp-width: 100%;
+  --adp-padding: 8px;
+  --adp-font-size: #{$font-size-sm};
+  --adp-background-color: transparent;
+  --adp-background-color-hover: #{rgba($white, .14)};
+  --adp-background-color-active: #{rgba($white, .22)};
+  --adp-color: #{$white};
+  --adp-color-secondary: #{rgba($white, .45)};
+  --adp-color-other-month: #{rgba($white, .45)};
+  --adp-color-other-month-hover: #{$white};
+  --adp-accent-color: #{$white};
+  --adp-color-current-date: #{$white};
+  --adp-border-color: transparent;
+  --adp-border-color-inner: transparent;
+  --adp-border-color-inline: transparent;
+  --adp-nav-height: 36px;
+  --adp-nav-action-size: 32px;
+  --adp-nav-arrow-color: #{$white};
+  --adp-nav-color-secondary: #{$white};
+  --adp-day-cell-height: 30px;
+  --adp-day-name-color: #{$white};
+  --adp-day-name-color-hover: #{$white};
+  --adp-cell-background-color-hover: #{rgba($white, .14)};
+  --adp-cell-background-color-selected: #{lighten($success, 8%)};
+  --adp-cell-background-color-selected-hover: #{lighten($success, 12%)};
+
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  box-shadow: none;
+
+  .air-datepicker-nav {
+    border-bottom: 0;
+    padding: 0 0 4px;
+  }
+
+  .air-datepicker-nav--title {
+    color: $white;
+    font-weight: $font-weight-bold;
+  }
+
+  .air-datepicker-nav--action svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  .air-datepicker-body--day-names {
+    margin: 4px 0;
+  }
+
+  .air-datepicker-body--day-name {
+    color: $white;
+    font-size: 1em;
+    font-weight: $font-weight-bold;
+    text-transform: none;
+  }
+
+  .air-datepicker-cell.-selected-::after {
+    border-bottom: 6px solid rgba($white, .9);
+    border-left: 6px solid transparent;
+    bottom: 3px;
+    content: "";
+    position: absolute;
+    right: 3px;
+  }
+}
+
+[data-bs-theme="dark"] .air-datepicker {
+  --adp-background-color: #{$dark};
+  --adp-background-color-hover: #{tint-color($dark, 8%)};
+  --adp-background-color-active: #{tint-color($dark, 12%)};
+  --adp-color: #{$gray-200};
+  --adp-color-secondary: #{$gray-500};
+  --adp-border-color: #{$gray-700};
+  --adp-border-color-inner: #{$gray-700};
+  --adp-border-color-inline: #{$gray-700};
+  --adp-time-track-color: #{$gray-600};
+  --adp-time-track-color-hover: #{$gray-400};
+
+  .air-datepicker--pointer::after {
+    background-color: $dark;
+  }
+}

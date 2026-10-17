@@ -58,7 +58,7 @@
   position: relative;
 
   > a::after {
-    @include caret(end);
+    @include caret-right ();
     float: right;
     margin-left: .5rem;
     margin-top: .5rem;
@@ -215,7 +215,7 @@
       background-color: $gray-100;
       padding: 10px;
 
-      .btn-default {
+      .btn-light {
         color: $gray-600;
 
         &:hover {
@@ -254,7 +254,7 @@
 
     &:focus,
     &:hover {
-      background-color: lighten($dark, 5%);
+      background-color: tint-color($dark, 5%);
     }
   }
   .dropdown-divider {
@@ -263,19 +263,19 @@
 
   .navbar-nav > .user-menu > .dropdown-menu {
     > .user-footer {
-      background-color: lighten($dark, 2.5%);
+      background-color: tint-color($dark, 2.5%);
       color: $white;
 
-      .btn-default {
+      .btn-light {
         color: $white;
 
         &:hover,
         &:focus {
-          background-color: lighten($dark, 5%);
+          background-color: tint-color($dark, 5%);
           color: $gray-300;
         }
         &:focus {
-          background-color: lighten($dark, 7.5%);
+          background-color: tint-color($dark, 7.5%);
         }
       }
     }

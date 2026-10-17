@@ -6,7 +6,7 @@ title: Implementations
 Thanks to many of AdminLTE users, there are multiple implementations of the template for easy integration with back-end frameworks. The following are some of them: 
 
 
-##### AdminLTE v3.0
+##### AdminLTE v4.0
 {: .text-bold .text-dark .mt-3}
 - [Setup AdminLTE3 in to Laravel in few minutes](https://youtu.be/jA7hr2gE9yc) by [Shailesh Ladumor](https://github.com/shailesh-ladumor)
 - [Laravel-AdminLTE _v3.x_](https://github.com/jeroennoten/Laravel-AdminLTE) by [Jeroen Noten](https://github.com/jeroennoten)

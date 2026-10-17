@@ -31,7 +31,7 @@ $(document).Toasts('create', {
 |autoremove | Boolean | true | Whether to auto remove toast after closing 
 |delay | Integer | 1000 | Auto Hide delay
 |fade | Boolean | true | Whether to fade toast
-|icon | String | null | Icon class (e.g. `fas fa-exclamation-triangle`)
+|icon | String | null | Icon class (e.g. `fa-solid fa-triangle-exclamation`)
 |image | String | null | Image url
 |imageAlt | String | null | Image alt
 |imageHeight | String | '25px' | Image size of toast

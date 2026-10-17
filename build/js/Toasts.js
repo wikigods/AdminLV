@@ -1,210 +1,89 @@
-// noinspection EqualityComparisonWithCoercionJS
+/** AdminLTE Toasts, implemented without jQuery. */
+/* eslint-disable max-statements-per-line */
+import { dispatch } from './Native'
 
-/**
- * --------------------------------------------
- * AdminLTE Toasts.js
- * License MIT
- * --------------------------------------------
- */
-
-import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'Toasts'
-const DATA_KEY = 'lte.toasts'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_INIT = `init${EVENT_KEY}`
-const EVENT_CREATED = `created${EVENT_KEY}`
-const EVENT_REMOVED = `removed${EVENT_KEY}`
-
-const SELECTOR_CONTAINER_TOP_RIGHT = '#toastsContainerTopRight'
-const SELECTOR_CONTAINER_TOP_LEFT = '#toastsContainerTopLeft'
-const SELECTOR_CONTAINER_BOTTOM_RIGHT = '#toastsContainerBottomRight'
-const SELECTOR_CONTAINER_BOTTOM_LEFT = '#toastsContainerBottomLeft'
-
-const CLASS_NAME_TOP_RIGHT = 'toasts-top-right'
-const CLASS_NAME_TOP_LEFT = 'toasts-top-left'
-const CLASS_NAME_BOTTOM_RIGHT = 'toasts-bottom-right'
-const CLASS_NAME_BOTTOM_LEFT = 'toasts-bottom-left'
-
-const POSITION_TOP_RIGHT = 'topRight'
-const POSITION_TOP_LEFT = 'topLeft'
-const POSITION_BOTTOM_RIGHT = 'bottomRight'
-const POSITION_BOTTOM_LEFT = 'bottomLeft'
-
-const Default = {
-  position: POSITION_TOP_RIGHT,
-  fixed: true,
-  autohide: false,
-  autoremove: true,
-  delay: 1000,
-  fade: true,
-  icon: null,
-  image: null,
-  imageAlt: null,
-  imageHeight: '25px',
-  title: null,
-  subtitle: null,
-  close: true,
-  body: null,
-  class: null
+const DEFAULT = { position: 'topRight', fixed: true, autohide: false, autoremove: true, delay: 1000, fade: true, icon: null, image: null, imageAlt: null, imageHeight: '25px', title: null, subtitle: null, close: true, body: null, class: null }
+const POSITIONS = {
+  topRight: ['toastsContainerTopRight', 'toasts-top-right'], topLeft: ['toastsContainerTopLeft', 'toasts-top-left'],
+  bottomRight: ['toastsContainerBottomRight', 'toasts-bottom-right'], bottomLeft: ['toastsContainerBottomLeft', 'toasts-bottom-left']
 }
 
-/**
- * Class Definition
- * ====================================================
- */
 class Toasts {
-  constructor(element, config) {
-    this._config = config
-    this._prepareContainer()
-
-    $('body').trigger($.Event(EVENT_INIT))
+  constructor(element = document.body, config = {}) {
+    this._element = element; this._config = { ...DEFAULT, ...config }; this._prepareContainer(); dispatch(document.body, 'init.lte.toasts')
   }
 
-  // Public
-
   create() {
-    const toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true"/>')
-
-    toast.data('autohide', this._config.autohide)
-    toast.data('animation', this._config.fade)
-
-    if (this._config.class) {
-      toast.addClass(this._config.class)
+    const toast = document.createElement('div'); toast.className = `toast${this._config.class ? ` ${this._config.class}` : ''}`
+    toast.setAttribute('role', 'alert'); toast.setAttribute('aria-live', 'assertive'); toast.setAttribute('aria-atomic', 'true')
+    toast.dataset.autohide = String(this._config.autohide); toast.dataset.animation = String(this._config.fade)
+    if (this._config.delay && this._config.delay !== 500) {
+      toast.dataset.delay = String(this._config.delay)
     }
 
-    if (this._config.delay && this._config.delay != 500) {
-      toast.data('delay', this._config.delay)
-    }
-
-    const toastHeader = $('<div class="toast-header">')
-
+    const header = document.createElement('div'); header.className = 'toast-header'
     if (this._config.image != null) {
-      const toastImage = $('<img />').addClass('rounded mr-2').attr('src', this._config.image).attr('alt', this._config.imageAlt)
-
-      if (this._config.imageHeight != null) {
-        toastImage.height(this._config.imageHeight).width('auto')
+      const image = document.createElement('img'); image.className = 'rounded me-2'; image.src = this._config.image; image.alt = this._config.imageAlt || ''; if (this._config.imageHeight) {
+        image.style.height = this._config.imageHeight
       }
 
-      toastHeader.append(toastImage)
+      image.style.width = 'auto'; header.append(image)
     }
 
-    if (this._config.icon != null) {
-      toastHeader.append($('<i />').addClass('mr-2').addClass(this._config.icon))
+    if (this._config.icon) {
+      const icon = document.createElement('i'); icon.className = `me-2 ${this._config.icon}`; header.append(icon)
     }
 
     if (this._config.title != null) {
-      toastHeader.append($('<strong />').addClass('mr-auto').html(this._config.title))
+      const title = document.createElement('strong'); title.className = 'me-auto'; title.innerHTML = this._config.title; header.append(title)
     }
 
     if (this._config.subtitle != null) {
-      toastHeader.append($('<small />').html(this._config.subtitle))
+      const subtitle = document.createElement('small'); subtitle.innerHTML = this._config.subtitle; header.append(subtitle)
     }
 
-    if (this._config.close == true) {
-      const toastClose = $('<button data-dismiss="toast" />').attr('type', 'button').addClass('ms-2 mb-1 close').attr('aria-label', 'Close').append('<span aria-hidden="true">&times;</span>')
-
-      if (this._config.title == null) {
-        toastClose.toggleClass('ms-2 ms-auto')
-      }
-
-      toastHeader.append(toastClose)
+    if (this._config.close) {
+      const close = document.createElement('button'); close.type = 'button'; close.dataset.bsDismiss = 'toast'; close.className = `btn-close ${this._config.title == null ? 'ms-auto' : 'ms-2'} mb-1`; close.setAttribute('aria-label', 'Close'); header.append(close)
     }
 
-    toast.append(toastHeader)
-
+    toast.append(header)
     if (this._config.body != null) {
-      toast.append($('<div class="toast-body" />').html(this._config.body))
+      const body = document.createElement('div'); body.className = 'toast-body'; body.innerHTML = this._config.body; toast.append(body)
     }
 
-    $(this._getContainerId()).prepend(toast)
+    const container = document.getElementById(POSITIONS[this._config.position]?.[0])
+    if (!container) {
+      return null
+    }
 
-    const $body = $('body')
+    container.prepend(toast); dispatch(document.body, 'created.lte.toasts')
+    if (!window.bootstrap?.Toast) {
+      throw new Error('Bootstrap 5 Toast is required to display AdminLTE toasts.')
+    }
 
-    $body.trigger($.Event(EVENT_CREATED))
-    toast.toast('show')
-
+    window.bootstrap.Toast.getOrCreateInstance(toast, { autohide: this._config.autohide, animation: this._config.fade, delay: this._config.delay }).show()
     if (this._config.autoremove) {
-      toast.on('hidden.bs.toast', function () {
-        $(this).delay(200).remove()
-        $body.trigger($.Event(EVENT_REMOVED))
-      })
-    }
-  }
-
-  // Static
-
-  _getContainerId() {
-    if (this._config.position === POSITION_TOP_RIGHT) {
-      return SELECTOR_CONTAINER_TOP_RIGHT
+      toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove(); dispatch(document.body, 'removed.lte.toasts')
+      }, { once: true })
     }
 
-    if (this._config.position === POSITION_TOP_LEFT) {
-      return SELECTOR_CONTAINER_TOP_LEFT
-    }
-
-    if (this._config.position === POSITION_BOTTOM_RIGHT) {
-      return SELECTOR_CONTAINER_BOTTOM_RIGHT
-    }
-
-    if (this._config.position === POSITION_BOTTOM_LEFT) {
-      return SELECTOR_CONTAINER_BOTTOM_LEFT
-    }
+    return toast
   }
 
   _prepareContainer() {
-    if ($(this._getContainerId()).length === 0) {
-      const container = $('<div />').attr('id', this._getContainerId().replace('#', ''))
-      if (this._config.position == POSITION_TOP_RIGHT) {
-        container.addClass(CLASS_NAME_TOP_RIGHT)
-      } else if (this._config.position == POSITION_TOP_LEFT) {
-        container.addClass(CLASS_NAME_TOP_LEFT)
-      } else if (this._config.position == POSITION_BOTTOM_RIGHT) {
-        container.addClass(CLASS_NAME_BOTTOM_RIGHT)
-      } else if (this._config.position == POSITION_BOTTOM_LEFT) {
-        container.addClass(CLASS_NAME_BOTTOM_LEFT)
-      }
-
-      $('body').append(container)
+    const position = POSITIONS[this._config.position] || POSITIONS.topRight
+    let container = document.getElementById(position[0])
+    if (!container) {
+      container = document.createElement('div'); container.id = position[0]; container.className = position[1]; document.body.append(container)
     }
 
-    if (this._config.fixed) {
-      $(this._getContainerId()).addClass('fixed')
-    } else {
-      $(this._getContainerId()).removeClass('fixed')
-    }
+    container.classList.toggle('fixed', Boolean(this._config.fixed))
   }
 
-  // Static
-  static _jQueryInterface(option, config) {
-    return this.each(function () {
-      const _options = $.extend({}, Default, config)
-      const toast = new Toasts($(this), _options)
-
-      if (option === 'create') {
-        toast[option]()
-      }
-    })
+  static create(config = {}) {
+    return new Toasts(document.body, config).create()
   }
-}
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = Toasts._jQueryInterface
-$.fn[NAME].Constructor = Toasts
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return Toasts._jQueryInterface
 }
 
 export default Toasts

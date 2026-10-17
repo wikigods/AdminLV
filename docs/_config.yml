@@ -1,8 +1,8 @@
-title: AdminLTE v3.2 Documentation
-version: v3.2
-description: AdminLTE v3.2 Documentation
+title: AdminLTE v4.0 Documentation
+version: v4.0
+description: AdminLTE v4.0 Documentation
 
-baseurl: /docs/3.2
+baseurl: /docs/4.0
 url: https://adminlte.io
 
 plugins:
@@ -12,15 +12,15 @@ plugins:
 navigation:
   - title: Installation
     url: index.html
-    icon: fas fa-microchip
+    icon: fa-solid fa-microchip
   - title: Dependencies & Plugins
     url: dependencies.html
-    icon: fas fa-handshake
+    icon: fa-solid fa-handshake
   - title: Layout
     url: layout.html
-    icon: fas fa-copy
+    icon: fa-solid fa-copy
   - title: Components
-    icon: fas fa-th
+    icon: fa-solid fa-table-cells
     url: components
     subitems:
       - title: Main Header
@@ -44,7 +44,7 @@ navigation:
       - title: Plugins
         url: components/plugins.html
   - title: JavaScript
-    icon: fas fa-code
+    icon: fa-solid fa-code
     url: javascript
     subitems:
       - title: Layout
@@ -75,22 +75,22 @@ navigation:
         url: javascript/navbar-search.html
   - title: Browser Support
     url: browser-support.html
-    icon: fab fa-chrome
+    icon: fa-brands fa-chrome
   - title: Implementations
     url: implementations.html
-    icon: fas fa-bookmark
+    icon: fa-solid fa-bookmark
   - title: Additional Styles
     url: additional-styles.html
-    icon: fas fa-mortar-pestle
+    icon: fa-solid fa-mortar-pestle
   - title: Upgrade Guide
     url: upgrade-guide.html
-    icon: fas fa-hand-point-up
+    icon: fa-solid fa-hand-point-up
   - title: Contributing Guide
     url: how-to-contribute.html
-    icon: fas fa-hands-helping
+    icon: fa-solid fa-handshake-angle
   - title: FAQ
     url: faq.html
-    icon: fas fa-question-circle
+    icon: fa-solid fa-circle-question
   - title: License
     url: license.html
-    icon: fas fa-file-contract
+    icon: fa-solid fa-file-contract

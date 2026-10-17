@@ -1,6 +1,7 @@
 'use strict'
 
 const { babel } = require('@rollup/plugin-babel')
+const { nodeResolve } = require('@rollup/plugin-node-resolve')
 
 const pkg = require('../../package')
 const year = new Date().getFullYear()
@@ -16,13 +17,10 @@ module.exports = {
     banner,
     file: 'dist/js/adminlte.js',
     format: 'umd',
-    globals: {
-      jquery: 'jQuery'
-    },
     name: 'adminlte'
   },
-  external: ['jquery'],
   plugins: [
+    nodeResolve(),
     babel({
       exclude: 'node_modules/**',
       // Include the helpers in the bundle, at most one copy of each

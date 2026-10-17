@@ -40,7 +40,7 @@
 }
 
 .users-list-date {
-  color: darken($gray-500, 20%);
+  color: shade-color($gray-500, 20%);
   font-size: 12px;
 }
 

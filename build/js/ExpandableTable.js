@@ -1,122 +1,106 @@
-/**
- * --------------------------------------------
- * AdminLTE ExpandableTable.js
- * License MIT
- * --------------------------------------------
- */
+import { delegate, dispatch, getInstance, onReady, setInstance } from './Native'
 
-import $ from 'jquery'
-
-/**
-  * Constants
-  * ====================================================
-  */
-
-const NAME = 'ExpandableTable'
-const DATA_KEY = 'lte.expandableTable'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
-const EVENT_EXPANDED = `expanded${EVENT_KEY}`
-const EVENT_COLLAPSED = `collapsed${EVENT_KEY}`
-
+const EVENT_EXPANDED = 'expanded.lte.expandableTable'
+const EVENT_COLLAPSED = 'collapsed.lte.expandableTable'
 const SELECTOR_TABLE = '.expandable-table'
-const SELECTOR_EXPANDABLE_BODY = '.expandable-body'
 const SELECTOR_DATA_TOGGLE = '[data-widget="expandable-table"]'
-const SELECTOR_ARIA_ATTR = 'aria-expanded'
+const CLASS_NAME_HIDDEN = 'd-none'
 
-/**
-  * Class Definition
-  * ====================================================
-  */
+function getRow(element) {
+  return element.closest('tr')
+}
+
+function getContent(row) {
+  return row?.nextElementSibling?.querySelector(':scope > td > :first-child') ?? null
+}
+
+function animate(content, expand, done = () => {}) {
+  if (!content) {
+    done()
+    return
+  }
+
+  const { height } = content.getBoundingClientRect()
+  const targetHeight = expand ? content.scrollHeight : 0
+  content.style.overflow = 'hidden'
+  const animation = content.animate([
+    { height: `${expand ? 0 : height}px`, opacity: expand ? 0 : 1 },
+    { height: `${targetHeight}px`, opacity: expand ? 1 : 0 }
+  ], { duration: 500, easing: 'ease' })
+  animation.onfinish = () => {
+    content.style.removeProperty('overflow')
+    if (expand) {
+      content.style.removeProperty('height')
+      content.style.removeProperty('opacity')
+    }
+
+    done()
+  }
+}
+
 class ExpandableTable {
   constructor(element) {
     this._element = element
+    setInstance(ExpandableTable, element, this)
   }
 
-  // Public
-
-  _init() {
-    $(SELECTOR_DATA_TOGGLE).each((_, $header) => {
-      const $type = $($header).attr(SELECTOR_ARIA_ATTR)
-      const $body = $($header).next(SELECTOR_EXPANDABLE_BODY).children().first().children()
-      if ($type === 'true') {
-        $body.show()
-      } else if ($type === 'false') {
-        $body.hide()
-        $body.parent().parent().addClass('d-none')
+  init() {
+    this._element.querySelectorAll(SELECTOR_DATA_TOGGLE).forEach(row => {
+      const body = row.nextElementSibling
+      const content = getContent(row)
+      const expanded = row.getAttribute('aria-expanded') === 'true'
+      body?.classList.toggle(CLASS_NAME_HIDDEN, !expanded)
+      if (content) {
+        content.style.display = expanded ? '' : 'none'
       }
     })
   }
 
-  toggleRow() {
-    let $element = this._element
-
-    if ($element[0].nodeName !== 'TR') {
-      $element = $element.parent()
-      if ($element[0].nodeName !== 'TR') {
-        $element = $element.parent()
-      }
+  toggleRow(trigger = this._element) {
+    const row = getRow(trigger)
+    if (!row) {
+      return
     }
 
-    const time = 500
-    const $type = $element.attr(SELECTOR_ARIA_ATTR)
-    const $body = $element.next(SELECTOR_EXPANDABLE_BODY).children().first().children()
+    const body = row.nextElementSibling
+    const content = getContent(row)
+    const expanded = row.getAttribute('aria-expanded') === 'true'
+    if (expanded) {
+      row.setAttribute('aria-expanded', 'false')
+      animate(content, false, () => body?.classList.add(CLASS_NAME_HIDDEN))
+      dispatch(row, EVENT_COLLAPSED)
+    } else {
+      body?.classList.remove(CLASS_NAME_HIDDEN)
+      if (content) {
+        content.style.display = ''
+      }
 
-    $body.stop()
-    if ($type === 'true') {
-      $body.slideUp(time, () => {
-        $element.next(SELECTOR_EXPANDABLE_BODY).addClass('d-none')
-      })
-      $element.attr(SELECTOR_ARIA_ATTR, 'false')
-      $element.trigger($.Event(EVENT_COLLAPSED))
-    } else if ($type === 'false') {
-      $element.next(SELECTOR_EXPANDABLE_BODY).removeClass('d-none')
-      $body.slideDown(time)
-      $element.attr(SELECTOR_ARIA_ATTR, 'true')
-      $element.trigger($.Event(EVENT_EXPANDED))
+      row.setAttribute('aria-expanded', 'true')
+      animate(content, true)
+      dispatch(row, EVENT_EXPANDED)
     }
   }
 
-  // Static
-  static _jQueryInterface(config) {
-    return this.each(function () {
-      let data = $(this).data(DATA_KEY)
+  static getInstance(element) {
+    return getInstance(ExpandableTable, element)
+  }
 
-      if (!data) {
-        data = new ExpandableTable($(this))
-        $(this).data(DATA_KEY, data)
-      }
-
-      if (typeof config === 'string' && /init|toggleRow/.test(config)) {
-        data[config]()
-      }
-    })
+  static getOrCreateInstance(element) {
+    return ExpandableTable.getInstance(element) ?? new ExpandableTable(element)
   }
 }
 
-/**
-  * Data API
-  * ====================================================
-  */
-$(SELECTOR_TABLE).ready(function () {
-  ExpandableTable._jQueryInterface.call($(this), '_init')
+onReady(() => {
+  document.querySelectorAll(SELECTOR_TABLE).forEach(table => {
+    ExpandableTable.getOrCreateInstance(table).init()
+  })
 })
 
-$(document).on('click', SELECTOR_DATA_TOGGLE, function () {
-  ExpandableTable._jQueryInterface.call($(this), 'toggleRow')
+delegate(document, 'click', SELECTOR_DATA_TOGGLE, (_event, element) => {
+  const table = element.closest(SELECTOR_TABLE) ?? element.closest('table')
+  if (table) {
+    ExpandableTable.getOrCreateInstance(table).toggleRow(element)
+  }
 })
-
-/**
-  * jQuery API
-  * ====================================================
-  */
-
-$.fn[NAME] = ExpandableTable._jQueryInterface
-$.fn[NAME].Constructor = ExpandableTable
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return ExpandableTable._jQueryInterface
-}
 
 export default ExpandableTable

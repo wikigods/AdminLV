@@ -6,13 +6,14 @@
   $brand-link-padding-y: $navbar-brand-padding-y + $navbar-padding-y;
   display: block;
   font-size: $navbar-brand-font-size;
-  line-height: $line-height-base;
+  line-height: $line-height-lg;
   padding: $brand-link-padding-y $sidebar-padding-x;
   transition: width $transition-speed $transition-fn;
   white-space: nowrap;
 
   &:hover {
     color: $white;
+    text-decoration: none;
   }
 
   .text-sm & {
@@ -20,7 +21,8 @@
   }
 
   [class*="sidebar-dark"] & {
-    border-bottom: 1px solid lighten($dark, 10%);
+    border-bottom: 1px solid tint-color($dark, 10%);
+
     &,
     .pushmenu {
       color: rgba($white, .8);
@@ -33,6 +35,7 @@
 
   [class*="sidebar-light"] & {
     border-bottom: 1px solid $gray-300;
+
     &,
     .pushmenu {
       color: rgba($black, .8);

@@ -1,48 +1,25 @@
 /**
- * --------------------------------------------
  * AdminLTE CardWidget.js
- * License MIT
- * --------------------------------------------
+ * Native JavaScript implementation
  */
 
-import $ from 'jquery'
+/* eslint-disable max-statements-per-line */
+import { dispatch, getConfig, getOrCreateInstance, setInstance, delegate } from './Native'
 
-/**
- * Constants
- * ====================================================
- */
-
-const NAME = 'CardWidget'
-const DATA_KEY = 'lte.cardwidget'
-const EVENT_KEY = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-
+const EVENT_KEY = '.lte.cardwidget'
 const EVENT_EXPANDED = `expanded${EVENT_KEY}`
 const EVENT_COLLAPSED = `collapsed${EVENT_KEY}`
 const EVENT_MAXIMIZED = `maximized${EVENT_KEY}`
 const EVENT_MINIMIZED = `minimized${EVENT_KEY}`
 const EVENT_REMOVED = `removed${EVENT_KEY}`
-
-const CLASS_NAME_CARD = 'card'
-const CLASS_NAME_COLLAPSED = 'collapsed-card'
-const CLASS_NAME_COLLAPSING = 'collapsing-card'
-const CLASS_NAME_EXPANDING = 'expanding-card'
-const CLASS_NAME_WAS_COLLAPSED = 'was-collapsed'
-const CLASS_NAME_MAXIMIZED = 'maximized-card'
-
-const SELECTOR_DATA_REMOVE = '[data-card-widget="remove"]'
-const SELECTOR_DATA_COLLAPSE = '[data-card-widget="collapse"]'
-const SELECTOR_DATA_MAXIMIZE = '[data-card-widget="maximize"]'
-const SELECTOR_CARD = `.${CLASS_NAME_CARD}`
-const SELECTOR_CARD_HEADER = '.card-header'
-const SELECTOR_CARD_BODY = '.card-body'
-const SELECTOR_CARD_FOOTER = '.card-footer'
-
-const Default = {
-  animationSpeed: 'normal',
-  collapseTrigger: SELECTOR_DATA_COLLAPSE,
-  removeTrigger: SELECTOR_DATA_REMOVE,
-  maximizeTrigger: SELECTOR_DATA_MAXIMIZE,
+const CARD = '.card'
+const COLLAPSED = 'collapsed-card'
+const MAXIMIZED = 'maximized-card'
+const DEFAULT = {
+  animationSpeed: 300,
+  collapseTrigger: '[data-card-widget="collapse"]',
+  removeTrigger: '[data-card-widget="remove"]',
+  maximizeTrigger: '[data-card-widget="maximize"]',
   collapseIcon: 'fa-minus',
   expandIcon: 'fa-plus',
   maximizeIcon: 'fa-expand',
@@ -50,189 +27,156 @@ const Default = {
 }
 
 class CardWidget {
-  constructor(element, settings) {
+  constructor(element, config = {}) {
     this._element = element
-    this._parent = element.parents(SELECTOR_CARD).first()
-
-    if (element.hasClass(CLASS_NAME_CARD)) {
-      this._parent = element
+    this._config = getConfig(element, DEFAULT, config)
+    if (!Number.isFinite(Number(this._config.animationSpeed))) {
+      this._config.animationSpeed = this._config.animationSpeed === 'fast' ? 200 : (this._config.animationSpeed === 'slow' ? 600 : 400)
+    } else {
+      this._config.animationSpeed = Number(this._config.animationSpeed)
     }
 
-    this._settings = $.extend({}, Default, settings)
+    this._card = element.matches(CARD) ? element : element.closest(CARD)
+    setInstance(CardWidget, element, this)
   }
 
   collapse() {
-    this._parent.addClass(CLASS_NAME_COLLAPSING).children(`${SELECTOR_CARD_BODY}, ${SELECTOR_CARD_FOOTER}`)
-      .slideUp(this._settings.animationSpeed, () => {
-        this._parent.addClass(CLASS_NAME_COLLAPSED).removeClass(CLASS_NAME_COLLAPSING)
+    if (!this._card) {
+      return
+    }
+
+    this._card.classList.add('collapsing-card')
+    this._card.querySelectorAll(':scope > .card-body, :scope > .card-footer').forEach(child => {
+      child.style.transition = `height ${this._config.animationSpeed}ms ease`
+      child.style.height = `${child.getBoundingClientRect().height}px`
+      requestAnimationFrame(() => {
+        child.style.height = '0px'; child.style.overflow = 'hidden'
       })
-
-    this._parent.find(`> ${SELECTOR_CARD_HEADER} ${this._settings.collapseTrigger} .${this._settings.collapseIcon}`)
-      .addClass(this._settings.expandIcon)
-      .removeClass(this._settings.collapseIcon)
-
-    this._element.trigger($.Event(EVENT_COLLAPSED), this._parent)
+      window.setTimeout(() => {
+        child.hidden = true; child.style.removeProperty('height'); child.style.removeProperty('overflow'); child.style.removeProperty('transition')
+      }, this._config.animationSpeed)
+    })
+    window.setTimeout(() => {
+      this._card.classList.add(COLLAPSED)
+      this._card.classList.remove('collapsing-card')
+    }, this._config.animationSpeed)
+    this._updateIcon(this._config.collapseTrigger, this._config.collapseIcon, this._config.expandIcon)
+    dispatch(this._element, EVENT_COLLAPSED, { card: this._card })
   }
 
   expand() {
-    this._parent.addClass(CLASS_NAME_EXPANDING).children(`${SELECTOR_CARD_BODY}, ${SELECTOR_CARD_FOOTER}`)
-      .slideDown(this._settings.animationSpeed, () => {
-        this._parent.removeClass(CLASS_NAME_COLLAPSED).removeClass(CLASS_NAME_EXPANDING)
+    if (!this._card) {
+      return
+    }
+
+    this._card.classList.add('expanding-card')
+    this._card.classList.remove(COLLAPSED)
+    this._card.querySelectorAll(':scope > .card-body, :scope > .card-footer').forEach(child => {
+      child.hidden = false
+      child.style.display = ''
+      const height = child.scrollHeight
+      child.style.height = '0px'; child.style.overflow = 'hidden'
+      requestAnimationFrame(() => {
+        child.style.transition = `height ${this._config.animationSpeed}ms ease`; child.style.height = `${height}px`
       })
-
-    this._parent.find(`> ${SELECTOR_CARD_HEADER} ${this._settings.collapseTrigger} .${this._settings.expandIcon}`)
-      .addClass(this._settings.collapseIcon)
-      .removeClass(this._settings.expandIcon)
-
-    this._element.trigger($.Event(EVENT_EXPANDED), this._parent)
+      window.setTimeout(() => {
+        child.style.removeProperty('height'); child.style.removeProperty('overflow'); child.style.removeProperty('transition')
+      }, this._config.animationSpeed)
+    })
+    this._card.classList.remove('expanding-card')
+    this._updateIcon(this._config.collapseTrigger, this._config.expandIcon, this._config.collapseIcon)
+    dispatch(this._element, EVENT_EXPANDED, { card: this._card })
   }
 
   remove() {
-    this._parent.slideUp()
-    this._element.trigger($.Event(EVENT_REMOVED), this._parent)
+    const card = this._card
+    if (!card) {
+      return
+    }
+
+    card.style.transition = `height ${this._config.animationSpeed}ms ease`
+    card.style.height = `${card.getBoundingClientRect().height}px`
+    requestAnimationFrame(() => {
+      card.style.height = '0px'; card.style.overflow = 'hidden'
+    })
+    dispatch(this._element, EVENT_REMOVED, { card })
+    window.setTimeout(() => card.remove(), this._config.animationSpeed)
   }
 
   toggle() {
-    if (this._parent.hasClass(CLASS_NAME_COLLAPSED)) {
+    if (this._card?.classList.contains(COLLAPSED)) {
       this.expand()
-      return
+    } else {
+      this.collapse()
     }
-
-    this.collapse()
   }
 
   maximize() {
-    this._parent.find(`${this._settings.maximizeTrigger} .${this._settings.maximizeIcon}`)
-      .addClass(this._settings.minimizeIcon)
-      .removeClass(this._settings.maximizeIcon)
-    this._parent.css({
-      height: this._parent.height(),
-      width: this._parent.width(),
-      position: 'fixed',
-      transition: 'all .15s'
-    }).delay(150).queue(function () {
-      const $element = $(this)
-
-      $element.addClass(CLASS_NAME_MAXIMIZED)
-      $('html').addClass(CLASS_NAME_MAXIMIZED)
-      if ($element.hasClass(CLASS_NAME_COLLAPSED)) {
-        $element.addClass(CLASS_NAME_WAS_COLLAPSED)
-      }
-
-      $element.dequeue()
-    })
-
-    this._element.trigger($.Event(EVENT_MAXIMIZED), this._parent)
-  }
-
-  minimize() {
-    this._parent.find(`${this._settings.maximizeTrigger} .${this._settings.minimizeIcon}`)
-      .addClass(this._settings.maximizeIcon)
-      .removeClass(this._settings.minimizeIcon)
-    this._parent.css('cssText', `height: ${this._parent[0].style.height} !important; width: ${this._parent[0].style.width} !important; transition: all .15s;`
-    ).delay(10).queue(function () {
-      const $element = $(this)
-
-      $element.removeClass(CLASS_NAME_MAXIMIZED)
-      $('html').removeClass(CLASS_NAME_MAXIMIZED)
-      $element.css({
-        height: 'inherit',
-        width: 'inherit'
-      })
-      if ($element.hasClass(CLASS_NAME_WAS_COLLAPSED)) {
-        $element.removeClass(CLASS_NAME_WAS_COLLAPSED)
-      }
-
-      $element.dequeue()
-    })
-
-    this._element.trigger($.Event(EVENT_MINIMIZED), this._parent)
-  }
-
-  toggleMaximize() {
-    if (this._parent.hasClass(CLASS_NAME_MAXIMIZED)) {
-      this.minimize()
+    if (!this._card || this._card.classList.contains(MAXIMIZED)) {
       return
     }
 
-    this.maximize()
+    const card = this._card
+    const rect = card.getBoundingClientRect()
+    card.style.height = `${rect.height}px`; card.style.width = `${rect.width}px`; card.style.position = 'fixed'
+    card.style.transition = 'all .15s'
+    window.setTimeout(() => {
+      card.classList.add(MAXIMIZED); document.documentElement.classList.add(MAXIMIZED)
+      if (card.classList.contains(COLLAPSED)) {
+        card.classList.add('was-collapsed')
+      }
+
+      card.style.removeProperty('position')
+      this._updateIcon(this._config.maximizeTrigger, this._config.maximizeIcon, this._config.minimizeIcon)
+    }, 150)
+    dispatch(this._element, EVENT_MAXIMIZED, { card })
   }
 
-  // Private
-
-  _init(card) {
-    this._parent = card
-
-    $(this).find(this._settings.collapseTrigger).click(() => {
-      this.toggle()
-    })
-
-    $(this).find(this._settings.maximizeTrigger).click(() => {
-      this.toggleMaximize()
-    })
-
-    $(this).find(this._settings.removeTrigger).click(() => {
-      this.remove()
-    })
-  }
-
-  // Static
-  static _jQueryInterface(config) {
-    let data = $(this).data(DATA_KEY)
-    const _config = $.extend({}, Default, $(this).data())
-
-    if (!data) {
-      data = new CardWidget($(this), _config)
-      $(this).data(DATA_KEY, typeof config === 'string' ? data : config)
+  minimize() {
+    if (!this._card) {
+      return
     }
 
-    if (typeof config === 'string' && /collapse|expand|remove|toggle|maximize|minimize|toggleMaximize/.test(config)) {
-      data[config]()
-    } else if (typeof config === 'object') {
-      data._init($(this))
+    const card = this._card
+    card.classList.remove(MAXIMIZED); document.documentElement.classList.remove(MAXIMIZED)
+    card.style.height = 'inherit'; card.style.width = 'inherit'; card.style.removeProperty('transition')
+    card.classList.remove('was-collapsed')
+    this._updateIcon(this._config.maximizeTrigger, this._config.minimizeIcon, this._config.maximizeIcon)
+    dispatch(this._element, EVENT_MINIMIZED, { card })
+  }
+
+  toggleMaximize() {
+    if (this._card?.classList.contains(MAXIMIZED)) {
+      this.minimize()
+    } else {
+      this.maximize()
+    }
+  }
+
+  _updateIcon(trigger, from, to) {
+    this._card?.querySelectorAll(`${trigger} .${from}`).forEach(icon => {
+      icon.classList.remove(from); icon.classList.add(to)
+    })
+  }
+
+  static getOrCreateInstance(element, config = {}) {
+    return getOrCreateInstance(CardWidget, element, config)
+  }
+
+  static _interface(element, method) {
+    const instance = CardWidget.getOrCreateInstance(element)
+    if (method) {
+      instance[method]()
+    } else {
+      setInstance(CardWidget, element, instance)
     }
   }
 }
 
-/**
- * Data API
- * ====================================================
- */
-
-$(document).on('click', SELECTOR_DATA_COLLAPSE, function (event) {
-  if (event) {
-    event.preventDefault()
-  }
-
-  CardWidget._jQueryInterface.call($(this), 'toggle')
+delegate(document, 'click', '[data-card-widget="collapse"], [data-card-widget="remove"], [data-card-widget="maximize"]', (event, trigger) => {
+  event.preventDefault()
+  const action = trigger.dataset.cardWidget === 'collapse' ? 'toggle' : (trigger.dataset.cardWidget === 'remove' ? 'remove' : 'toggleMaximize')
+  CardWidget._interface(trigger, action)
 })
-
-$(document).on('click', SELECTOR_DATA_REMOVE, function (event) {
-  if (event) {
-    event.preventDefault()
-  }
-
-  CardWidget._jQueryInterface.call($(this), 'remove')
-})
-
-$(document).on('click', SELECTOR_DATA_MAXIMIZE, function (event) {
-  if (event) {
-    event.preventDefault()
-  }
-
-  CardWidget._jQueryInterface.call($(this), 'toggleMaximize')
-})
-
-/**
- * jQuery API
- * ====================================================
- */
-
-$.fn[NAME] = CardWidget._jQueryInterface
-$.fn[NAME].Constructor = CardWidget
-$.fn[NAME].noConflict = function () {
-  $.fn[NAME] = JQUERY_NO_CONFLICT
-  return CardWidget._jQueryInterface
-}
 
 export default CardWidget

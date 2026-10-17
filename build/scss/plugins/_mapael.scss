@@ -50,8 +50,8 @@
     &:hover,
     &:active,
     &.hover {
-      background-color: darken($button-default-background-color, 5%);
-      color: darken($button-default-color, 10%);
+      background-color: shade-color($button-default-background-color, 5%);
+      color: shade-color($button-default-color, 10%);
     }
   }
 

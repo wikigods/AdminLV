@@ -1,7 +1,26 @@
 //
 // General: Mixins
 //
-@import "mixins/helpers";
+
+@mixin caret-right() {
+  border-bottom: $caret-width solid transparent;
+  border-left: $caret-width solid;
+  border-top: $caret-width solid transparent;
+}
+
+@mixin hover-focus() {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin hover() {
+  &:hover {
+    @content;
+  }
+}
+
 @import "mixins/animations";
 @import "mixins/scrollbar";
 @import "mixins/cards";

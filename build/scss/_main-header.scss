@@ -18,12 +18,11 @@
       padding: $nav-link-sm-padding-y $nav-link-padding-x;
 
       /* stylelint-disable selector-class-pattern */
-      > .fa,
-      > .fas,
-      > .far,
-      > .fab,
-      > .fal,
-      > .fad,
+      > .fa-solid,
+      > .fa-regular,
+      > .fa-brands,
+      > .fa-light,
+      > .fa-duotone,
       > .svg-inline--fa,
       > .ion {
         font-size: $font-size-sm;
@@ -81,7 +80,7 @@
 .form-control-navbar {
   border-right-width: 0;
 
-  + .input-group-append {
+  + .btn-navbar {
     margin-left: 0;
   }
 }
@@ -103,13 +102,13 @@
       color: $main-header-dark-placeholder-color;
     }
 
-    + .input-group-append > .btn-navbar {
+    + .btn-navbar {
       color: $main-header-dark-placeholder-color;
     }
 
     &:focus {
       &,
-      + .input-group-append .btn-navbar {
+      + .btn-navbar {
         background-color: $main-header-dark-form-control-focused-bg;
         border-color: $main-header-dark-form-control-focused-border-color !important;
         color: $main-header-dark-form-control-focused-color;
@@ -130,13 +129,13 @@
       color: $main-header-light-placeholder-color;
     }
 
-    + .input-group-append > .btn-navbar {
+    + .btn-navbar {
       color: $main-header-light-placeholder-color;
     }
 
     &:focus {
       &,
-      + .input-group-append .btn-navbar {
+      + .btn-navbar {
         background-color: $main-header-light-form-control-focused-bg;
         border-color: $main-header-light-form-control-focused-border-color !important;
         color: $main-header-light-form-control-focused-color;
@@ -148,10 +147,47 @@
     .form-control-navbar {
       &:focus {
         &,
-        + .input-group-append .btn-navbar {
+        + .btn-navbar {
           color: $main-header-light-placeholder-color;
         }
       }
+    }
+  }
+}
+
+@include dark-mode () {
+  .main-header.navbar-white {
+    background-color: $dark;
+    border-bottom-color: $gray-700;
+    color: $white;
+    --#{$prefix}navbar-color: #{rgba($white, .8)};
+    --#{$prefix}navbar-hover-color: #{rgba($white, .95)};
+    --#{$prefix}navbar-disabled-color: #{rgba($white, .4)};
+    --#{$prefix}navbar-active-color: #{$white};
+    --#{$prefix}navbar-brand-color: #{$white};
+    --#{$prefix}navbar-brand-hover-color: #{$white};
+    --#{$prefix}navbar-toggler-border-color: #{rgba($white, .15)};
+
+    .navbar-search-block {
+      background-color: $dark;
+    }
+
+    .form-control-navbar,
+    .btn-navbar {
+      background-color: $main-header-dark-form-control-bg;
+      border-color: $main-header-dark-form-control-border-color;
+      color: $white;
+    }
+
+    .form-control-navbar::placeholder {
+      color: $main-header-dark-placeholder-color;
+    }
+
+    .form-control-navbar:focus,
+    .form-control-navbar:focus + .btn-navbar {
+      background-color: $main-header-dark-form-control-focused-bg;
+      border-color: $main-header-dark-form-control-focused-border-color !important;
+      color: $white;
     }
   }
 }

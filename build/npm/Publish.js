@@ -35,7 +35,7 @@ class Publish {
       const fseOptions = {
         // Skip copying dot files
         filter(src) {
-          return !path.basename(src).startsWith('.')
+          return !path.basename(src).startsWith('.') && (!module.filter || module.filter(src))
         }
       }
 

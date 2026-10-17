@@ -67,6 +67,6 @@
 
 @include dark-mode () {
   .progress {
-    background: lighten($dark, 7.5%);
+    background: tint-color($dark, 7.5%);
   }
 }
