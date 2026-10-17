@@ -314,15 +314,23 @@ class IFrame {
   static _interface() {
     const element = document.querySelector(DATA)
     if (element) {
-      const saved = JSON.parse(localStorage.getItem('AdminLTE:IFrame:Options') || '{}')
+      const saved = getSavedOptions()
       const config = getConfig(element, DEFAULT, saved)
-      localStorage.setItem('AdminLTE:IFrame:Options', JSON.stringify(config))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config))
       const instance = IFrame.getOrCreateInstance(element, config); setInstance(IFrame, element, instance); window.iFrameInstance = instance
     } else {
-      const saved = JSON.parse(localStorage.getItem('AdminLTE:IFrame:Options') || '{}')
+      const saved = getSavedOptions()
       const config = { ...DEFAULT, ...saved }; const instance = new IFrame(document.body, config); window.iFrameInstance = instance; instance._initFrameElement()
     }
   }
+}
+
+const STORAGE_KEY = 'AdminLV:IFrame:Options'
+const LEGACY_STORAGE_KEY = 'AdminLTE:IFrame:Options'
+
+function getSavedOptions() {
+  const saved = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY)
+  return saved ? JSON.parse(saved) : {}
 }
 
 const SELECTOR_IFRAME = `${WRAPPER} iframe`

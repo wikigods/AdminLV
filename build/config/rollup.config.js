@@ -12,10 +12,10 @@ const banner = `/*!
  */`
 
 module.exports = {
-  input: 'build/js/AdminLTE.js',
+  input: 'build/js/AdminLV.js',
   output: {
     banner,
-    file: 'dist/js/adminlte.js',
+    file: 'dist/js/adminlv.js',
     format: 'umd',
     name: 'adminlte'
   },

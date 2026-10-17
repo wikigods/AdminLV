@@ -14,7 +14,7 @@ module.exports = [
     ignores: [
       '**/*.min.js',
       '**/plugins/**',
-      'dist/js/adminlte.js',
+      'dist/js/adminlv.js',
       'docs/**',
       'docs_html/**'
     ]
