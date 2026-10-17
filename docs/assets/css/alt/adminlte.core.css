@@ -1,9 +1,9 @@
 @charset "UTF-8";
 /*!
- *   AdminLTE v3.2.0
+ *   AdminLV v3.2.0
  *     Only Core
  *   Author: Colorlib
- *   Website: AdminLTE.io <https://adminlte.io>
+ *   Website: AdminLV <https://adminlte.io>
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 /*!
@@ -1641,11 +1641,11 @@ progress {
   --bs-table-color-state: initial;
   --bs-table-bg-state: initial;
   --bs-table-color: var(--bs-emphasis-color);
-  --bs-table-bg: transparent;
+  --bs-table-bg: #fff;
   --bs-table-border-color: #dee2e6;
   --bs-table-accent-bg: rgba(0, 0, 0, 0.05);
   --bs-table-striped-color: var(--bs-emphasis-color);
-  --bs-table-striped-bg: rgba(var(--bs-emphasis-color-rgb), 0.05);
+  --bs-table-striped-bg: #fff;
   --bs-table-active-color: var(--bs-emphasis-color);
   --bs-table-active-bg: rgba(0, 0, 0, 0.075);
   --bs-table-hover-color: var(--bs-emphasis-color);
@@ -11081,6 +11081,39 @@ textarea.form-control-lg {
     transform: none;
   }
 }
+.svg-inline--fa {
+  box-sizing: content-box;
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+  width: var(--fa-width, 1.25em);
+}
+
+.svg-inline--fa.fa-2xs {
+  vertical-align: 0.1em;
+}
+
+.svg-inline--fa.fa-xs {
+  vertical-align: 0;
+}
+
+.svg-inline--fa.fa-sm {
+  vertical-align: -0.0714285714em;
+}
+
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.2em;
+}
+
+.svg-inline--fa.fa-xl {
+  vertical-align: -0.25em;
+}
+
+.svg-inline--fa.fa-2xl {
+  vertical-align: -0.3125em;
+}
+
 [data-bs-theme=dark] {
   --lightblue: rgb(38.8235294118%, 64.2352941176%, 78.9803921569%);
   --navy: rgb(5%, 16.5490196078%, 28.4705882353%);
@@ -12850,15 +12883,18 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 .user-panel .image {
   display: inline-block;
-  padding-left: 0.8rem;
+  padding-left: 0;
 }
 .user-panel img {
   height: auto;
-  width: 2.1rem;
+  width: 2.75rem;
 }
 .user-panel .info {
-  display: inline-block;
-  padding: 5px 5px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  height: 2.75rem;
+  justify-content: center;
+  padding: 0 5px 0 15px;
 }
 .user-panel .status,
 .user-panel .dropdown-menu {
@@ -12906,43 +12942,21 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 .nav-sidebar > .nav-item .nav-icon {
   margin-left: 0.05rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-right: 0.2rem;
   text-align: center;
   width: 1.6rem;
-  /* stylelint-disable selector-class-pattern */
-}
-.nav-sidebar > .nav-item .nav-icon.fa-solid, .nav-sidebar > .nav-item .nav-icon.fa-regular, .nav-sidebar > .nav-item .nav-icon.fa-brands, .nav-sidebar > .nav-item .nav-icon.fa-light, .nav-sidebar > .nav-item .nav-icon.fa-duotone, .nav-sidebar > .nav-item .nav-icon.svg-inline--fa, .nav-sidebar > .nav-item .nav-icon.ion {
-  font-size: 0.9rem;
-}
-.nav-sidebar > .nav-item .nav-icon {
-  /* stylelint-enable selector-class-pattern */
 }
 .nav-sidebar > .nav-item .float-end {
   margin-top: 3px;
 }
 .nav-sidebar {
-  /* Match the compact, right-aligned AdminLTE 3 navigation indicators. */
   /* stylelint-disable selector-class-pattern */
 }
-.nav-sidebar .nav-link > .right.fa,
-.nav-sidebar .nav-link > .right.fa-solid,
-.nav-sidebar .nav-link > .right.fa-regular,
-.nav-sidebar .nav-link > .right.fa-brands,
-.nav-sidebar .nav-link > .right.fa-light,
-.nav-sidebar .nav-link > .right.fa-duotone,
-.nav-sidebar .nav-link > .right.svg-inline--fa,
-.nav-sidebar .nav-link > .right.ion,
-.nav-sidebar .nav-link > p > .right.fa,
-.nav-sidebar .nav-link > p > .right.fa-solid,
-.nav-sidebar .nav-link > p > .right.fa-regular,
-.nav-sidebar .nav-link > p > .right.fa-brands,
-.nav-sidebar .nav-link > p > .right.fa-light,
-.nav-sidebar .nav-link > p > .right.fa-duotone,
-.nav-sidebar .nav-link > p > .right.svg-inline--fa,
-.nav-sidebar .nav-link > p > .right.ion {
+.nav-sidebar .nav-link > .right.fa-angle-left,
+.nav-sidebar .nav-link > p > .right.fa-angle-left {
+  --fa-width: auto;
   font-size: 0.875rem;
-  right: 0.5rem;
 }
 .nav-sidebar {
   /* stylelint-enable selector-class-pattern */

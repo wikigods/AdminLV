@@ -2,7 +2,7 @@
 layout: page
 title: Plugins
 ---
-AdminLTE comes with color overrides & extras for the following plugins.
+AdminLV comes with color overrides & extras for the following plugins.
 
 ### Bootstrap Slider
 
@@ -88,9 +88,9 @@ Example: `<body class="pace-success">`
 
 ### SweetAlert
 
-If you use SweetAlert and load the SweetAlert CSS before AdminLTE's CSS, then the colors of any icon changes to AdminLTE's default colors.
+If you use SweetAlert and load the SweetAlert CSS before AdminLV's CSS, then the colors of any icon changes to AdminLV's default colors.
 
 
 ### Toastr
 
-If you use Toastr and load the Toastr CSS before AdminLTE's CSS, then the background colors changes to AdminLTE's default colors.
+If you use Toastr and load the Toastr CSS before AdminLV's CSS, then the background colors changes to AdminLV's default colors.

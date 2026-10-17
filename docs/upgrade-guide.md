@@ -5,11 +5,11 @@ title: Upgrade Guide
 
 #### Migration from v2.4.x
 
-When migrating an older AdminLTE project that uses Bootstrap 3 or 4 to AdminLTE v4, first follow the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/), then update the AdminLTE markup and components.
+When migrating an older AdminLV project that uses Bootstrap 3 or 4 to AdminLV v4, first follow the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.3/migration/), then update the AdminLV markup and components.
 
 #### CSS / JS Files
 
-Since AdminLTE v4.0 Bootstrap 5 is complete included in AdminLTE's CSS file. You will not need to load the Bootstrap CSS file `bootstrap(.min).css`, but you will need the Bootstrap JS file `bootstrap(.min).js`.
+Since AdminLV v4.0 Bootstrap 5 is complete included in AdminLV's CSS file. You will not need to load the Bootstrap CSS file `bootstrap(.min).css`, but you will need the Bootstrap JS file `bootstrap(.min).js`.
 
 ##### Main Header
 
@@ -31,7 +31,7 @@ Like above the biggest change is the Main Sidebar contains now the Logo and the 
 1. Main Sidebar Color
   - `<aside class="main-sidebar">` replaced with `<aside class="main-sidebar sidebar-dark-primary">`
 2. Logo / Brand Link
-  - `<a href="index3.html" class="brand-link"><img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"><span class="brand-text fw-light">AdminLTE 4</span></a>` replaces the old logo
+  - `<a href="index3.html" class="brand-link"><img src="dist/img/AdminLVLogo.png" alt="AdminLV Logo" class="brand-image img-circle elevation-3" style="opacity: .8"><span class="brand-text fw-light">AdminLV 4</span></a>` replaces the old logo
 3. Sidebar
   - `<section class="sidebar">` replaced with `<div class="sidebar">`
 4. User Panel
@@ -125,7 +125,7 @@ New sample entry (with tree menu)
 
 ##### Content Header
 
-The biggest change in content header is AdminLTE use here now `.container-fluid`, `.row` & `.col-*` and the breadcrumb markup changed, here are all changes:
+The biggest change in content header is AdminLV use here now `.container-fluid`, `.row` & `.col-*` and the breadcrumb markup changed, here are all changes:
 
 - `<section class="content-header">` replaced with `<div class="content-header">`
 - `<div class="container-fluid">` added in `<div class="content-header">`

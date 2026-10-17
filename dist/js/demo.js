@@ -1,5 +1,5 @@
 /**
- * AdminLTE Demo Menu
+ * AdminLV Demo Menu
  * ------------------
  * You should not use this file in production.
  * This file is for demo purposes only.
@@ -12,7 +12,7 @@
     try {
       if (window.___browserSync___ === undefined && Number(localStorage.getItem('AdminLTE:Demo:MessageShowed')) < Date.now()) {
         localStorage.setItem('AdminLTE:Demo:MessageShowed', Date.now() + (15 * 60 * 1000))
-        window.alert('You load AdminLTE\'s "demo.js", \nthis file is only created for testing purposes!')
+        window.alert('You load AdminLV\'s "demo.js", \nthis file is only created for testing purposes!')
       }
     } catch (error) {
       // The demo menu should still work when browser storage is unavailable.
@@ -88,7 +88,7 @@
     })
   }
 
-  container.append(addText('Customize AdminLTE', 'h5'))
+  container.append(addText('Customize AdminLV', 'h5'))
   var divider = document.createElement('hr')
   divider.className = 'mb-2'
   container.append(divider)

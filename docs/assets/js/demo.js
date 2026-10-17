@@ -1,696 +1,283 @@
 /**
- * AdminLTE Demo Menu
+ * AdminLV Demo Menu
  * ------------------
  * You should not use this file in production.
  * This file is for demo purposes only.
  */
 
-/* eslint-disable camelcase */
-
-(function ($) {
+(function () {
   'use strict'
 
-  setTimeout(function () {
-    if (window.___browserSync___ === undefined && Number(localStorage.getItem('AdminLTE:Demo:MessageShowed')) < Date.now()) {
-      localStorage.setItem('AdminLTE:Demo:MessageShowed', (Date.now()) + (15 * 60 * 1000))
-      // eslint-disable-next-line no-alert
-      alert('You load AdminLTE\'s "demo.js", \nthis file is only created for testing purposes!')
+  window.setTimeout(function () {
+    try {
+      if (window.___browserSync___ === undefined && Number(localStorage.getItem('AdminLTE:Demo:MessageShowed')) < Date.now()) {
+        localStorage.setItem('AdminLTE:Demo:MessageShowed', Date.now() + (15 * 60 * 1000))
+        window.alert('You load AdminLV\'s "demo.js", \nthis file is only created for testing purposes!')
+      }
+    } catch (error) {
+      // The demo menu should still work when browser storage is unavailable.
     }
   }, 1000)
 
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1)
+  var sidebar = document.querySelector('.control-sidebar')
+  if (!sidebar) {
+    return
   }
 
-  function createSkinBlock(colors, callback, noneSelected) {
-    var $block = $('<select />', {
-      class: noneSelected ? 'form-select mb-3 border-0' : 'form-select mb-3 text-light border-0 ' + colors[0].replace(/accent-|navbar-/, 'bg-')
+  var body = document.body
+  var header = document.querySelector('.main-header')
+  var mainSidebar = document.querySelector('.main-sidebar')
+  var navSidebar = document.querySelector('.nav-sidebar')
+  var brand = document.querySelector('.brand-link')
+  var footer = document.querySelector('.main-footer')
+  var sidebarScrollers = document.querySelectorAll('.sidebar')
+  var container = document.createElement('div')
+  container.className = 'p-3 control-sidebar-content'
+  sidebar.append(container)
+
+  function addText(text, tag) {
+    var element = document.createElement(tag || 'span')
+    element.textContent = text
+    return element
+  }
+
+  function addHeading(text, tag) {
+    container.append(addText(text, tag || 'h6'))
+  }
+
+  function addToggle(label, targets, className, spacing, onChange) {
+    var wrapper = document.createElement('div')
+    wrapper.className = spacing || 'mb-1'
+
+    var input = document.createElement('input')
+    input.type = 'checkbox'
+    input.value = '1'
+    input.className = 'me-1'
+    input.checked = targets.some(function (target) {
+      return target.classList.contains(className)
+    })
+    input.addEventListener('change', function () {
+      targets.forEach(function (target) {
+        target.classList.toggle(className, input.checked)
+      })
+      if (onChange) {
+        onChange(input.checked)
+      }
     })
 
+    wrapper.append(input, addText(label))
+    container.append(wrapper)
+    return input
+  }
+
+  function getTargets(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector))
+  }
+
+  function forceResize() {
+    window.dispatchEvent(new Event('resize'))
+  }
+
+  function addOptionSection(title, options) {
+    addHeading(title)
+    options.forEach(function (option) {
+      var checkbox = addToggle(option.label, option.targets, option.className, option.spacing, option.onChange)
+      if (option.onCreate) {
+        option.onCreate(checkbox)
+      }
+    })
+  }
+
+  container.append(addText('Customize AdminLV', 'h5'))
+  var divider = document.createElement('hr')
+  divider.className = 'mb-2'
+  container.append(divider)
+
+  addToggle('Dark Mode', [], 'unused', 'mb-4', function (enabled) {
+    document.documentElement.setAttribute('data-bs-theme', enabled ? 'dark' : 'light')
+  }).checked = document.documentElement.getAttribute('data-bs-theme') === 'dark'
+
+  addOptionSection('Header Options', [
+    { label: 'Fixed', targets: [body], className: 'layout-navbar-fixed' },
+    { label: 'Dropdown Legacy Offset', targets: getTargets('.main-header'), className: 'dropdown-legacy' },
+    { label: 'No border', targets: getTargets('.main-header'), className: 'border-bottom-0', spacing: 'mb-4' }
+  ])
+
+  var collapsedToggle
+  addOptionSection('Sidebar Options', [
+    {
+      label: 'Collapsed', targets: [body], className: 'sidebar-collapse',
+      onChange: forceResize,
+      onCreate: function (checkbox) { collapsedToggle = checkbox }
+    },
+    { label: 'Fixed', targets: [body], className: 'layout-fixed', onChange: forceResize },
+    { label: 'Sidebar Mini', targets: [body], className: 'sidebar-mini' },
+    { label: 'Sidebar Mini MD', targets: [body], className: 'sidebar-mini-md' },
+    { label: 'Sidebar Mini XS', targets: [body], className: 'sidebar-mini-xs' },
+    { label: 'Nav Flat Style', targets: getTargets('.nav-sidebar'), className: 'nav-flat' },
+    { label: 'Nav Legacy Style', targets: getTargets('.nav-sidebar'), className: 'nav-legacy' },
+    { label: 'Nav Compact', targets: getTargets('.nav-sidebar'), className: 'nav-compact' },
+    { label: 'Nav Child Indent', targets: getTargets('.nav-sidebar'), className: 'nav-child-indent' },
+    { label: 'Nav Child Hide on Collapse', targets: getTargets('.nav-sidebar'), className: 'nav-collapse-hide-child' },
+    { label: 'Disable Hover/Focus Auto-Expand', targets: getTargets('.main-sidebar'), className: 'sidebar-no-expand', spacing: 'mb-4' }
+  ])
+
+  document.addEventListener('shown.lte.pushmenu', function () {
+    if (collapsedToggle) collapsedToggle.checked = false
+  })
+  document.addEventListener('collapsed.lte.pushmenu', function () {
+    if (collapsedToggle) collapsedToggle.checked = true
+  })
+
+  addOptionSection('Footer Options', [
+    { label: 'Fixed', targets: [body], className: 'layout-footer-fixed', spacing: 'mb-4' }
+  ])
+
+  addOptionSection('Small Text Options', [
+    { label: 'Body', targets: [body], className: 'text-sm' },
+    { label: 'Navbar', targets: getTargets('.main-header'), className: 'text-sm' },
+    { label: 'Brand', targets: getTargets('.brand-link'), className: 'text-sm' },
+    { label: 'Sidebar Nav', targets: getTargets('.nav-sidebar'), className: 'text-sm' },
+    { label: 'Footer', targets: getTargets('.main-footer'), className: 'text-sm', spacing: 'mb-4' }
+  ])
+
+  var navbarDarkSkins = [
+    'navbar-primary', 'navbar-secondary', 'navbar-info', 'navbar-success', 'navbar-danger',
+    'navbar-indigo', 'navbar-purple', 'navbar-pink', 'navbar-navy', 'navbar-lightblue',
+    'navbar-teal', 'navbar-cyan', 'navbar-dark', 'navbar-gray-dark', 'navbar-gray'
+  ]
+  var navbarLightSkins = ['navbar-light', 'navbar-warning', 'navbar-white', 'navbar-orange']
+  var navbarAllColors = navbarDarkSkins.concat(navbarLightSkins)
+  var sidebarColors = [
+    'bg-primary', 'bg-warning', 'bg-info', 'bg-danger', 'bg-success', 'bg-indigo',
+    'bg-lightblue', 'bg-navy', 'bg-purple', 'bg-fuchsia', 'bg-pink', 'bg-maroon',
+    'bg-orange', 'bg-lime', 'bg-teal', 'bg-olive'
+  ]
+  var accentColors = sidebarColors.map(function (color) { return color.replace('bg-', 'accent-') })
+  var sidebarSkins = sidebarColors.map(function (color) { return 'sidebar-dark-' + color.replace('bg-', '') })
+    .concat(sidebarColors.map(function (color) { return 'sidebar-light-' + color.replace('bg-', '') }))
+
+  function titleForColor(color) {
+    return color.replace(/^(navbar-|accent-|bg-)/, '').replace(/-/g, ' ').replace(/^\w/, function (letter) { return letter.toUpperCase() })
+  }
+
+  function makeSelect(colors, noneSelected, onChange) {
+    var select = document.createElement('select')
+    select.className = 'form-select mb-3 border-0' + (noneSelected ? '' : ' text-light')
     if (noneSelected) {
-      var $default = $('<option />', {
-        text: 'None Selected'
-      })
-
-      $block.append($default)
+      var empty = document.createElement('option')
+      empty.textContent = 'None Selected'
+      select.append(empty)
     }
-
     colors.forEach(function (color) {
-      var $color = $('<option />', {
-        class: (typeof color === 'object' ? color.join(' ') : color).replace('navbar-', 'bg-').replace('accent-', 'bg-'),
-        text: capitalizeFirstLetter((typeof color === 'object' ? color.join(' ') : color).replace(/navbar-|accent-|bg-/, '').replace('-', ' '))
-      })
-
-      $block.append($color)
+      var option = document.createElement('option')
+      option.className = color.replace(/^(navbar-|accent-)/, 'bg-')
+      option.textContent = titleForColor(color)
+      select.append(option)
     })
-    if (callback) {
-      $block.on('change', callback)
-    }
-
-    return $block
+    select.addEventListener('change', onChange)
+    return select
   }
 
-  var $sidebar = $('.control-sidebar')
-  var $container = $('<div />', {
-    class: 'p-3 control-sidebar-content'
-  })
-
-  $sidebar.append($container)
-
-  // Checkboxes
-
-  $container.append(
-    '<h5>Customize AdminLTE</h5><hr class="mb-2"/>'
-  )
-
-  var $dark_mode_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: document.documentElement.getAttribute('data-bs-theme') === 'dark',
-    class: 'me-1'
-  }).on('click', function () {
-    document.documentElement.setAttribute('data-bs-theme', $(this).is(':checked') ? 'dark' : 'light')
-  })
-  var $dark_mode_container = $('<div />', { class: 'mb-4' }).append($dark_mode_checkbox).append('<span>Dark Mode</span>')
-  $container.append($dark_mode_container)
-
-  $container.append('<h6>Header Options</h6>')
-  var $header_fixed_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('layout-navbar-fixed'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('layout-navbar-fixed')
-    } else {
-      $('body').removeClass('layout-navbar-fixed')
-    }
-  })
-  var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_fixed_checkbox).append('<span>Fixed</span>')
-  $container.append($header_fixed_container)
-
-  var $dropdown_legacy_offset_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.main-header').hasClass('dropdown-legacy'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-header').addClass('dropdown-legacy')
-    } else {
-      $('.main-header').removeClass('dropdown-legacy')
-    }
-  })
-  var $dropdown_legacy_offset_container = $('<div />', { class: 'mb-1' }).append($dropdown_legacy_offset_checkbox).append('<span>Dropdown Legacy Offset</span>')
-  $container.append($dropdown_legacy_offset_container)
-
-  var $no_border_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.main-header').hasClass('border-bottom-0'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-header').addClass('border-bottom-0')
-    } else {
-      $('.main-header').removeClass('border-bottom-0')
-    }
-  })
-  var $no_border_container = $('<div />', { class: 'mb-4' }).append($no_border_checkbox).append('<span>No border</span>')
-  $container.append($no_border_container)
-
-  $container.append('<h6>Sidebar Options</h6>')
-
-  var $sidebar_collapsed_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('sidebar-collapse'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('sidebar-collapse')
-      $(window).trigger('resize')
-    } else {
-      $('body').removeClass('sidebar-collapse')
-      $(window).trigger('resize')
-    }
-  })
-  var $sidebar_collapsed_container = $('<div />', { class: 'mb-1' }).append($sidebar_collapsed_checkbox).append('<span>Collapsed</span>')
-  $container.append($sidebar_collapsed_container)
-
-  $(document).on('collapsed.lte.pushmenu', '[data-widget="pushmenu"]', function () {
-    $sidebar_collapsed_checkbox.prop('checked', true)
-  })
-  $(document).on('shown.lte.pushmenu', '[data-widget="pushmenu"]', function () {
-    $sidebar_collapsed_checkbox.prop('checked', false)
-  })
-
-  var $sidebar_fixed_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('layout-fixed'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('layout-fixed')
-      $(window).trigger('resize')
-    } else {
-      $('body').removeClass('layout-fixed')
-      $(window).trigger('resize')
-    }
-  })
-  var $sidebar_fixed_container = $('<div />', { class: 'mb-1' }).append($sidebar_fixed_checkbox).append('<span>Fixed</span>')
-  $container.append($sidebar_fixed_container)
-
-  var $sidebar_mini_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('sidebar-mini'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('sidebar-mini')
-    } else {
-      $('body').removeClass('sidebar-mini')
-    }
-  })
-  var $sidebar_mini_container = $('<div />', { class: 'mb-1' }).append($sidebar_mini_checkbox).append('<span>Sidebar Mini</span>')
-  $container.append($sidebar_mini_container)
-
-  var $sidebar_mini_md_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('sidebar-mini-md'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('sidebar-mini-md')
-    } else {
-      $('body').removeClass('sidebar-mini-md')
-    }
-  })
-  var $sidebar_mini_md_container = $('<div />', { class: 'mb-1' }).append($sidebar_mini_md_checkbox).append('<span>Sidebar Mini MD</span>')
-  $container.append($sidebar_mini_md_container)
-
-  var $sidebar_mini_xs_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('sidebar-mini-xs'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('sidebar-mini-xs')
-    } else {
-      $('body').removeClass('sidebar-mini-xs')
-    }
-  })
-  var $sidebar_mini_xs_container = $('<div />', { class: 'mb-1' }).append($sidebar_mini_xs_checkbox).append('<span>Sidebar Mini XS</span>')
-  $container.append($sidebar_mini_xs_container)
-
-  var $flat_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('nav-flat'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('nav-flat')
-    } else {
-      $('.nav-sidebar').removeClass('nav-flat')
-    }
-  })
-  var $flat_sidebar_container = $('<div />', { class: 'mb-1' }).append($flat_sidebar_checkbox).append('<span>Nav Flat Style</span>')
-  $container.append($flat_sidebar_container)
-
-  var $legacy_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('nav-legacy'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('nav-legacy')
-    } else {
-      $('.nav-sidebar').removeClass('nav-legacy')
-    }
-  })
-  var $legacy_sidebar_container = $('<div />', { class: 'mb-1' }).append($legacy_sidebar_checkbox).append('<span>Nav Legacy Style</span>')
-  $container.append($legacy_sidebar_container)
-
-  var $compact_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('nav-compact'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('nav-compact')
-    } else {
-      $('.nav-sidebar').removeClass('nav-compact')
-    }
-  })
-  var $compact_sidebar_container = $('<div />', { class: 'mb-1' }).append($compact_sidebar_checkbox).append('<span>Nav Compact</span>')
-  $container.append($compact_sidebar_container)
-
-  var $child_indent_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('nav-child-indent'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('nav-child-indent')
-    } else {
-      $('.nav-sidebar').removeClass('nav-child-indent')
-    }
-  })
-  var $child_indent_sidebar_container = $('<div />', { class: 'mb-1' }).append($child_indent_sidebar_checkbox).append('<span>Nav Child Indent</span>')
-  $container.append($child_indent_sidebar_container)
-
-  var $child_hide_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('nav-collapse-hide-child'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('nav-collapse-hide-child')
-    } else {
-      $('.nav-sidebar').removeClass('nav-collapse-hide-child')
-    }
-  })
-  var $child_hide_sidebar_container = $('<div />', { class: 'mb-1' }).append($child_hide_sidebar_checkbox).append('<span>Nav Child Hide on Collapse</span>')
-  $container.append($child_hide_sidebar_container)
-
-  var $no_expand_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.main-sidebar').hasClass('sidebar-no-expand'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-sidebar').addClass('sidebar-no-expand')
-    } else {
-      $('.main-sidebar').removeClass('sidebar-no-expand')
-    }
-  })
-  var $no_expand_sidebar_container = $('<div />', { class: 'mb-4' }).append($no_expand_sidebar_checkbox).append('<span>Disable Hover/Focus Auto-Expand</span>')
-  $container.append($no_expand_sidebar_container)
-
-  $container.append('<h6>Footer Options</h6>')
-  var $footer_fixed_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('layout-footer-fixed'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('layout-footer-fixed')
-    } else {
-      $('body').removeClass('layout-footer-fixed')
-    }
-  })
-  var $footer_fixed_container = $('<div />', { class: 'mb-4' }).append($footer_fixed_checkbox).append('<span>Fixed</span>')
-  $container.append($footer_fixed_container)
-
-  $container.append('<h6>Small Text Options</h6>')
-
-  var $text_sm_body_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('body').hasClass('text-sm'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('body').addClass('text-sm')
-    } else {
-      $('body').removeClass('text-sm')
-    }
-  })
-  var $text_sm_body_container = $('<div />', { class: 'mb-1' }).append($text_sm_body_checkbox).append('<span>Body</span>')
-  $container.append($text_sm_body_container)
-
-  var $text_sm_header_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.main-header').hasClass('text-sm'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-header').addClass('text-sm')
-    } else {
-      $('.main-header').removeClass('text-sm')
-    }
-  })
-  var $text_sm_header_container = $('<div />', { class: 'mb-1' }).append($text_sm_header_checkbox).append('<span>Navbar</span>')
-  $container.append($text_sm_header_container)
-
-  var $text_sm_brand_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.brand-link').hasClass('text-sm'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.brand-link').addClass('text-sm')
-    } else {
-      $('.brand-link').removeClass('text-sm')
-    }
-  })
-  var $text_sm_brand_container = $('<div />', { class: 'mb-1' }).append($text_sm_brand_checkbox).append('<span>Brand</span>')
-  $container.append($text_sm_brand_container)
-
-  var $text_sm_sidebar_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.nav-sidebar').hasClass('text-sm'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.nav-sidebar').addClass('text-sm')
-    } else {
-      $('.nav-sidebar').removeClass('text-sm')
-    }
-  })
-  var $text_sm_sidebar_container = $('<div />', { class: 'mb-1' }).append($text_sm_sidebar_checkbox).append('<span>Sidebar Nav</span>')
-  $container.append($text_sm_sidebar_container)
-
-  var $text_sm_footer_checkbox = $('<input />', {
-    type: 'checkbox',
-    value: 1,
-    checked: $('.main-footer').hasClass('text-sm'),
-    class: 'me-1'
-  }).on('click', function () {
-    if ($(this).is(':checked')) {
-      $('.main-footer').addClass('text-sm')
-    } else {
-      $('.main-footer').removeClass('text-sm')
-    }
-  })
-  var $text_sm_footer_container = $('<div />', { class: 'mb-4' }).append($text_sm_footer_checkbox).append('<span>Footer</span>')
-  $container.append($text_sm_footer_container)
-
-  // Color Arrays
-
-  var navbar_dark_skins = [
-    'navbar-primary',
-    'navbar-secondary',
-    'navbar-info',
-    'navbar-success',
-    'navbar-danger',
-    'navbar-indigo',
-    'navbar-purple',
-    'navbar-pink',
-    'navbar-navy',
-    'navbar-lightblue',
-    'navbar-teal',
-    'navbar-cyan',
-    'navbar-dark',
-    'navbar-gray-dark',
-    'navbar-gray'
-  ]
-
-  var navbar_light_skins = [
-    'navbar-light',
-    'navbar-warning',
-    'navbar-white',
-    'navbar-orange'
-  ]
-
-  var sidebar_colors = [
-    'bg-primary',
-    'bg-warning',
-    'bg-info',
-    'bg-danger',
-    'bg-success',
-    'bg-indigo',
-    'bg-lightblue',
-    'bg-navy',
-    'bg-purple',
-    'bg-fuchsia',
-    'bg-pink',
-    'bg-maroon',
-    'bg-orange',
-    'bg-lime',
-    'bg-teal',
-    'bg-olive'
-  ]
-
-  var accent_colors = [
-    'accent-primary',
-    'accent-warning',
-    'accent-info',
-    'accent-danger',
-    'accent-success',
-    'accent-indigo',
-    'accent-lightblue',
-    'accent-navy',
-    'accent-purple',
-    'accent-fuchsia',
-    'accent-pink',
-    'accent-maroon',
-    'accent-orange',
-    'accent-lime',
-    'accent-teal',
-    'accent-olive'
-  ]
-
-  var sidebar_skins = [
-    'sidebar-dark-primary',
-    'sidebar-dark-warning',
-    'sidebar-dark-info',
-    'sidebar-dark-danger',
-    'sidebar-dark-success',
-    'sidebar-dark-indigo',
-    'sidebar-dark-lightblue',
-    'sidebar-dark-navy',
-    'sidebar-dark-purple',
-    'sidebar-dark-fuchsia',
-    'sidebar-dark-pink',
-    'sidebar-dark-maroon',
-    'sidebar-dark-orange',
-    'sidebar-dark-lime',
-    'sidebar-dark-teal',
-    'sidebar-dark-olive',
-    'sidebar-light-primary',
-    'sidebar-light-warning',
-    'sidebar-light-info',
-    'sidebar-light-danger',
-    'sidebar-light-success',
-    'sidebar-light-indigo',
-    'sidebar-light-lightblue',
-    'sidebar-light-navy',
-    'sidebar-light-purple',
-    'sidebar-light-fuchsia',
-    'sidebar-light-pink',
-    'sidebar-light-maroon',
-    'sidebar-light-orange',
-    'sidebar-light-lime',
-    'sidebar-light-teal',
-    'sidebar-light-olive'
-  ]
-
-  // Navbar Variants
-
-  $container.append('<h6>Navbar Variants</h6>')
-
-  var $navbar_variants = $('<div />', {
-    class: 'd-flex'
-  })
-  var navbar_all_colors = navbar_dark_skins.concat(navbar_light_skins)
-  var $navbar_variants_colors = createSkinBlock(navbar_all_colors, function () {
-    var color = $(this).find('option:selected').attr('class').replace('bg-', 'navbar-')
-    var $main_header = $('.main-header')
-    $main_header.removeClass('navbar-dark').removeClass('navbar-light')
-    navbar_all_colors.forEach(function (color) {
-      $main_header.removeClass(color)
-    })
-
-    $(this).removeClass().addClass('form-select mb-3 text-light border-0 ')
-
-    if (navbar_dark_skins.indexOf(color) > -1) {
-      $main_header.addClass('navbar-dark')
-      $(this).addClass(color).addClass('text-light')
-    } else {
-      $main_header.addClass('navbar-light')
-      $(this).addClass(color)
-    }
-
-    $main_header.addClass(color)
-  })
-
-  var active_navbar_color = null
-  var $main_header = $('.main-header')
-  if ($main_header.length > 0) {
-    $main_header[0].classList.forEach(function (className) {
-      if (navbar_all_colors.indexOf(className) > -1 && active_navbar_color === null) {
-        active_navbar_color = className.replace('navbar-', 'bg-')
-      }
-    })
+  function colorOf(select) {
+    var option = select.options[select.selectedIndex]
+    return option ? option.className : ''
   }
 
-  $navbar_variants_colors.find('option.' + active_navbar_color).prop('selected', true)
-  $navbar_variants_colors.removeClass().addClass('form-select mb-3 text-light border-0 ').addClass(active_navbar_color)
-
-  $navbar_variants.append($navbar_variants_colors)
-
-  $container.append($navbar_variants)
-
-  // Sidebar Colors
-
-  $container.append('<h6>Accent Color Variants</h6>')
-  var $accent_variants = $('<div />', {
-    class: 'd-flex'
-  })
-  $container.append($accent_variants)
-  $container.append(createSkinBlock(accent_colors, function () {
-    var color = $(this).find('option:selected').attr('class')
-    var $body = $('body')
-    accent_colors.forEach(function (skin) {
-      $body.removeClass(skin)
-    })
-
-    var accent_color_class = color.replace('bg-', 'accent-')
-
-    $body.addClass(accent_color_class)
-  }, true))
-
-  var active_accent_color = null
-  $('body')[0].classList.forEach(function (className) {
-    if (accent_colors.indexOf(className) > -1 && active_accent_color === null) {
-      active_accent_color = className.replace('navbar-', 'bg-')
-    }
-  })
-
-  // $accent_variants.find('option.' + active_accent_color).prop('selected', true)
-  // $accent_variants.removeClass().addClass('form-select mb-3 text-light border-0 ').addClass(active_accent_color)
-
-  $container.append('<h6>Dark Sidebar Variants</h6>')
-  var $sidebar_variants_dark = $('<div />', {
-    class: 'd-flex'
-  })
-  $container.append($sidebar_variants_dark)
-  var $sidebar_dark_variants = createSkinBlock(sidebar_colors, function () {
-    var color = $(this).find('option:selected').attr('class')
-    var sidebar_class = 'sidebar-dark-' + color.replace('bg-', '')
-    var $sidebar = $('.main-sidebar')
-    sidebar_skins.forEach(function (skin) {
-      $sidebar.removeClass(skin)
-      $sidebar_light_variants.removeClass(skin.replace('sidebar-dark-', 'bg-')).removeClass('text-light')
-    })
-
-    $(this).removeClass().addClass('form-select mb-3 text-light border-0').addClass(color)
-
-    $sidebar_light_variants.find('option').prop('selected', false)
-    $sidebar.addClass(sidebar_class)
-    $('.sidebar').removeClass('os-theme-dark').addClass('os-theme-light')
-  }, true)
-  $container.append($sidebar_dark_variants)
-
-  var active_sidebar_dark_color = null
-  var $main_sidebar = $('.main-sidebar')
-  if ($main_sidebar.length > 0) {
-    $main_sidebar[0].classList.forEach(function (className) {
-      var color = className.replace('sidebar-dark-', 'bg-')
-      if (sidebar_colors.indexOf(color) > -1 && active_sidebar_dark_color === null) {
-        active_sidebar_dark_color = color
-      }
-    })
-  }
-
-  $sidebar_dark_variants.find('option.' + active_sidebar_dark_color).prop('selected', true)
-  $sidebar_dark_variants.removeClass().addClass('form-select mb-3 text-light border-0 ').addClass(active_sidebar_dark_color)
-
-  $container.append('<h6>Light Sidebar Variants</h6>')
-  var $sidebar_variants_light = $('<div />', {
-    class: 'd-flex'
-  })
-  $container.append($sidebar_variants_light)
-  var $sidebar_light_variants = createSkinBlock(sidebar_colors, function () {
-    var color = $(this).find('option:selected').attr('class')
-    var sidebar_class = 'sidebar-light-' + color.replace('bg-', '')
-    var $sidebar = $('.main-sidebar')
-    sidebar_skins.forEach(function (skin) {
-      $sidebar.removeClass(skin)
-      $sidebar_dark_variants.removeClass(skin.replace('sidebar-light-', 'bg-')).removeClass('text-light')
-    })
-
-    $(this).removeClass().addClass('form-select mb-3 text-light border-0').addClass(color)
-
-    $sidebar_dark_variants.find('option').prop('selected', false)
-    $sidebar.addClass(sidebar_class)
-    $('.sidebar').removeClass('os-theme-light').addClass('os-theme-dark')
-  }, true)
-  $container.append($sidebar_light_variants)
-
-  var active_sidebar_light_color = null
-  if ($main_sidebar.length > 0) {
-    $main_sidebar[0].classList.forEach(function (className) {
-      var color = className.replace('sidebar-light-', 'bg-')
-      if (sidebar_colors.indexOf(color) > -1 && active_sidebar_light_color === null) {
-        active_sidebar_light_color = color
-      }
-    })
-  }
-
-  if (active_sidebar_light_color !== null) {
-    $sidebar_light_variants.find('option.' + active_sidebar_light_color).prop('selected', true)
-    $sidebar_light_variants.removeClass().addClass('form-select mb-3 text-light border-0 ').addClass(active_sidebar_light_color)
-  }
-
-  var logo_skins = navbar_all_colors
-  $container.append('<h6>Brand Logo Variants</h6>')
-  var $logo_variants = $('<div />', {
-    class: 'd-flex'
-  })
-  $container.append($logo_variants)
-  var $clear_btn = $('<a />', {
-    href: '#'
-  }).text('clear').on('click', function (e) {
-    e.preventDefault()
-    var $logo = $('.brand-link')
-    logo_skins.forEach(function (skin) {
-      $logo.removeClass(skin)
-    })
-  })
-
-  var $brand_variants = createSkinBlock(logo_skins, function () {
-    var color = $(this).find('option:selected').attr('class').replace('bg-', 'navbar-')
-    var $logo = $('.brand-link')
-
-    if (color === 'navbar-light' || color === 'navbar-white') {
-      $logo.addClass('text-black')
-    } else {
-      $logo.removeClass('text-black')
-    }
-
-    logo_skins.forEach(function (skin) {
-      $logo.removeClass(skin)
-    })
-
+  function setSelectColor(select, color, darkText) {
+    select.className = 'form-select mb-3 border-0'
     if (color) {
-      $(this).removeClass().addClass('form-select mb-3 border-0').addClass(color).addClass(color !== 'navbar-light' && color !== 'navbar-white' ? 'text-light' : '')
-    } else {
-      $(this).removeClass().addClass('form-select mb-3 border-0')
+      if (darkText) select.classList.add('text-light')
+      select.classList.add(color)
     }
+  }
 
-    $logo.addClass(color)
-  }, true).append($clear_btn)
-  $container.append($brand_variants)
+  function selectCurrentColor(select, element, colors, fromPrefix) {
+    if (!element) return ''
+    var current = colors.find(function (color) { return element.classList.contains(color) }) || ''
+    var optionColor = current ? current.replace(fromPrefix, 'bg-') : ''
+    var optionIndex = Array.prototype.findIndex.call(select.options, function (option) { return option.classList.contains(optionColor) })
+    if (optionIndex >= 0) select.selectedIndex = optionIndex
+    setSelectColor(select, optionColor, true)
+    return current
+  }
 
-  var active_brand_color = null
-  var $brand_link = $('.brand-link')
-  if ($brand_link.length > 0) {
-    $brand_link[0].classList.forEach(function (className) {
-      if (logo_skins.indexOf(className) > -1 && active_brand_color === null) {
-        active_brand_color = className.replace('navbar-', 'bg-')
-      }
+  function appendSelect(title, select) {
+    addHeading(title)
+    var row = document.createElement('div')
+    row.className = 'd-flex'
+    row.append(select)
+    container.append(row)
+  }
+
+  var navbarSelect = makeSelect(navbarAllColors, false, function () {
+    if (!header) return
+    var selectedColor = colorOf(navbarSelect).replace('bg-', 'navbar-')
+    header.classList.remove('navbar-dark', 'navbar-light')
+    navbarAllColors.forEach(function (color) { header.classList.remove(color) })
+    var dark = navbarDarkSkins.includes(selectedColor)
+    header.classList.add(dark ? 'navbar-dark' : 'navbar-light', selectedColor)
+    setSelectColor(navbarSelect, colorOf(navbarSelect), dark)
+  })
+  selectCurrentColor(navbarSelect, header, navbarAllColors, 'navbar-')
+  appendSelect('Navbar Variants', navbarSelect)
+
+  addHeading('Accent Color Variants')
+  var accentSelect = makeSelect(accentColors, true, function () {
+    accentColors.forEach(function (color) { body.classList.remove(color) })
+    var selectedColor = colorOf(accentSelect).replace('bg-', 'accent-')
+    if (selectedColor) body.classList.add(selectedColor)
+  })
+  container.append(accentSelect)
+
+  function syncSidebarScrollers(themeToRemove, themeToAdd) {
+    sidebarScrollers.forEach(function (element) {
+      element.classList.remove(themeToRemove)
+      element.classList.add(themeToAdd)
     })
   }
 
-  if (active_brand_color) {
-    $brand_variants.find('option.' + active_brand_color).prop('selected', true)
-    $brand_variants.removeClass().addClass('form-select mb-3 text-light border-0 ').addClass(active_brand_color)
-  }
-})(jQuery)
+  addHeading('Dark Sidebar Variants')
+  var darkSidebarSelect = makeSelect(sidebarColors, true, function () {
+    var selectedColor = colorOf(darkSidebarSelect)
+    sidebarSkins.forEach(function (skin) { if (mainSidebar) mainSidebar.classList.remove(skin) })
+    var lightColorClasses = sidebarColors.concat(['text-light'])
+    lightColorClasses.forEach(function (className) { lightSidebarSelect.classList.remove(className) })
+    lightSidebarSelect.selectedIndex = 0
+    var sidebarClass = 'sidebar-dark-' + selectedColor.replace('bg-', '')
+    if (mainSidebar && selectedColor) mainSidebar.classList.add(sidebarClass)
+    setSelectColor(darkSidebarSelect, selectedColor, true)
+    syncSidebarScrollers('os-theme-dark', 'os-theme-light')
+  })
+  container.append(darkSidebarSelect)
+
+  addHeading('Light Sidebar Variants')
+  var lightSidebarSelect = makeSelect(sidebarColors, true, function () {
+    var selectedColor = colorOf(lightSidebarSelect)
+    sidebarSkins.forEach(function (skin) { if (mainSidebar) mainSidebar.classList.remove(skin) })
+    sidebarColors.concat(['text-light']).forEach(function (className) { darkSidebarSelect.classList.remove(className) })
+    darkSidebarSelect.selectedIndex = 0
+    var sidebarClass = 'sidebar-light-' + selectedColor.replace('bg-', '')
+    if (mainSidebar && selectedColor) mainSidebar.classList.add(sidebarClass)
+    setSelectColor(lightSidebarSelect, selectedColor, true)
+    syncSidebarScrollers('os-theme-light', 'os-theme-dark')
+  })
+  container.append(lightSidebarSelect)
+  selectCurrentColor(darkSidebarSelect, mainSidebar, sidebarSkins.filter(function (skin) { return skin.indexOf('sidebar-dark-') === 0 }), 'sidebar-dark-')
+  selectCurrentColor(lightSidebarSelect, mainSidebar, sidebarSkins.filter(function (skin) { return skin.indexOf('sidebar-light-') === 0 }), 'sidebar-light-')
+
+  addHeading('Brand Logo Variants')
+  var brandRow = document.createElement('div')
+  brandRow.className = 'd-flex'
+  var brandSelect = makeSelect(navbarAllColors, true, function () {
+    if (!brand) return
+    var selectedColor = colorOf(brandSelect).replace('bg-', 'navbar-')
+    navbarAllColors.forEach(function (color) { brand.classList.remove(color) })
+    brand.classList.toggle('text-black', selectedColor === 'navbar-light' || selectedColor === 'navbar-white')
+    if (selectedColor) brand.classList.add(selectedColor)
+    setSelectColor(brandSelect, colorOf(brandSelect), selectedColor !== 'navbar-light' && selectedColor !== 'navbar-white')
+  })
+  brandRow.append(brandSelect)
+  container.append(brandRow)
+  selectCurrentColor(brandSelect, brand, navbarAllColors, 'navbar-')
+})()

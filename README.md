@@ -1,34 +1,33 @@
-# [AdminLTE - Bootstrap 5 Admin Dashboard](https://adminlte.io)
+# [AdminLV - Bootstrap 5 Admin Dashboard](https://github.com/wikigods/AdminLV)
 
 [![npm version](https://img.shields.io/npm/v/admin-lte/latest.svg)](https://www.npmjs.com/package/admin-lte)
 [![Packagist](https://img.shields.io/packagist/v/almasaeed2010/adminlte.svg)](https://packagist.org/packages/almasaeed2010/adminlte)
 [![cdn version](https://data.jsdelivr.com/v1/package/npm/admin-lte/badge)](https://www.jsdelivr.com/package/npm/admin-lte)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ColorlibHQ/AdminLTE)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/wikigods/AdminLV)
 [![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/jfdvjwFqfz)
 
-**AdminLTE** is a fully responsive administration template. Based on **[Bootstrap 5](https://getbootstrap.com/)** framework and also the JS/jQuery plugin.
+**AdminLV** is a fully responsive administration template. Based on **[Bootstrap 5](https://getbootstrap.com/)** framework and also the JS/jQuery plugin.
 Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
 
-**Preview on [AdminLTE.io](https://adminlte.io/themes/v4)**
+**Preview of the original theme: [AdminLV](https://adminlte.io/themes/v4)**
 
 ## Looking for Premium Templates?
 
-AdminLTE.io just opened a new premium templates page. Hand picked to ensure the best quality and the most affordable
-prices. Visit <https://adminlte.io/premium> for more information.
+The original theme also offers premium templates. Visit <https://adminlte.io/premium> for more information.
 
-!["AdminLTE Presentation"](https://adminlte.io/AdminLTE3.png "AdminLTE Presentation")
+!["AdminLV Presentation"](https://adminlte.io/AdminLTE3.png "AdminLV Presentation")
 
-**AdminLTE** has been carefully coded with clear comments in all of its JS, SCSS and HTML files.
+**AdminLV** has been carefully coded with clear comments in all of its JS, SCSS and HTML files.
 SCSS has been used to increase code customizability.
 
 ## Quick start
-There are multiple ways to install AdminLTE.
+There are multiple ways to install AdminLV.
 
 ### Download & Changelog:
-Always Recommended to download from GitHub latest release [AdminLTE 4](https://github.com/ColorlibHQ/AdminLTE/releases/latest) for bug free and latest features.\
+Always Recommended to download from GitHub latest release [AdminLV 4](https://github.com/ColorlibHQ/AdminLTE/releases/latest) for bug free and latest features.\
 Visit the [releases](https://github.com/ColorlibHQ/AdminLTE/releases) page to view the changelog.\
-Legacy Releases are [AdminLTE 2](https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.18) / [AdminLTE 1](https://github.com/ColorlibHQ/AdminLTE/releases/tag/1.3.1).
+Legacy Releases are [AdminLV 2](https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.18) / [AdminLV 1](https://github.com/ColorlibHQ/AdminLTE/releases/tag/1.3.1).
 
 ## Stable release
 ### Grab from [jsdelivr](https://www.jsdelivr.com/package/npm/admin-lte) CDN:
@@ -55,7 +54,7 @@ composer require "almasaeed2010/adminlte=~4.0"
 ```
 #### Via Git
 ```bash
-git clone https://github.com/ColorlibHQ/AdminLTE.git
+git clone https://github.com/wikigods/AdminLV.git
 ```
 
 ## Documentation
@@ -86,15 +85,14 @@ To compile the dist files you need Node.js/npm, clone/download the repo then:
 
 ## Contributing
 
-Please read through our [contributing guidelines](https://github.com/ColorlibHQ/AdminLTE/tree/master/.github/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
+Please read through our [contributing guidelines](https://github.com/wikigods/AdminLV/tree/master/.github/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
 
 Editor preferences are available in the [editor config](https://github.com/twbs/bootstrap/blob/main/.editorconfig) for easy use in common text editors. Read more and download plugins at <https://editorconfig.org/>.
 
 
 ## License
 
-AdminLTE is an open source project by [AdminLTE.io](https://adminlte.io) that is licensed under [MIT](https://opensource.org/licenses/MIT).
-AdminLTE.io reserves the right to change the license of future releases.
+AdminLV is an open source project licensed under [MIT](https://opensource.org/licenses/MIT).
 
 ## Image Credits
 

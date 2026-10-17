@@ -1,5 +1,5 @@
 /*!
- * AdminLTE v4.0.0 (https://adminlte.io)
+ * AdminLV v4.0.0 (https://github.com/wikigods/AdminLV)
  * Copyright 2014-2026 Colorlib <https://colorlib.com>
  * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
  */
@@ -255,7 +255,7 @@
   });
 
   /**
-   * AdminLTE CardWidget.js
+   * AdminLV CardWidget.js
    * Native JavaScript implementation
    */
 
@@ -439,7 +439,7 @@
     CardWidget._interface(trigger, action);
   });
 
-  /** AdminLTE ControlSidebar, implemented without jQuery. */
+  /** AdminLV ControlSidebar, implemented without jQuery. */
   /* eslint-disable max-statements-per-line */
   const KEY = '.lte.controlsidebar';
   const SELECTOR = '.control-sidebar';
@@ -859,7 +859,7 @@
     });
   });
 
-  /** AdminLTE IFrame, implemented without jQuery. */
+  /** AdminLV IFrame, implemented without jQuery. */
   /* eslint-disable max-statements-per-line */
   const DATA = '[data-widget="iframe"]';
   const WRAPPER = '.content-wrapper';
@@ -1032,7 +1032,7 @@
       document.querySelectorAll(`${NAV} .active`).forEach(el => el.classList.remove('active'));
       const Tab = window.bootstrap?.Tab;
       if (!Tab) {
-        throw new Error('Bootstrap 5 Tab is required for AdminLTE iframe tabs.');
+        throw new Error('Bootstrap 5 Tab is required for AdminLV iframe tabs.');
       }
       Tab.getOrCreateInstance(tab).show();
       tab.closest('.nav-item')?.classList.add('active');
@@ -1241,7 +1241,7 @@
   const SELECTOR_IFRAME = `${WRAPPER} iframe`;
   onReady(IFrame._interface);
 
-  /** AdminLTE Layout, implemented without jQuery. */
+  /** AdminLV Layout, implemented without jQuery. */
   /* eslint-disable max-statements-per-line */
   const SELECTOR_CONTENT = '.content-wrapper';
   const CLASS_FIXED = 'layout-fixed';
@@ -1373,7 +1373,7 @@
     });
   });
 
-  /** AdminLTE PushMenu, implemented without jQuery. */
+  /** AdminLV PushMenu, implemented without jQuery. */
   const EVENT_KEY = '.lte.pushmenu';
   const COLLAPSED = 'sidebar-collapse';
   const OPEN = 'sidebar-open';
@@ -1506,7 +1506,7 @@
   });
   onReady(() => document.querySelectorAll('[data-widget="pushmenu"]').forEach(button => PushMenu._interface(button)));
 
-  /** AdminLTE SidebarSearch, implemented without jQuery. */
+  /** AdminLV SidebarSearch, implemented without jQuery. */
   /* eslint-disable max-statements-per-line */
   const WIDGET = '[data-widget="sidebar-search"]';
   const DEFAULT$1 = {
@@ -1750,7 +1750,7 @@
     NavbarSearch.getOrCreateInstance(element).toggle();
   });
 
-  /** AdminLTE Toasts, implemented without jQuery. */
+  /** AdminLV Toasts, implemented without jQuery. */
   /* eslint-disable max-statements-per-line */
   const DEFAULT = {
     position: 'topRight',
@@ -1847,7 +1847,7 @@
       container.prepend(toast);
       dispatch(document.body, 'created.lte.toasts');
       if (!window.bootstrap?.Toast) {
-        throw new Error('Bootstrap 5 Toast is required to display AdminLTE toasts.');
+        throw new Error('Bootstrap 5 Toast is required to display AdminLV toasts.');
       }
       window.bootstrap.Toast.getOrCreateInstance(toast, {
         autohide: this._config.autohide,

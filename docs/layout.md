@@ -21,7 +21,7 @@ The layout consists of four major parts:
 > You cannot use both layout-boxed and layout-navbar-fixed or layout-footer-fixed at the same time. Anything else can be mixed together.
 {: .quote-danger}
 
-AdminLTE 4.0 provides a set of options to apply to your main layout. Each one of these classes can be added to the body tag to get the desired goal.
+AdminLV 4.0 provides a set of options to apply to your main layout. Each one of these classes can be added to the body tag to get the desired goal.
 
 - Fixed Sidebar: use the class `.layout-fixed` to get a fixed sidebar.
 - Fixed Navbar: use the class `.layout-navbar-fixed` to get a fixed navbar.
@@ -57,7 +57,7 @@ Preloader to avoid [https://github.com/ColorlibHQ/AdminLTE/discussions/3319](htt
 <div class="wrapper">
   <!-- Preloader -->
   <div class="preloader">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <img src="dist/img/AdminLVLogo.png" alt="AdminLVLogo" height="60" width="60">
   </div>
 </div>
 ```
@@ -68,7 +68,7 @@ Preloader to avoid [https://github.com/ColorlibHQ/AdminLTE/discussions/3319](htt
 
 #### Dark Mode
 
-AdminLTE 4.0 supports Bootstrap 5.3 color modes. Set the Bootstrap theme attribute on the root element to enable dark mode:
+AdminLV 4.0 supports Bootstrap 5.3 color modes. Set the Bootstrap theme attribute on the root element to enable dark mode:
 
 ```html
 <html lang="en" data-bs-theme="dark">
@@ -79,7 +79,7 @@ You can also scope dark mode to a component by adding `data-bs-theme="dark"` to 
 
 #### Color Variations
 
-AdminLTE 4.0 provides a set of color variations to apply to your sidebar (light & dark) & navbar. You can combine any available color with these class prefixes:
+AdminLV 4.0 provides a set of color variations to apply to your sidebar (light & dark) & navbar. You can combine any available color with these class prefixes:
 
 - `.navbar-*`
 - `.sidebar-dark-*`
@@ -87,7 +87,7 @@ AdminLTE 4.0 provides a set of color variations to apply to your sidebar (light 
 - `.accent-*`
 
 > ###### New
-> You can use override the link/accent color in AdminLTE, you can add `.accent-*` to `body`.
+> You can use override the link/accent color in AdminLV, you can add `.accent-*` to `body`.
 {: .quote-info}
 
 > ###### Info

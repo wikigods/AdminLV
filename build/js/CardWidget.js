@@ -1,5 +1,5 @@
 /**
- * AdminLTE CardWidget.js
+ * AdminLV CardWidget.js
  * Native JavaScript implementation
  */
 

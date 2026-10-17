@@ -510,9 +510,9 @@ You can change the style of the card by adding any of the contextual classes.
 ##### Card Tools
 {: .text-bold .text-dark .mt-5}
 
-Cards can contain tools to deploy a specific event or provide simple info. The following examples makes use of multiple AdminLTE components within the header of the card.
+Cards can contain tools to deploy a specific event or provide simple info. The following examples makes use of multiple AdminLV components within the header of the card.
 
-AdminLTE data-card-widget attribute provides cards with the ability to collapse or be removed. The buttons are placed in the card-tools which is placed in the card-header. 
+AdminLV data-card-widget attribute provides cards with the ability to collapse or be removed. The buttons are placed in the card-tools which is placed in the card-header.
 
 ```html
 <div class="card card-primary">

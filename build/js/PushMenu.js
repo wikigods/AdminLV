@@ -1,4 +1,4 @@
-/** AdminLTE PushMenu, implemented without jQuery. */
+/** AdminLV PushMenu, implemented without jQuery. */
 import { dispatch, getConfig, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 
 const EVENT_KEY = '.lte.pushmenu'

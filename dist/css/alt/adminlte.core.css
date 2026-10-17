@@ -1,9 +1,9 @@
 @charset "UTF-8";
 /*!
- *   AdminLTE v3.2.0
+ *   AdminLV v3.2.0
  *     Only Core
  *   Author: Colorlib
- *   Website: AdminLTE.io <https://adminlte.io>
+ *   Website: AdminLV <https://adminlte.io>
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 /*!
@@ -1641,11 +1641,11 @@ progress {
   --bs-table-color-state: initial;
   --bs-table-bg-state: initial;
   --bs-table-color: var(--bs-emphasis-color);
-  --bs-table-bg: transparent;
+  --bs-table-bg: #fff;
   --bs-table-border-color: #dee2e6;
   --bs-table-accent-bg: rgba(0, 0, 0, 0.05);
   --bs-table-striped-color: var(--bs-emphasis-color);
-  --bs-table-striped-bg: rgba(var(--bs-emphasis-color-rgb), 0.05);
+  --bs-table-striped-bg: #fff;
   --bs-table-active-color: var(--bs-emphasis-color);
   --bs-table-active-bg: rgba(0, 0, 0, 0.075);
   --bs-table-hover-color: var(--bs-emphasis-color);
@@ -12883,15 +12883,18 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 .user-panel .image {
   display: inline-block;
-  padding-left: 0.8rem;
+  padding-left: 0;
 }
 .user-panel img {
   height: auto;
-  width: 2.1rem;
+  width: 2.75rem;
 }
 .user-panel .info {
-  display: inline-block;
-  padding: 5px 5px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  height: 2.75rem;
+  justify-content: center;
+  padding: 0 5px 0 15px;
 }
 .user-panel .status,
 .user-panel .dropdown-menu {

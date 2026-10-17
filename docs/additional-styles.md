@@ -3,7 +3,7 @@ layout: page
 title: Additional Styles / Custom Skin
 ---
 
-If you want to create additional styles like a company specific color for buttons, the background utility or something else you can simply create your own subversion of AdminLTE with the following SCSS template.
+If you want to create additional styles like a company specific color for buttons, the background utility or something else you can simply create your own subversion of AdminLV with the following SCSS template.
 
 In this example we create a custom button class called `.btn-custom-color` with an extra button style and a custom class called `.my-custom-style`.
 
@@ -44,7 +44,7 @@ $theme-colors: map-merge((
 ```
 {: .max-height-300}
 
-You can also create a skin on top of AdminLTE with the following SCSS template.
+You can also create a skin on top of AdminLV with the following SCSS template.
 
 In this example we create a custom class called `.btn-custom-color` with a extra button style.
 

@@ -1,4 +1,4 @@
-/** AdminLTE Layout, implemented without jQuery. */
+/** AdminLV Layout, implemented without jQuery. */
 /* eslint-disable max-statements-per-line */
 import { getConfig, getInstance, getOrCreateInstance, setInstance, onReady } from './Native'
 

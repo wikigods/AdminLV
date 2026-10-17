@@ -3,7 +3,7 @@ layout: page
 title: Miscellaneous
 ---
 
-AdminLTE has smaller custom classes that not related to other components are listed here.
+AdminLV has smaller custom classes that not related to other components are listed here.
 
 
 ### Text Size 

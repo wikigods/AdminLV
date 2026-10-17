@@ -1,4 +1,4 @@
-/** AdminLTE Toasts, implemented without jQuery. */
+/** AdminLV Toasts, implemented without jQuery. */
 /* eslint-disable max-statements-per-line */
 import { dispatch } from './Native'
 
@@ -58,7 +58,7 @@ class Toasts {
 
     container.prepend(toast); dispatch(document.body, 'created.lte.toasts')
     if (!window.bootstrap?.Toast) {
-      throw new Error('Bootstrap 5 Toast is required to display AdminLTE toasts.')
+      throw new Error('Bootstrap 5 Toast is required to display AdminLV toasts.')
     }
 
     window.bootstrap.Toast.getOrCreateInstance(toast, { autohide: this._config.autohide, animation: this._config.fade, delay: this._config.delay }).show()

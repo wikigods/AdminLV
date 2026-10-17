@@ -1,4 +1,4 @@
-/** AdminLTE SidebarSearch, implemented without jQuery. */
+/** AdminLV SidebarSearch, implemented without jQuery. */
 /* eslint-disable max-statements-per-line */
 import { getConfig, getInstance, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 

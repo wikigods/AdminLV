@@ -3,12 +3,12 @@ layout: page
 title: 
 ---
 
-# Contributing to AdminLTE
+# Contributing to AdminLV
 
 Contributions are always **welcome and recommended**! Here is how for beginner's: [Get started with open source click here](https://youtu.be/GbqSvJs-6W4)
 
 1. Contribution Requirements :
-    * When you contribute, you agree to give a non-exclusive license to AdminLTE.io to use that contribution in any context as we (AdminLTE.io) see appropriate.
+    * When you contribute, you agree to give the AdminLV maintainers a non-exclusive license to use that contribution in this project.
     * If you use content provided by another party, it must be appropriately licensed using an [open source](https://opensource.org/licenses) license.
     * Contributions are only accepted through GitHub pull requests.
     * Finally, contributed code must work in all supported browsers (see above for browser support).
@@ -17,7 +17,7 @@ Contributions are always **welcome and recommended**! Here is how for beginner's
     * Clone to your machine
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/AdminLTE.git
+    git clone https://github.com/YOUR_USERNAME/AdminLV.git
     ```
     * Create a new branch
 3. Compile dist files (Development) :
@@ -34,7 +34,7 @@ Contributions are always **welcome and recommended**! Here is how for beginner's
 
 You can use Gitpod(an online IDE which is free for Open Source) for working on issues or making PRs (Pull Requests). With a single click it will launch a workspace and automatically:
 
-- clone the `AdminLTE` repo.
+- clone the `AdminLV` repo.
 - install the dependencies.
 - run `npm run dev` to start the server.
 

@@ -53,15 +53,15 @@
     "control-panel",
     "dashboard"
   ],
-  "homepage": "https://adminlte.io",
+  "homepage": "https://github.com/wikigods/AdminLV",
   "style": "dist/css/adminlte.css",
   "sass": "build/scss/adminlte.scss",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ColorlibHQ/AdminLTE.git"
+    "url": "https://github.com/wikigods/AdminLV.git"
   },
   "bugs": {
-    "url": "https://github.com/ColorlibHQ/AdminLTE/issues"
+    "url": "https://github.com/wikigods/AdminLV/issues"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.3.1",

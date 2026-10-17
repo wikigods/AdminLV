@@ -3,7 +3,7 @@ layout: page
 title: Control Sidebar Plugin
 ---
 
-The control sidebar component is part of AdminLTE's layout as the right sidebar. 
+The control sidebar component is part of AdminLV's layout as the right sidebar.
 
 ##### Usage
 This plugin can be activated as a jQuery plugin or using the data api. To activate the plugin, you must first add the HTML markup to your layout, then create the toggle button as shown below. 
@@ -28,7 +28,7 @@ Add `data-widget="control-sidebar"` to any button or a element to activate the p
 
 ###### jQuery
 {: .text-bold }
-Just like all other AdminLTE plugins, you can also activate the toggle button using jQuery by running the following example. 
+Just like all other AdminLV plugins, you can also activate the toggle button using jQuery by running the following example.
 ```js
 $("#my-toggle-button").ControlSidebar('toggle');
 ```

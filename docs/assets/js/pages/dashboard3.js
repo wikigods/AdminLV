@@ -1,6 +1,6 @@
 /* global Chart:false */
 
-$(function () {
+(function () {
   'use strict'
 
   var ticksStyle = {
@@ -25,9 +25,9 @@ $(function () {
     }
   }
 
-  var $salesChart = $('#sales-chart')
+  var salesCanvas = document.getElementById('sales-chart')
   // eslint-disable-next-line no-unused-vars
-  var salesChart = new Chart($salesChart, {
+  var salesChart = new Chart(salesCanvas, {
     type: 'bar',
     data: {
       labels: ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -79,9 +79,9 @@ $(function () {
     }
   })
 
-  var $visitorsChart = $('#visitors-chart')
+  var visitorsCanvas = document.getElementById('visitors-chart')
   // eslint-disable-next-line no-unused-vars
-  var visitorsChart = new Chart($visitorsChart, {
+  var visitorsChart = new Chart(visitorsCanvas, {
     type: 'line',
     data: {
       labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
@@ -127,6 +127,6 @@ $(function () {
       }
     }
   })
-})
+})()
 
 // lgtm [js/unused-local-variable]

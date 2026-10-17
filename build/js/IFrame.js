@@ -1,4 +1,4 @@
-/** AdminLTE IFrame, implemented without jQuery. */
+/** AdminLV IFrame, implemented without jQuery. */
 /* eslint-disable max-statements-per-line */
 import { getConfig, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 
@@ -138,7 +138,7 @@ class IFrame {
     document.querySelectorAll(`${NAV} .active`).forEach(el => el.classList.remove('active'))
     const Tab = window.bootstrap?.Tab
     if (!Tab) {
-      throw new Error('Bootstrap 5 Tab is required for AdminLTE iframe tabs.')
+      throw new Error('Bootstrap 5 Tab is required for AdminLV iframe tabs.')
     }
 
     Tab.getOrCreateInstance(tab).show()

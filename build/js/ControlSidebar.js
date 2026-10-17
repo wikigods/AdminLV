@@ -1,4 +1,4 @@
-/** AdminLTE ControlSidebar, implemented without jQuery. */
+/** AdminLV ControlSidebar, implemented without jQuery. */
 /* eslint-disable max-statements-per-line */
 import { dispatch, getConfig, getOrCreateInstance, setInstance, delegate, onReady } from './Native'
 

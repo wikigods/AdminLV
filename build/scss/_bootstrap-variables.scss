@@ -84,7 +84,7 @@ $theme-colors: map-merge((
 ), $theme-colors);
 // stylelint-enable
 
-// Preserve AdminLTE's dark foreground color with Bootstrap 5's contrast function.
+// Preserve AdminLV's dark foreground color with Bootstrap 5's contrast function.
 $color-contrast-dark: #1f2d3d !default;
 $color-contrast-light: $white !default;
 $min-contrast-ratio: 3 !default;

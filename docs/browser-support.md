@@ -3,7 +3,7 @@ layout: page
 title: Browser Support
 ---
 
-AdminLTE v4 supports the latest stable versions of major browsers, recent mobile browsers, and Firefox ESR. Internet Explorer 10 and 11 are not supported.
+AdminLV v4 supports the latest stable versions of major browsers, recent mobile browsers, and Firefox ESR. Internet Explorer 10 and 11 are not supported.
 
 > ##### Bootstrap 5 browser support
 > Bootstrap 5 supports current browsers and has dropped Internet Explorer 10 and 11.

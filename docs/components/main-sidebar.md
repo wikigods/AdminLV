@@ -10,9 +10,9 @@ The sidebar used in this page to the left provides an example of what your sideb
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <img src="dist/img/AdminLVLogo.png" alt="AdminLV Logo" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text fw-light">AdminLTE 4</span>
+    <span class="brand-text fw-light">AdminLV 4</span>
   </a>
 
   <!-- Sidebar -->
@@ -80,8 +80,8 @@ You can use two logo images instead of logo with text, you only need to change t
 
 ```html
 <a href="#" class="brand-link logo-switch">
-  <img src="dist/img/logo-xs.png" alt="AdminLTE Docs Logo Small" class="brand-image-xl logo-xs">
-  <img src="dist/img/logo-xl.png" alt="AdminLTE Docs Logo Large" class="brand-image-xs logo-xl" style="left: 12px">
+  <img src="dist/img/logo-xs.png" alt="AdminLV Docs Logo Small" class="brand-image-xl logo-xs">
+  <img src="dist/img/logo-xl.png" alt="AdminLV Docs Logo Large" class="brand-image-xs logo-xl" style="left: 12px">
 </a>
 ```
 > Example from v3.0 docs.
@@ -95,8 +95,8 @@ You can place the pushmenu button inside the brand, simply replace the brand-lin
 ```html
 <div class="brand-link d-flex justify-content-between align-items-center">
   <a class="brand-link" href="index3.html">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-    <span class="brand-text fw-light">AdminLTE 4</span>
+    <img src="dist/img/AdminLVLogo.png" alt="AdminLV Logo" class="brand-image img-circle elevation-3">
+    <span class="brand-text fw-light">AdminLV 4</span>
   </a>
   <a class="pushmenu" data-widget="pushmenu" href="#" role="button"><i class="fa-solid fa-bars"></i></a>
 </div>
