@@ -1,5 +1,6 @@
 /docs/
 /docs_html/
+/stylelint
 /plugins/*
 !/plugins/flot-old/
 /.github/

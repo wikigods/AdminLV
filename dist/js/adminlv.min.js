@@ -1,5 +1,5 @@
 /*!
- * AdminLV v1.0.6 (https://github.com/wikigods/AdminLV)
+ * AdminLV v2.0.0 (https://github.com/wikigods/AdminLV)
  * Copyright 2014-2026 Colorlib <https://colorlib.com>
  * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
  */
