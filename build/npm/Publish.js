@@ -33,24 +33,37 @@ class Publish {
     // Publish files
     Plugins.forEach(module => {
       const fseOptions = {
+        // Follow pnpm's package symlinks so directories are copied as directories
+        dereference: true,
         // Skip copying dot files
-        filter(src) {
-          return !path.basename(src).startsWith('.') && (!module.filter || module.filter(src))
+        filter(src, dest) {
+          if (path.basename(src).startsWith('.') || (module.filter && !module.filter(src))) {
+            return false
+          }
+
+          try {
+            if (fse.statSync(src).isFile() && fse.statSync(dest).isFile() && fse.readFileSync(src).equals(fse.readFileSync(dest))) {
+              return false
+            }
+          } catch {}
+
+          return true
         }
       }
 
       try {
-        if (fse.existsSync(module.from)) {
-          fse.copySync(module.from, module.to, fseOptions)
-        } else {
-          fse.copySync(module.from.replace('node_modules/', '../'), module.to, fseOptions)
+        if (!fse.existsSync(module.from)) {
+          throw new Error(`Source path does not exist: ${module.from}`)
         }
+
+        fse.copySync(module.from, module.to, fseOptions)
 
         if (this.options.verbose) {
           console.log(`Copied ${module.from} to ${module.to}`)
         }
       } catch (error) {
         console.error(`Error: ${error}`)
+        process.exitCode = 1
       }
     })
   }

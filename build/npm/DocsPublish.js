@@ -35,9 +35,21 @@ class Publish {
     Plugins.forEach(module => {
       try {
         fse.copySync(module.from, module.to, {
+          // Follow pnpm's package symlinks so directories are copied as directories
+          dereference: true,
           // Skip copying dot files
-          filter(src) {
-            return !path.basename(src).startsWith('.')
+          filter(src, dest) {
+            if (path.basename(src).startsWith('.')) {
+              return false
+            }
+
+            try {
+              if (fse.statSync(src).isFile() && fse.statSync(dest).isFile() && fse.readFileSync(src).equals(fse.readFileSync(dest))) {
+                return false
+              }
+            } catch {}
+
+            return true
           }
         })
 
@@ -46,6 +58,7 @@ class Publish {
         }
       } catch (error) {
         console.error(`Error: ${error}`)
+        process.exitCode = 1
       }
     })
 

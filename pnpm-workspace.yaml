@@ -1,3 +1,4 @@
 allowBuilds:
-  '@parcel/watcher': set this to true or false
-  vnu-jar: set this to true or false
+  '@parcel/watcher': false
+  unrs-resolver: set this to true or false
+  vnu-jar: false

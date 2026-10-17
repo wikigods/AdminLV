@@ -44,7 +44,7 @@ AdminLTE makes use of the following plugins. For documentation, updates or licen
   <div class="col-sm-3">
     <ul class="list-unstyled">
       <li><h4>Form Elements</h4></li>
-      <li><a href="https://farbelous.io/bootstrap-colorpicker/">Bootstrap Colorpicker</a></li>
+      <li>Native HTML color picker</li>
       <li><a href="https://github.com/seiyria/bootstrap-slider/">Bootstrap Slider</a></li>
       <li><a href="http://www.daterangepicker.com/" rel="noopener" target="_blank">Date Range Picker</a></li>
       <li><a href="https://www.dropzonejs.com/" rel="noopener" target="_blank">Dropzone JS</a></li>

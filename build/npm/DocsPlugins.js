@@ -17,7 +17,7 @@ const Plugins = [
   },
   // Popper
   {
-    from: 'node_modules/popper.js/dist/',
+    from: 'node_modules/@popperjs/core/dist/umd/',
     to: 'docs/assets/plugins/popper/'
   },
   // Bootstrap

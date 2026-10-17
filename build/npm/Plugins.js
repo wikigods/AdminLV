@@ -2,6 +2,15 @@
 
 const path = require('path')
 
+const packageDependencyPath = (parentPackage, dependency, subPath) => {
+  const parentPackagePath = require.resolve(`${parentPackage}/package.json`)
+  const dependencyPackagePath = require.resolve(`${dependency}/package.json`, {
+    paths: [path.dirname(parentPackagePath)]
+  })
+
+  return path.join(path.dirname(dependencyPackagePath), subPath)
+}
+
 const Plugins = [
   // jQuery
   {
@@ -10,8 +19,11 @@ const Plugins = [
   },
   // Popper
   {
-    from: 'node_modules/popper.js/dist',
-    to: 'plugins/popper'
+    from: 'node_modules/@popperjs/core/dist/umd',
+    to: 'plugins/popper',
+    filter(src) {
+      return ['popper.js', 'popper.min.js', 'popper.js.map', 'popper.min.js.map'].includes(path.basename(src))
+    }
   },
   // Bootstrap
   {
@@ -80,15 +92,6 @@ const Plugins = [
     from: 'node_modules/bootstrap-slider/dist/css',
     to: 'plugins/bootstrap-slider/css'
   },
-  // Bootstrap Colorpicker
-  {
-    from: 'node_modules/bootstrap-colorpicker/dist/js',
-    to: 'plugins/bootstrap-colorpicker/js'
-  },
-  {
-    from: 'node_modules/bootstrap-colorpicker/dist/css',
-    to: 'plugins/bootstrap-colorpicker/css'
-  },
   // Air Datepicker
   {
     from: 'node_modules/air-datepicker',
@@ -135,7 +138,7 @@ const Plugins = [
     to: 'plugins/datatables-bs5/css'
   },
   {
-    from: 'node_modules/datatables.net-autofill/js',
+    from: packageDependencyPath('datatables.net-autofill-bs5', 'datatables.net-autofill', 'js'),
     to: 'plugins/datatables-autofill/js'
   },
   {
@@ -147,7 +150,7 @@ const Plugins = [
     to: 'plugins/datatables-autofill/css'
   },
   {
-    from: 'node_modules/datatables.net-buttons/js',
+    from: packageDependencyPath('datatables.net-buttons-bs5', 'datatables.net-buttons', 'js'),
     to: 'plugins/datatables-buttons/js'
   },
   {
@@ -159,7 +162,7 @@ const Plugins = [
     to: 'plugins/datatables-buttons/css'
   },
   {
-    from: 'node_modules/datatables.net-colreorder/js',
+    from: packageDependencyPath('datatables.net-colreorder-bs5', 'datatables.net-colreorder', 'js'),
     to: 'plugins/datatables-colreorder/js'
   },
   {
@@ -171,7 +174,7 @@ const Plugins = [
     to: 'plugins/datatables-colreorder/css'
   },
   {
-    from: 'node_modules/datatables.net-fixedcolumns/js',
+    from: packageDependencyPath('datatables.net-fixedcolumns-bs5', 'datatables.net-fixedcolumns', 'js'),
     to: 'plugins/datatables-fixedcolumns/js'
   },
   {
@@ -183,7 +186,7 @@ const Plugins = [
     to: 'plugins/datatables-fixedcolumns/css'
   },
   {
-    from: 'node_modules/datatables.net-fixedheader/js',
+    from: packageDependencyPath('datatables.net-fixedheader-bs5', 'datatables.net-fixedheader', 'js'),
     to: 'plugins/datatables-fixedheader/js'
   },
   {
@@ -195,7 +198,7 @@ const Plugins = [
     to: 'plugins/datatables-fixedheader/css'
   },
   {
-    from: 'node_modules/datatables.net-keytable/js',
+    from: packageDependencyPath('datatables.net-keytable-bs5', 'datatables.net-keytable', 'js'),
     to: 'plugins/datatables-keytable/js'
   },
   {
@@ -207,7 +210,7 @@ const Plugins = [
     to: 'plugins/datatables-keytable/css'
   },
   {
-    from: 'node_modules/datatables.net-responsive/js',
+    from: packageDependencyPath('datatables.net-responsive-bs5', 'datatables.net-responsive', 'js'),
     to: 'plugins/datatables-responsive/js'
   },
   {
@@ -219,7 +222,7 @@ const Plugins = [
     to: 'plugins/datatables-responsive/css'
   },
   {
-    from: 'node_modules/datatables.net-rowgroup/js',
+    from: packageDependencyPath('datatables.net-rowgroup-bs5', 'datatables.net-rowgroup', 'js'),
     to: 'plugins/datatables-rowgroup/js'
   },
   {
@@ -231,7 +234,7 @@ const Plugins = [
     to: 'plugins/datatables-rowgroup/css'
   },
   {
-    from: 'node_modules/datatables.net-rowreorder/js',
+    from: packageDependencyPath('datatables.net-rowreorder-bs5', 'datatables.net-rowreorder', 'js'),
     to: 'plugins/datatables-rowreorder/js'
   },
   {
@@ -243,7 +246,7 @@ const Plugins = [
     to: 'plugins/datatables-rowreorder/css'
   },
   {
-    from: 'node_modules/datatables.net-scroller/js',
+    from: packageDependencyPath('datatables.net-scroller-bs5', 'datatables.net-scroller', 'js'),
     to: 'plugins/datatables-scroller/js'
   },
   {
@@ -255,7 +258,7 @@ const Plugins = [
     to: 'plugins/datatables-scroller/css'
   },
   {
-    from: 'node_modules/datatables.net-searchbuilder/js',
+    from: packageDependencyPath('datatables.net-searchbuilder-bs5', 'datatables.net-searchbuilder', 'js'),
     to: 'plugins/datatables-searchbuilder/js'
   },
   {
@@ -267,7 +270,7 @@ const Plugins = [
     to: 'plugins/datatables-searchbuilder/css'
   },
   {
-    from: 'node_modules/datatables.net-searchpanes/js',
+    from: packageDependencyPath('datatables.net-searchpanes-bs5', 'datatables.net-searchpanes', 'js'),
     to: 'plugins/datatables-searchpanes/js'
   },
   {
@@ -279,7 +282,7 @@ const Plugins = [
     to: 'plugins/datatables-searchpanes/css'
   },
   {
-    from: 'node_modules/datatables.net-select/js',
+    from: packageDependencyPath('datatables.net-select-bs5', 'datatables.net-select', 'js'),
     to: 'plugins/datatables-select/js'
   },
   {
@@ -294,7 +297,11 @@ const Plugins = [
   // Fullcalendar
   {
     from: 'node_modules/fullcalendar/',
-    to: 'plugins/fullcalendar'
+    to: 'plugins/fullcalendar',
+    // Keep the repository's Font Awesome 7 icon mappings in the vendored build.
+    filter(src) {
+      return path.basename(src) !== 'main.js'
+    }
   },
   // icheck bootstrap
   {
