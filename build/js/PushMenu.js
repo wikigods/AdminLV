@@ -116,7 +116,6 @@ class PushMenu {
 
     const overlay = document.createElement('div')
     overlay.id = 'sidebar-overlay'
-    overlay.addEventListener('click', () => this.collapse())
     wrapper.append(overlay)
   }
 
@@ -138,6 +137,21 @@ delegate(document, 'click', '[data-widget="pushmenu"]', (event, button) => {
   event.preventDefault()
   PushMenu._interface(button, 'toggle')
 })
+
+document.addEventListener('click', event => {
+  const target = event.target
+  if (!(target instanceof Element) || target.closest('[data-widget="pushmenu"], .main-sidebar')) {
+    return
+  }
+
+  const button = document.querySelector('[data-widget="pushmenu"]')
+  if (!button || document.body.classList.contains(COLLAPSED)) {
+    return
+  }
+
+  PushMenu._interface(button, 'collapse')
+})
+
 onReady(() => document.querySelectorAll('[data-widget="pushmenu"]').forEach(button => PushMenu._interface(button)))
 
 export default PushMenu
