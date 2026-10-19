@@ -1,5 +1,5 @@
 /*!
- * AdminLV v2.0.0 (https://github.com/wikigods/AdminLV)
+ * AdminLV v2.0.2 (https://github.com/wikigods/AdminLV)
  * Copyright 2014-2026 Colorlib <https://colorlib.com>
  * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
  */
@@ -5792,7 +5792,9 @@
       once: true
     });
   } else {
-    replaceLegacyV5Icons();
+    // Let the host application's entry point finish mounting before replacing icons.
+    // Frameworks such as Vue may otherwise render over the temporary icon wrapper.
+    window.setTimeout(replaceLegacyV5Icons, 0);
   }
 
   exports.CardRefresh = CardRefresh;

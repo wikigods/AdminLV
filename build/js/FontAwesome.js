@@ -82,5 +82,7 @@ const replaceLegacyV5Icons = async () => {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', replaceLegacyV5Icons, { once: true })
 } else {
-  replaceLegacyV5Icons()
+  // Let the host application's entry point finish mounting before replacing icons.
+  // Frameworks such as Vue may otherwise render over the temporary icon wrapper.
+  window.setTimeout(replaceLegacyV5Icons, 0)
 }
