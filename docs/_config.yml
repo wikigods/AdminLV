@@ -73,6 +73,8 @@ navigation:
         url: javascript/iframe.html
       - title: Navbar Search
         url: javascript/navbar-search.html
+      - title: Legacy Font Awesome Icons
+        url: javascript/legacy-icons.html
   - title: Browser Support
     url: browser-support.html
     icon: fa-brands fa-chrome

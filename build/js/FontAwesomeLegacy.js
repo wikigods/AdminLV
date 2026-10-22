@@ -1,4 +1,5 @@
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import legacyIcons from './FontAwesomeLegacyIcons'
 
 // Keep the Font Awesome 7 name while restoring the previous tachometer artwork.
 // The original f3fd Unicode is kept so it does not claim gauge-high's v7 codepoint.
@@ -50,22 +51,119 @@ const legacyV5Icons = [
   }
 ]
 
-library.add(...legacyV5Icons)
+library.add(...legacyV5Icons, ...legacyIcons)
 
-const replaceLegacyV5Icons = async () => {
-  const v5IconClasses = [
-    'fa-gauge-high',
-    'fa-table-cells',
-    'fa-th',
-    'fa-table',
-    'fa-lock',
-    'fa-calendar',
-    'fa-trash-arrow-up',
-    'fa-trash-restore'
+const legacyClassMap = {
+  'fa-copy': 'fa-copy',
+  'fa-file': 'fa-file',
+  'fa-file-pdf': 'fa-file-pdf',
+  'fa-photo-video': 'fa-photo-film',
+  'fa-file-csv': 'fa-file-csv',
+  'fa-file-upload': 'fa-file-arrow-up',
+  'fa-file-download': 'fa-file-arrow-down',
+  'fa-file-invoice': 'fa-file-invoice',
+  'fa-exclamation-circle': 'fa-circle-exclamation',
+  'fa-building': 'fa-building',
+  'fa-home': 'fa-house',
+  'fa-warehouse': 'fa-warehouse',
+  'fa-store': 'fa-store',
+  'fa-map-marked-alt': 'fa-map-location-dot',
+  'fa-fire-alt': 'fa-fire-flame-curved',
+  'fa-fire': 'fa-fire',
+  'fa-dollar-sign': 'fa-dollar-sign',
+  'fa-bug': 'fa-bug',
+  'fa-barcode': 'fa-barcode',
+  'fa-envelope': 'fa-envelope',
+  'fa-language': 'fa-language',
+  'fa-money-bill-alt': 'fa-money-bill-1',
+  'fa-calendar': 'fa-calendar',
+  'fa-magic': 'fa-wand-magic-sparkles',
+  'fa-eraser': 'fa-eraser',
+  'fa-edit': 'fa-pen-to-square',
+  'fa-list': 'fa-list',
+  'fa-th': 'fa-table-cells',
+  'fa-table-cells': 'fa-table-cells',
+  'fa-table': 'fa-table',
+  'fa-lock': 'fa-lock',
+  'fa-trash-arrow-up': 'fa-trash-arrow-up',
+  'fa-trash-restore': 'fa-trash-arrow-up',
+  'fa-coins': 'fa-coins',
+  'fa-chart-line': 'fa-chart-line',
+  'fa-cash-register': 'fa-cash-register',
+  'fa-chart-pie': 'fa-chart-pie',
+  'fa-box': 'fa-box',
+  'fa-gauge': 'fa-gauge-high',
+  'fa-gauge-high': 'fa-gauge-high',
+  'fa-tachometer-alt': 'fa-gauge-high',
+  'fa-tachometer-alt-fast': 'fa-gauge-high',
+  'fa-key': 'fa-key',
+  'fa-cubes': 'fa-cubes',
+  'fa-cart-arrow-down': 'fa-cart-arrow-down'
+}
+
+const legacyIconDefinitions = [legacyGaugeHigh, ...legacyV5Icons, ...legacyIcons]
+const legacyIconSelectors = legacyIconDefinitions.flatMap(iconDefinition => {
+  const currentName = `fa-${iconDefinition.iconName}`
+  const legacyNames = Object.entries(legacyClassMap)
+    .filter(([, mappedName]) => mappedName === currentName)
+    .map(([legacyName]) => legacyName.slice(3))
+  const iconNames = [
+    iconDefinition.iconName,
+    ...(iconDefinition.icon[2] || []).filter(alias => typeof alias === 'string'),
+    ...legacyNames
   ]
-  const legacyIcons = document.querySelectorAll(v5IconClasses.map(className => `.${className}:not([data-fa-i2svg])`).join(', '))
+  const styleClasses = iconDefinition.prefix === 'far'
+    ? ['far', 'fa-regular']
+    : ['fas', 'fa-solid']
+
+  return styleClasses.flatMap(styleClass => iconNames.map(iconName => `.${styleClass}.fa-${iconName}:not([data-fa-i2svg])`))
+})
+const legacyIconSelector = [...new Set(legacyIconSelectors)]
+  .join(', ')
+
+const processingIcons = new WeakSet()
+
+const normalizeLegacyClasses = root => {
+  const legacyIcons = []
+  if (root.matches?.(legacyIconSelector)) {
+    legacyIcons.push(root)
+  }
+
+  legacyIcons.push(...root.querySelectorAll(legacyIconSelector))
 
   for (const legacyIcon of legacyIcons) {
+    for (const [legacyClass, modernClass] of Object.entries(legacyClassMap)) {
+      if (legacyIcon.classList.contains(legacyClass) && legacyClass !== modernClass) {
+        legacyIcon.classList.remove(legacyClass)
+        legacyIcon.classList.add(modernClass)
+      }
+    }
+
+    if (legacyIcon.classList.contains('fas')) {
+      legacyIcon.classList.replace('fas', 'fa-solid')
+    }
+
+    if (legacyIcon.classList.contains('far')) {
+      legacyIcon.classList.replace('far', 'fa-regular')
+    }
+  }
+}
+
+const replaceLegacyIcons = async (root) => {
+  const legacyIcons = []
+  if (root.matches?.(legacyIconSelector)) {
+    legacyIcons.push(root)
+  }
+
+  legacyIcons.push(...root.querySelectorAll(legacyIconSelector))
+
+  for (const legacyIcon of legacyIcons) {
+    if (processingIcons.has(legacyIcon)) {
+      continue
+    }
+
+    processingIcons.add(legacyIcon)
+
     // Give i2svg a root containing only this icon so unrelated webfont icons stay untouched.
     const iconContainer = document.createElement('span')
     legacyIcon.replaceWith(iconContainer)
@@ -79,10 +177,25 @@ const replaceLegacyV5Icons = async () => {
   }
 }
 
+const observeLegacyIcons = () => {
+  // Keep the adapter opt-in and process only the initial tree and newly inserted subtrees.
+  const observer = new MutationObserver(records => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (node instanceof Element) {
+          normalizeLegacyClasses(node)
+          replaceLegacyIcons(node)
+        }
+      }
+    }
+  })
+  observer.observe(document.body, { childList: true, subtree: true })
+  normalizeLegacyClasses(document.body)
+  replaceLegacyIcons(document.body)
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', replaceLegacyV5Icons, { once: true })
+  document.addEventListener('DOMContentLoaded', observeLegacyIcons, { once: true })
 } else {
-  // Let the host application's entry point finish mounting before replacing icons.
-  // Frameworks such as Vue may otherwise render over the temporary icon wrapper.
-  window.setTimeout(replaceLegacyV5Icons, 0)
+  observeLegacyIcons()
 }
